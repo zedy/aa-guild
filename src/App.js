@@ -15,15 +15,17 @@ import AboutUsPage from './pages/about/about.component';
 
 const App = () => {
   return (
-    <div className="ui container">
+    <div className="app">
       <Header />
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route exact path='/about' component={AboutUsPage} />
-        <Route exact path='/events' component={EventPage} />
-        <Route exact path='/news' component={NewsPage} />
-        <Route exact path='/player-list' component={PlayersPage} />
-      </Switch>
+      <div className="ui container content" style={{marginTop: "7em"}}>
+        <Switch>
+          <Route exact path='/' component={HomePage} />
+          <Route exact path='/about' component={AboutUsPage} />
+          <Route exact path='/events' component={EventPage} />
+          <Route exact path='/news' component={NewsPage} />
+          <Route exact path='/player-list' component={PlayersPage} />
+        </Switch>
+      </div>
       <Footer />
     </div>
   )
