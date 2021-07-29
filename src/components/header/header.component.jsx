@@ -18,11 +18,10 @@ const Header = () => {
           </Link>
         </div>
         <div className="item right">
-          <Link to="/about">About us</Link>
-          <Link to="/events">Events</Link>
-          <Link to="/news">News</Link>
-          <Link to="/players-list">Players</Link>
-          <span className="menu-divider">|</span>
+          <Link className="item active" to="/about">About us</Link>
+          <Link className="item" to="/events">Events</Link>
+          <Link className="item" to="/news">News</Link>
+          <Link className="item" to="/players-list">Players</Link>
           <LanguageSwitcher />
         </div>
       </div>

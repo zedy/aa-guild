@@ -10,8 +10,9 @@ import Footer from './components/footer/footer.component';
 import HomePage from './pages/homepage/homepage.component';
 import NewsPage from './pages/news/news.component';
 import EventPage from './pages/event/event.component';
-import PlayersPage from './pages/players/players.component';
+import PlayersListPage from './pages/players-list/players-list.component';
 import AboutUsPage from './pages/about/about.component';
+import PlayerPage from './pages/player/player.component';
 
 const App = () => {
   return (
@@ -23,7 +24,8 @@ const App = () => {
           <Route exact path='/about' component={AboutUsPage} />
           <Route exact path='/events' component={EventPage} />
           <Route exact path='/news' component={NewsPage} />
-          <Route exact path='/player-list' component={PlayersPage} />
+          <Route exact path='/players-list' component={PlayersListPage} />
+          <Route exact path='/player/:id' component={PlayerPage} />
         </Switch>
       </div>
       <Footer />
