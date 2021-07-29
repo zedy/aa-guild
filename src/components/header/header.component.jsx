@@ -21,8 +21,13 @@ const Header = () => {
           <Link className="item active" to="/about">About us</Link>
           <Link className="item" to="/events">Events</Link>
           <Link className="item" to="/news">News</Link>
-          <Link className="item" to="/players-list">Players</Link>
+          <Link className="item" to="/players-list">Players</Link>          
+        </div>
+        <div className="item">
           <LanguageSwitcher />
+        </div>
+        <div className="item">
+          <Link to="/signin" className="ui button"><i className="user outline icon"></i>Log in</Link>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import EventPage from './pages/event/event.component';
 import PlayersListPage from './pages/players-list/players-list.component';
 import AboutUsPage from './pages/about/about.component';
 import PlayerPage from './pages/player/player.component';
+import SignInOut from './pages/sign-in-out/sign-in-out.component';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route exact path='/news' component={NewsPage} />
           <Route exact path='/players-list' component={PlayersListPage} />
           <Route exact path='/player/:id' component={PlayerPage} />
+          <Route exact path='/signin' component={SignInOut} />
         </Switch>
       </div>
       <Footer />
