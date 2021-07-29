@@ -27,7 +27,10 @@ const Header = () => {
           <LanguageSwitcher />
         </div>
         <div className="item">
-          <Link to="/signin" className="ui button"><i className="user outline icon"></i>Log in</Link>
+          <Link to="/signin" className="ui button">
+            <i className="user outline icon"></i>
+              Log in
+            </Link>
         </div>
       </div>
     </div>
