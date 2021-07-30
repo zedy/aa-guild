@@ -6,55 +6,22 @@ import * as Yup from 'yup';
 const SingUp = () => {
   const [loading, setLoading] = useState(false);
 
-  const validate = (values) => {
-    const errors = {};
-
-    // basic validation
-    if (!values.fullName) {
-      errors.fullName = "Required field";
-    }
-    if (!values.email) {
-      errors.email = "Required field";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
-    }
-    if (!values.displayName) {
-      errors.displayName = "Required field";
-    }
-    // if (!values.tac) {
-    //   errors.tac = "You must accept the T&C";
-    // }
-
-    // password matching
-    if (!values.password) {
-      errors.password = "Required field";
-    }
-    if (!values.confirmPassword) {
-      errors.confirmPassword = "Required field";
-    }
-    if (
-      values.confirmPassword &&
-      values.password &&
-      values.confirmPassword !== values.password
-    ) {
-      errors.confirmPassword = "Passwords must match";
-    }
-
-    return errors;
-  };
-
   const formik = useFormik({
     initialValues: {
       email: "",
       fullName: "",
       displayName: "",
       password: "",
-      confirmPassword: "",
-      //tac: false,
+      confirmPassword: ""
     },
-    validate,
+    validationSchema: Yup.object({
+        email: Yup.string().email('Invalid email address').required('Required'),
+        fullName: Yup.string().required('Required'),
+        displayName: Yup.string().required('Required'),
+        password: Yup.string().required('Required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required')
+    }),
     onSubmit: (values) => {
       setLoading(!loading);
       console.log(JSON.stringify(values, null, 2));
@@ -175,20 +142,6 @@ const SingUp = () => {
             formik.errors.tac && formik.touched.tac ? "error" : ""
           }`}
         >
-          {/* <div className="ui checkbox">
-            <input
-              type="checkbox"
-              id="tac"
-              className="checkbox"
-              value={formik.values.tac}
-              onBlur={formik.handleBlur}
-              name="tac"
-            />
-            <label htmlFor="tac">I agree to the Terms and Conditions</label>
-            {formik.errors.tac && formik.touched.tac ? (
-              <div>{formik.errors.tac}</div>
-            ) : null}
-          </div> */}
         </div>
         <button className="ui button" type="submit">
           Submit
