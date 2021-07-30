@@ -1,10 +1,14 @@
 // libs
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
+import { connect } from 'react-redux';
 
 // components
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
+
+// firebase
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 // pages
 import HomePage from './pages/homepage/homepage.component';
@@ -15,7 +19,37 @@ import AboutUsPage from './pages/about/about.component';
 import PlayerPage from './pages/player/player.component';
 import SignInOut from './pages/sign-in-out/sign-in-out.component';
 
-const App = () => {
+// redux
+import { setCurrentUser } from './redux/user/user.actions';
+
+const App = ({ setCurrentUser }) => {
+  let unsubscribeFromAuth = null;
+
+  useEffect(() => {
+    console.log('1111');
+
+    unsubscribeFromAuth = auth.onAuthStateChanged(async userAuthObj => {
+      console.log(userAuthObj);
+      if (userAuthObj) {
+        const userRef = await createUserProfileDocument(userAuthObj);
+
+        userRef.onSnapshot(response => {
+          setCurrentUser({
+            id: response.id,
+            ...response.data()
+          });
+        });
+      }
+
+      setCurrentUser(userAuthObj);
+    });
+
+    return () => {
+      console.log('222');
+      if (unsubscribeFromAuth !== null) unsubscribeFromAuth();
+    }
+  }, [unsubscribeFromAuth])
+
   return (
     <div className="app">
       <Header />
@@ -35,4 +69,8 @@ const App = () => {
   )
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(App);

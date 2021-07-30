@@ -14,7 +14,7 @@ const Header = () => {
       <div className="ui container">
         <div className="item">
           <Link to="/">
-            <img src={logo} className="logo" style={{width: "50px"}} />
+            <img src={logo} className="logo" alt="aa-logo" style={{width: "50px"}} />
           </Link>
         </div>
         <div className="item right">

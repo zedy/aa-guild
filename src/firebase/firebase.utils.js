@@ -15,19 +15,18 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const createUserProfileDocument = async (userAuth, otherData) => {
-  console.log(userAuth)
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShop = await userRef.get();
 
   if (!snapShop.exists) {
-    const { name, email } = userAuth;
+    const { displayName, email } = userAuth;
     const createdAt = new Date();
 
     try {
       await userRef.set({
-        name,
+        displayName,
         email,
         createdAt,
         ...otherData,
@@ -41,17 +40,17 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
 };
 
 // create collection in firebase
-export const addCollectionAndItems = async (collectionKey, items) => {
-  const collectionRef = firestore.collection(collectionKey);
-  const batch = firestore.batch();
+// export const addCollectionAndItems = async (collectionKey, items) => {
+//   const collectionRef = firestore.collection(collectionKey);
+//   const batch = firestore.batch();
 
-  items.forEach((item) => {
-    const newDocRef = collectionRef.doc();
-    batch.set(newDocRef, item);
-  });
+//   items.forEach((item) => {
+//     const newDocRef = collectionRef.doc();
+//     batch.set(newDocRef, item);
+//   });
 
-  return await batch.commit();
-};
+//   return await batch.commit();
+// };
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

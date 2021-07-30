@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const PlayerItem = ({ data }) => {
   return (
     <Link to={`/player/${data.id}`} className="item">
-      <img style={{width: "100px", height: "100px"}} className="ui avatar image" src={`${data.profile_pic}`} alt="profile image" />
+      <img style={{width: "100px", height: "100px"}} className="ui avatar image" src={`${data.profile_pic}`} alt="test" />
       <div className="content">
         <span className="header">{ data.name.toUpperCase() }</span>
         <div className="description">
