@@ -25,15 +25,21 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!snapShop.exists) {
     const { displayName, email, newUser } = userAuth;
     const createdAt = new Date();
+    const gamesPlayed = 0;
     const emailConfirmation = false;
+    const profilePic = '';
+    const pc = [];
 
     try {
       await userRef.set({
         displayName,
         email,
         emailConfirmation,
+        gamesPlayed,
         createdAt,
+        profilePic,
         newUser,
+        pc,
         ...otherData,
       });
     } catch (err) {

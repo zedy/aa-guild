@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // components
 import LanguageSwitcher from '../language/language-switcher.components';
-import UserProfile from '../user-profile/user-profile.component';
+import UserProfileDropdown from '../user-profile/user-profile-dropdown.component';
 
 // assets
 import logo from '../../assets/logo.png';
@@ -30,7 +30,7 @@ const Header = ({ currentUser }) => {
         </div>
         {
             currentUser ? 
-            <UserProfile user={currentUser} />
+            <UserProfileDropdown user={currentUser} />
             :
             <div className="item">
               <Link to="/signin" className="ui button">

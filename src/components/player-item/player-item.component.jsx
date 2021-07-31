@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const PlayerItem = ({ data }) => {
   return (
     <Link to={`/player/${data.id}/character`} className="item">
-      <img style={{width: "100px", height: "100px"}} className="ui avatar image" src={`${data.profile_pic}`} alt="test" />
+      <img style={{width: "100px", height: "100px"}} className="ui avatar image" src={`${data.profilePic}`} alt="test" />
       <div className="content">
         <span className="header">{ data.name.toUpperCase() }</span>
         <div className="description">
@@ -13,7 +13,7 @@ const PlayerItem = ({ data }) => {
           <div className="">Level/Race/Class:
             <strong>{ data.pc.level }/{ data.pc.race }/{ data.pc.class }</strong>
           </div>
-          <div className="">Games played: <strong>{ data.games_played }</strong></div>
+          <div className="">Games played: <strong>{ data.gamesPlayed }</strong></div>
         </div>
       </div>
     </Link>

@@ -1,43 +1,28 @@
 // libs
-import React from "react";
-import { Link } from "react-router-dom";
-import { Dropdown } from "semantic-ui-react";
+import React from 'react';
+import { connect } from 'react-redux';
 
-// firebase
-import { auth } from "../../firebase/firebase.utils";
+// components
+import UserPic from '../user-pic/user-pic.component';
+import UserForm from '../user-form/user-form.component';
 
-// component
-import Button from "../buttons/button.components";
+const UserProfile = ({ currentUser }) => {
+  console.log(currentUser);
 
-const UserProfile = ({ user }) => {
   return (
-    <div className="item">
-      <Dropdown icon="user outline">
-        <Dropdown.Menu>
-          <Dropdown.Item>
-            <Link
-              style={{ color: "#000" }}
-              className="item"
-              to={`/player/${user.id}/profile`}
-            >
-              Profile page
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>
-            <Button
-              style={{ color: "#000" }}
-              onClick={() => auth.signOut()}
-              className="ui button item"
-            >
-              <i className="sign out icon"></i>
-              Sign out
-            </Button>
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+    <div className="ui grid">
+      <div className="four wide column">
+        <UserPic />
+      </div>
+      <div className="twelve wide column">
+          <UserForm />
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserProfile;
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+});
+
+export default connect(mapStateToProps)(UserProfile);

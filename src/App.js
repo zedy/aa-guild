@@ -11,6 +11,7 @@ import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer.component";
 import { ModalHero } from "./components/modal/modal.component";
 import { ModalContentNewUser } from "./components/modal/content/modal-content.component"
+
 // pages
 import HomePage from "./pages/homepage/homepage.component";
 import NewsPage from "./pages/news/news.component";
@@ -19,6 +20,7 @@ import PlayersListPage from "./pages/players-list/players-list.component";
 import AboutUsPage from "./pages/about/about.component";
 import PlayerPage from "./pages/player/player.component";
 import SignInOut from "./pages/sign-in-out/sign-in-out.component";
+import PlayerProfile from './pages/player-profile/player-profile.component';
 
 // redux
 import { setCurrentUser } from "./redux/user/user.actions";
@@ -81,7 +83,7 @@ const App = ({ setCurrentUser, currentUser }) => {
           <Route exact path="/news" component={NewsPage} />
           <Route exact path="/players-list" component={PlayersListPage} />
           <Route exact path="/player/:id/character" component={PlayerPage} />
-          <Route exact path="/player/:id/profile" component={PlayerPage} />
+          <Route exact path="/player/:id/profile" component={PlayerProfile} />
           <Route
             exact
             path="/signin"
