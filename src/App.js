@@ -26,10 +26,7 @@ const App = ({ setCurrentUser, currentUser }) => {
   let unsubscribeFromAuth = null;
 
   useEffect(() => {
-    console.log('1111');
-
     unsubscribeFromAuth = auth.onAuthStateChanged(async userAuthObj => {
-      console.log(userAuthObj);
       if (userAuthObj) {
         const userRef = await createUserProfileDocument(userAuthObj);
 
@@ -45,7 +42,6 @@ const App = ({ setCurrentUser, currentUser }) => {
     });
 
     return () => {
-      console.log('222');
       if (unsubscribeFromAuth !== null) unsubscribeFromAuth();
     }
   }, [unsubscribeFromAuth])
@@ -53,14 +49,15 @@ const App = ({ setCurrentUser, currentUser }) => {
   return (
     <div className="app">
       <Header />
-      <div className="ui container content" style={{marginTop: "7em"}}>
+      <div className="ui container content" style={{paddingTop: "9em"}}>
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/about' component={AboutUsPage} />
           <Route exact path='/events' component={EventPage} />
           <Route exact path='/news' component={NewsPage} />
           <Route exact path='/players-list' component={PlayersListPage} />
-          <Route exact path='/player/:id' component={PlayerPage} />
+          <Route exact path='/player/:id/character' component={PlayerPage} />
+          <Route exact path='/player/:id/profile' component={PlayerPage} />
           <Route exact path='/signin' render={() => currentUser ? <Redirect to="/" /> : <SignInOut />} />
         </Switch>
       </div>

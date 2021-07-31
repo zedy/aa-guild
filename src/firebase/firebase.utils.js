@@ -14,6 +14,8 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+// TODO make bypass for emailConfirmation for googleSignIn
+
 export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!userAuth) return;
 
@@ -23,11 +25,13 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!snapShop.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
+    const emailConfirmation = false;
 
     try {
       await userRef.set({
         displayName,
         email,
+        emailConfirmation,
         createdAt,
         ...otherData,
       });

@@ -3,11 +3,16 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+// firebase
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
+
 // components
 import InputField from "../form/input/input.component";
 
+// TODO Email deduplication Test
 const SingUp = () => {
   const [loading, setLoading] = useState(false);
+  const emailConfirmation = false;
 
   const formik = useFormik({
     initialValues: {
@@ -18,18 +23,39 @@ const SingUp = () => {
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").min(8).max(45).required("Required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .min(8)
+        .max(45)
+        .required("Required"),
       fullName: Yup.string().min(5).max(25).required("Required"),
       displayName: Yup.string().min(5).max(25).required("Required"),
       password: Yup.string().min(8).max(25).required("Required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .min(8).max(25)
+        .min(8)
+        .max(25)
         .required("Required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setLoading(!loading);
-      console.log(JSON.stringify(values, null, 2));
+      const { email, fullName, displayName, password } = values;
+      
+      try {
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        await createUserProfileDocument(user, {
+          displayName,
+          emailConfirmation,
+          fullName,
+        });
+      } catch (err) {
+        console.log(err);
+        setLoading(!loading);
+        // TODO add toastr messages
+      }
     },
   });
 
@@ -40,36 +66,46 @@ const SingUp = () => {
         className={`ui form ${loading ? "loading" : ""}`}
         onSubmit={formik.handleSubmit}
       >
-        <InputField
-          type="text"
-          name="fullName"
-          formik={formik}
-          label="First and last name"
-        />
-        <InputField
-          type="email"
-          name="email"
-          formik={formik}
-          label="Email"
-        />
-        <InputField
-          type="text"
-          name="displayName"
-          formik={formik}
-          label="User name"
-        />
-        <InputField
-          type="password"
-          name="password"
-          formik={formik}
-          label="Password"
-        />
-        <InputField
-          type="password"
-          name="confirmPassword"
-          formik={formik}
-          label="Confirm password"
-        />        
+        <InputField label="First and last name" name="fullName" formik={formik}>
+          <input
+            type="email"
+            id="fullName"
+            placeholder="Name"
+            {...formik.getFieldProps("fullName")}
+          />
+        </InputField>
+        <InputField label="Email" name="email" formik={formik}>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            {...formik.getFieldProps("email")}
+          />
+        </InputField>
+        <InputField label="User name" name="displayName" formik={formik}>
+          <input
+            type="text"
+            id="displayName"
+            placeholder="User name"
+            {...formik.getFieldProps("displayName")}
+          />
+        </InputField>
+        <InputField label="Password" name="password" formik={formik}>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            {...formik.getFieldProps("password")}
+          />
+        </InputField>
+        <InputField label="Confirm password" name="confirmPassword" formik={formik}>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+            {...formik.getFieldProps("confirmPassword")}
+          />
+        </InputField>
         <button className="ui button teal" type="submit">
           Submit
         </button>

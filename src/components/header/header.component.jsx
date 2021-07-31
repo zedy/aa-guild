@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 
 // components
 import LanguageSwitcher from '../language/language-switcher.components';
+import UserProfile from '../user-profile/user-profile.component';
 
 // assets
 import logo from '../../assets/logo.png';
-import Button from '../buttons/button.components';
-import { auth } from '../../firebase/firebase.utils';
 
 const Header = ({ currentUser }) => {
   return (
@@ -29,20 +28,17 @@ const Header = ({ currentUser }) => {
         <div className="item">
           <LanguageSwitcher />
         </div>
-        <div className="item">
-          {
+        {
             currentUser ? 
-            <Button onClick={() => auth.signOut()} className="ui button">
-              <i className="sign out icon"></i>
-              Sign out
-            </Button>
+            <UserProfile user={currentUser} />
             :
-            <Link to="/signin" className="ui button">
-              <i className="user outline icon"></i>
-                Log in
-            </Link>
+            <div className="item">
+              <Link to="/signin" className="ui button">
+                <i className="sign-in icon"></i>
+                  Log in
+              </Link>
+            </div>
           }
-        </div>
       </div>
     </div>
   )
