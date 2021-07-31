@@ -21,6 +21,7 @@ const SingUp = () => {
       displayName: "",
       password: "",
       confirmPassword: "",
+      newUer: true
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -39,7 +40,7 @@ const SingUp = () => {
     }),
     onSubmit: async (values) => {
       setLoading(!loading);
-      const { email, fullName, displayName, password } = values;
+      const { email, fullName, displayName, password, newUer } = values;
       
       try {
         const { user } = await auth.createUserWithEmailAndPassword(
@@ -49,6 +50,7 @@ const SingUp = () => {
         await createUserProfileDocument(user, {
           displayName,
           emailConfirmation,
+          newUer,
           fullName,
         });
       } catch (err) {

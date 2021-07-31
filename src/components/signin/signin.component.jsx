@@ -2,7 +2,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { connect } from "react-redux";
 
 // auth
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";

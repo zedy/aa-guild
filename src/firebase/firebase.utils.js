@@ -23,7 +23,7 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   const snapShop = await userRef.get();
 
   if (!snapShop.exists) {
-    const { displayName, email } = userAuth;
+    const { displayName, email, newUser } = userAuth;
     const createdAt = new Date();
     const emailConfirmation = false;
 
@@ -33,7 +33,27 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
         email,
         emailConfirmation,
         createdAt,
+        newUser,
         ...otherData,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return userRef;
+};
+
+export const updateNewUserFlag = async (user) => {
+  if (!user) return;
+
+  const userRef = firestore.doc(`users/${user.id}`);
+  const snapShop = await userRef.get();
+
+  if (snapShop.exists) {
+    try {
+      await userRef.update({
+        newUser: false 
       });
     } catch (err) {
       console.log(err);
