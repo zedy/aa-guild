@@ -7,15 +7,15 @@ import UserPic from '../user-pic/user-pic.component';
 import UserForm from '../user-form/user-form.component';
 
 const UserProfile = ({ currentUser }) => {
-  console.log(currentUser);
+  if (!currentUser) return null;
 
   return (
     <div className="ui grid">
       <div className="four wide column">
-        <UserPic />
+        <UserPic user={currentUser} />
       </div>
       <div className="twelve wide column">
-          <UserForm />
+          <UserForm user={currentUser} />
       </div>
     </div>
   )

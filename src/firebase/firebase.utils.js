@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import 'firebase/storage';
 import "firebase/auth";
 
 var firebaseConfig = {
@@ -15,6 +16,8 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // TODO make bypass for emailConfirmation for googleSignIn
+
+// TODO refactor firebase profile updates functions to reduce duplicate code
 
 export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!userAuth) return;
@@ -50,6 +53,25 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   return userRef;
 };
 
+export const updateUserProfile = async (user, data) => {
+  if (!user) return;
+
+  const userRef = firestore.doc(`users/${user.id}`);
+  const snapShop = await userRef.get();
+
+  if (snapShop.exists) {
+    try {
+      await userRef.update({
+        ...data
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return userRef;
+};
+
 export const updateNewUserFlag = async (user) => {
   if (!user) return;
 
@@ -68,6 +90,22 @@ export const updateNewUserFlag = async (user) => {
 
   return userRef;
 };
+
+export const imageUpload = async (file, filename) => {
+  if (!file) return;
+
+  const storage = firebase.storage();
+  const storageRef = storage.ref();
+
+  await storageRef.child('images/profile/' + filename).put(file).then((snapshot) => {
+    console.log(snapshot);
+    console.log('Uploaded image!');
+  });
+
+  return storageRef.child('images/profile/' + filename).getDownloadURL().then(fireBaseUrl => {
+    return fireBaseUrl;
+  });
+}
 
 // create collection in firebase
 // export const addCollectionAndItems = async (collectionKey, items) => {
