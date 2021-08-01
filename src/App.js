@@ -75,8 +75,7 @@ const App = ({ setCurrentUser, currentUser }) => {
   return (
     <div className="app">
       <Header />
-      <div className="ui container content" style={{ paddingTop: "9em" }}>
-        <Switch>
+      <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/about" component={AboutUsPage} />
           <Route exact path="/events" component={EventPage} />
@@ -90,7 +89,6 @@ const App = ({ setCurrentUser, currentUser }) => {
             render={() => (currentUser ? <Redirect to="/" /> : <SignInOut />)}
           />
         </Switch>
-      </div>
       <Footer />
       <ModalHero        
         isActive={activeModalStatus ? "active" : null}

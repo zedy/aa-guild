@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const EventPage = () => {
   return (
-    <div>Event Page</div>
-  )
-}
+    <div className="ui container content" style={{ paddingTop: "9em" }}>
+      <div>Event Page</div>
+    </div>
+  );
+};
 
 export default EventPage;
