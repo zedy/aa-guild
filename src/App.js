@@ -26,7 +26,7 @@ import PlayerProfile from './pages/player-profile/player-profile.component';
 import { setCurrentUser } from "./redux/user/user.actions";
 
 const App = ({ setCurrentUser, currentUser }) => {
-  const [activeModalStatus, setActiveModalStatus] = useState(false);
+  const [isModalActive, setIsModalActive] = useState(false);
   let unsubscribeFromAuth = null;
 
   useEffect(() => {    
@@ -42,7 +42,7 @@ const App = ({ setCurrentUser, currentUser }) => {
             ...data,
           });    
           
-          if (data && data.newUser) setActiveModalStatus(true);          
+          if (data && data.newUser) setIsModalActive(true);          
         });
       }
       
@@ -56,21 +56,8 @@ const App = ({ setCurrentUser, currentUser }) => {
 
   const hideModal = async () => {
     await updateNewUserFlag(currentUser);
-    setActiveModalStatus(false);
+    setIsModalActive(false);
   };
-
-  const actions = (
-    <div className="actions ui centered two column grid">
-      <button
-        onClick={() => {
-          hideModal();
-        }}
-        className="ui button blue"
-      >
-        Got it!
-      </button>
-    </div>
-  );
 
   return (
     <div className="app">
@@ -91,9 +78,9 @@ const App = ({ setCurrentUser, currentUser }) => {
         </Switch>
       <Footer />
       <ModalHero        
-        isActive={activeModalStatus ? "active" : null}
+        isActive={isModalActive}
       >
-        <ModalContentNewUser actions={actions} />
+        <ModalContentNewUser handleClick={hideModal} />
       </ModalHero>
     </div>
   );

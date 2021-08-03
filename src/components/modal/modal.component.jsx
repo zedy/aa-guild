@@ -9,7 +9,7 @@ export const ModalDefault = ({
   children,
 }) => {
   return ReactDOM.createPortal(
-    <div className={`${isActive} ui dimmer modals visible`}>
+    <div className={`${isActive ? 'active' : null} ui dimmer modals visible`}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="ui standard modal visible active"
@@ -25,7 +25,7 @@ export const ModalDefault = ({
 
 export const ModalHero = ({ isActive, children }) => {
   return ReactDOM.createPortal(
-    <div className={`${isActive} ui dimmer modals visible`}>
+    <div className={`${isActive ? 'active' : null} ui dimmer modals visible`}>
       { children }
     </div>,
     document.querySelector("#modal")
