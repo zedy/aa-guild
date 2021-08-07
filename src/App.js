@@ -25,12 +25,21 @@ import PlayerProfile from './pages/player-profile/player-profile.component';
 
 // redux
 import { setCurrentUser } from "./redux/user/user.actions";
+import { setEventsList } from './redux/events/events.actions';
 
-const App = ({ setCurrentUser, currentUser }) => {
+// utils
+import { fetchAllEvents } from "./utils/firebaseFetch";
+
+const App = ({ setCurrentUser, currentUser, storeEvents }) => {
   const [isModalActive, setIsModalActive] = useState(false);
   let unsubscribeFromAuth = null;
 
-  useEffect(() => {    
+  useEffect(() => {  
+    (async () => {
+      const events = await fetchAllEvents();
+      storeEvents(events);    
+    })();
+
     unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuthObj) => {
       if (userAuthObj) {
         const userRef = await createUserProfileDocument(userAuthObj);
@@ -93,7 +102,8 @@ const mapStateToProps = ({ user }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  storeEvents: events => dispatch(setEventsList(events))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

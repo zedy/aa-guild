@@ -17,10 +17,10 @@ const DMItem = ({ item, index }) => {
 
   return <div className="row">
     {
-      index % 2 == 0 ? bio() : image()
+      index % 2 === 0 ? bio() : image()
     }
     {
-      index % 2 == 0 ? image() : bio()
+      index % 2 === 0 ? image() : bio()
     }
   </div>;
 };

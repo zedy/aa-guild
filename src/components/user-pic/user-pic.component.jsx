@@ -41,7 +41,7 @@ const UserPic = ({ user }) => {
           <div className="wrapper">            
             {
               !imageList.length ?
-              <img alt="avatar" className="ui medium circular image" src={user.profilePic ? user.profilePic : defaultAvatar} />
+              <img alt="" className="ui medium circular image" src={user.profilePic ? user.profilePic : defaultAvatar} />
               :
               null
             }            
