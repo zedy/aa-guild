@@ -2,7 +2,7 @@ export const PLAYERS_DATA = [
   {
     id: 1,
     name: "aleksandar aleksic",
-    gamesPlayer: 4,
+    gamesPlayed: 4,
     profilePic: "https://via.placeholder.com/150",
     pc: {
       name: "norfir enniis",
@@ -16,7 +16,7 @@ export const PLAYERS_DATA = [
   {
     id: 2,
     name: "bojan bojanovic",
-    gamesPlayer: 1,
+    gamesPlayed: 1,
     profilePic: "https://via.placeholder.com/150",
     pc: {
       name: "kir birneg",
@@ -30,7 +30,7 @@ export const PLAYERS_DATA = [
   {
     id: 3,
     name: "jovana jovanovic",
-    gamesPlayer: 3,
+    gamesPlayed: 3,
     profilePic: "https://via.placeholder.com/150",
     pc: {
       name: "humirra orebasher",
@@ -44,7 +44,7 @@ export const PLAYERS_DATA = [
   {
     id: 4,
     name: "milica milicic",
-    gamesPlayer: 5,
+    gamesPlayed: 5,
     profilePic: "https://via.placeholder.com/150",
     pc: {
       name: "odilile teashadow",
@@ -58,7 +58,7 @@ export const PLAYERS_DATA = [
   {
     id: 5,
     name: "marko markovic",
-    gamesPlayer: 3,
+    gamesPlayed: 3,
     profilePic: "https://via.placeholder.com/150",
     pc: {
       name: "lokemong",

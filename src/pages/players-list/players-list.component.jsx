@@ -11,7 +11,7 @@ const PlayersPage = () => {
   return (
     <div className="ui container content" style={{ paddingTop: "9em" }}>
       <h1>Player list</h1>
-      <div class="ui middle aligned divided list">
+      <div className="ui middle aligned divided list">
         {PLAYERS_DATA.map((item) => (
           <PlayerItem key={item.id} data={item} />
         ))}
