@@ -17,7 +17,7 @@ const EventListPage = ({ eventList }) => {
       <div className="ui middle aligned divided list">
         {eventList.future.length ? (
           eventList.future.map((event) => {
-            return <EventListItem key={event.id} event={event} />;
+            return <EventListItem key={event.id} event={event} isPast={false} />;
           })
         ) : (
           <Placeholder />
@@ -28,7 +28,7 @@ const EventListPage = ({ eventList }) => {
       <div className="ui middle aligned divided list">
         {eventList.past.length ? (
           eventList.past.map((event) => {
-            return <EventListItem key={event.id} event={event} />;
+            return <EventListItem key={event.id} event={event} isPast={true} />;
           })
         ) : (
           <Placeholder />
