@@ -53,6 +53,25 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   return userRef;
 };
 
+export const updatePlayerCharacterProfile = async (user, data) => {
+  if (!user) return false;
+
+  const userRef = firestore.doc(`users/${user.id}`);
+  const snapShop = await userRef.get();
+
+  if (snapShop.exists) {
+    try {
+      await userRef.update({
+        pc: data
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return userRef;
+};
+
 export const updateUserProfile = async (user, data) => {
   if (!user) return;
 
@@ -91,18 +110,18 @@ export const updateNewUserFlag = async (user) => {
   return userRef;
 };
 
-export const imageUpload = async (file, filename) => {
+export const imageUpload = async (file, filename, path) => {
   if (!file) return;
 
   const storage = firebase.storage();
   const storageRef = storage.ref();
 
-  await storageRef.child('images/profile/' + filename).put(file).then((snapshot) => {
+  await storageRef.child('images/' + path + '/' + filename).put(file).then((snapshot) => {
     console.log(snapshot);
     console.log('Uploaded image!');
   });
 
-  return storageRef.child('images/profile/' + filename).getDownloadURL().then(fireBaseUrl => {
+  return storageRef.child('images/' + path + '/' + filename).getDownloadURL().then(fireBaseUrl => {
     return fireBaseUrl;
   });
 }

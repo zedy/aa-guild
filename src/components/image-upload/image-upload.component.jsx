@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
 
 // firebase
-import { imageUpload, updateUserProfile } from '../../firebase/firebase.utils';
+import { imageUpload } from '../../firebase/firebase.utils';
 
-const UserPic = ({ user }) => {
+const ImageUpload = ({ user, profileUpdateCallback, path, presetImage, fieldName }) => {
   // todo move to .env
   const defaultAvatar = 'https://via.placeholder.com/300x300.png?text=Avatar';
   const [images, setImages] = useState([]);
@@ -13,8 +13,8 @@ const UserPic = ({ user }) => {
   const onChange = async imageList => {
     setImages(imageList);
     const filename = generateFileName(imageList[0].file);
-    const imgUrl = await imageUpload(imageList[0].file, filename);
-    await updateUserProfile(user, {profilePic: imgUrl});
+    const imgUrl = await imageUpload(imageList[0].file, filename, path);
+    await profileUpdateCallback(user, {[fieldName]: imgUrl});
 
     // TODO implementer toastr message
   };
@@ -28,23 +28,21 @@ const UserPic = ({ user }) => {
   return (
     <div className="ui grid centered">
      <ImageUploading        
-        acceptType={['jpg', 'jpeg', 'png']}
         value={images}
-        maxFileSize={'2,097,152'}
         onChange={onChange}
         dataURLKey="data_url"
       >
         {({
           imageList,
-          onImageUpload,          
+          onImageUpload,
         }) => (
           <div className="wrapper">            
             {
               !imageList.length ?
-              <img alt="" className="ui medium circular image" src={user.profilePic ? user.profilePic : defaultAvatar} />
+              <img alt="" className="ui medium circular image" src={presetImage ? presetImage : defaultAvatar} />
               :
               null
-            }            
+            }     
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <img className="ui medium circular image" src={image['data_url']} alt="image-upload-placeholder" style={{width: "100%"}} />
@@ -63,4 +61,4 @@ const UserPic = ({ user }) => {
   )
 }
 
-export default UserPic;
+export default ImageUpload;

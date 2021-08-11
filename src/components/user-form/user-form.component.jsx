@@ -2,13 +2,12 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { connect } from "react-redux";
 
 // components
 import InputField from "../form/input/input.component";
 
 // firebase
-import { updateUserProfile } from '../../firebase/firebase.utils';
+import { updateUserProfile } from "../../firebase/firebase.utils";
 
 const UserForm = ({ user }) => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +28,8 @@ const UserForm = ({ user }) => {
     { type: "password", id: "confirmPassword", label: "Confirm password" },
   ];
 
+  // TODO export validation schema to separate file
+
   const formik = useFormik({
     initialValues: initialValues,
     initialTouched: false,
@@ -44,7 +45,7 @@ const UserForm = ({ user }) => {
     }),
     onSubmit: async (values) => {
       setLoading(true);
-      
+
       const data = gedChangedValues(values);
       await updateUserProfile(user, data);
       setLoading(false);
@@ -55,12 +56,12 @@ const UserForm = ({ user }) => {
   const gedChangedValues = (values) => {
     const out = {};
     Object.keys(values).filter((value, idx) =>
-      Object.values(values)[idx] !== Object.values(initialValues)[idx] ? 
-        out[value] = Object.values(values)[idx] :
-        false
+      Object.values(values)[idx] !== Object.values(initialValues)[idx]
+        ? (out[value] = Object.values(values)[idx])
+        : false
     );
     return out;
-  }
+  };
 
   return (
     <div>
@@ -70,7 +71,12 @@ const UserForm = ({ user }) => {
       >
         {formElementsMap.map((element) => {
           return (
-            <InputField key={element.id} label={element.label} name={element.id} formik={formik}>
+            <InputField
+              key={element.id}
+              label={element.label}
+              name={element.id}
+              formik={formik}
+            >
               {element.type === "textarea" ? (
                 <textarea
                   type={element.type}
@@ -78,7 +84,7 @@ const UserForm = ({ user }) => {
                   placeholder={element.label}
                   {...formik.getFieldProps(element.id)}
                 />
-              ) : (               
+              ) : (
                 <input
                   type={element.type}
                   id={element.id}
@@ -88,7 +94,7 @@ const UserForm = ({ user }) => {
               )}
             </InputField>
           );
-        })}        
+        })}
         <div className="ui divider"></div>
         <button type="submit" className="ui button teal">
           Submit
@@ -98,8 +104,4 @@ const UserForm = ({ user }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  //currentUser: user.currentUser
-});
-
-export default connect(mapStateToProps)(UserForm);
+export default UserForm;

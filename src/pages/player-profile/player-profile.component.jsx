@@ -15,7 +15,7 @@ const PlayerProfile = ({ match, currentUser }) => {
     return null;
   }
 
-  // todo add Loading to class
+  // TODO add Loading to class
   const panes = [
     {
       menuItem: "User profile",

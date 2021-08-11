@@ -1,10 +1,13 @@
 // libs
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
 // components
-import UserPic from '../user-pic/user-pic.component';
-import UserForm from '../user-form/user-form.component';
+import ImageUpload from "../image-upload/image-upload.component";
+import UserForm from "../user-form/user-form.component";
+
+// firebase
+import { updateUserProfile } from "../../firebase/firebase.utils";
 
 const UserProfile = ({ currentUser }) => {
   if (!currentUser) return null;
@@ -12,17 +15,23 @@ const UserProfile = ({ currentUser }) => {
   return (
     <div className="ui grid">
       <div className="four wide column">
-        <UserPic user={currentUser} />
+        <ImageUpload
+          user={currentUser}
+          path='profile'
+          fieldName='profilePic'
+          presetImage={currentUser.profilePic}
+          profileUpdateCallback={updateUserProfile}
+        />
       </div>
       <div className="twelve wide column">
-          <UserForm user={currentUser} />
+        <UserForm user={currentUser} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
+  currentUser: user.currentUser,
 });
 
 export default connect(mapStateToProps)(UserProfile);
