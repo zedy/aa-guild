@@ -28,6 +28,20 @@ export const fetchAllEvents = async () => {
   return data;
 }
 
+export const fetchAllPlayersData = async () => {
+  let data = [];
+  const collectionRef = firestore.collection('users');
+  const snapShop = await collectionRef.orderBy("gamesPlayed", "desc").get();
+  
+  snapShop.docs.forEach(user => {
+    const playerData = user.data();
+
+    if (hasOwnProperty.call(playerData, 'pc')) data.push(playerData);    
+  });
+ 
+  return data;
+}
+
 export const fetchDndData = async () => {
   let data = {};
   const collectionRef = firestore.collection('dnd');
