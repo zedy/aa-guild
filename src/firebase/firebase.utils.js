@@ -43,6 +43,7 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
         emailConfirmation,
         gamesPlayed,
         createdAt,
+        characterPic,
         profilePic,
         newUser,
         pc,

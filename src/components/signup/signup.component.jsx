@@ -21,7 +21,7 @@ const SingUp = () => {
       displayName: "",
       password: "",
       confirmPassword: "",
-      newUer: true
+      newUser: true
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -29,7 +29,7 @@ const SingUp = () => {
         .min(8)
         .max(45)
         .required("Required"),
-      fullName: Yup.string().min(5).max(25).required("Required"),
+      fullName: Yup.string().min(3).max(25).required("Required"),
       displayName: Yup.string().min(5).max(25).required("Required"),
       password: Yup.string().min(8).max(25).required("Required"),
       confirmPassword: Yup.string()
@@ -40,7 +40,7 @@ const SingUp = () => {
     }),
     onSubmit: async (values) => {
       setLoading(!loading);
-      const { email, fullName, displayName, password, newUer } = values;
+      const { email, fullName, displayName, password, newUser } = values;
       
       try {
         const { user } = await auth.createUserWithEmailAndPassword(
@@ -50,7 +50,7 @@ const SingUp = () => {
         await createUserProfileDocument(user, {
           displayName,
           emailConfirmation,
-          newUer,
+          newUser,
           fullName,
         });
       } catch (err) {
@@ -70,7 +70,7 @@ const SingUp = () => {
       >
         <InputField label="First and last name" name="fullName" formik={formik}>
           <input
-            type="email"
+            type="text"
             id="fullName"
             placeholder="Name"
             {...formik.getFieldProps("fullName")}

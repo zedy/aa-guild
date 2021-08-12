@@ -7,7 +7,7 @@ import ImageUpload from "../image-upload/image-upload.component";
 import CharacterProfileForm from "./character-profile-form.component";
 
 // firebase
-import { updatePlayerCharacterProfile } from "../../firebase/firebase.utils";
+import { updatePlayerCharacterProfile, updateUserProfile } from "../../firebase/firebase.utils";
 
 const CharacterProfile = ({ currentUser }) => {
   return (
@@ -18,7 +18,7 @@ const CharacterProfile = ({ currentUser }) => {
           path='character'
           fieldName='characterPic'
           presetImage={currentUser.characterPic}
-          profileUpdateCallback={updatePlayerCharacterProfile}
+          profileUpdateCallback={updateUserProfile}
         />
       </div>
       <div className="twelve wide column">

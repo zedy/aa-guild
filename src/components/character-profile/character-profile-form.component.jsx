@@ -23,7 +23,7 @@ const CharacterProfileForm = ({ user }) => {
     })();
   }, []);
 
-  const pcData = Object.keys(user.pc).length !== 0 ? user.pc : false;
+  const pcData = user.pc && Object.keys(user.pc).length !== 0 ? user.pc : false;
 
   const initialValues = {
     charClass: pcData ? pcData.charClass : "",
