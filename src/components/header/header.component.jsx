@@ -20,7 +20,7 @@ const Header = ({ currentUser }) => {
           </Link>
         </div>
         <div className="item right">
-          <Link className="item active" to="/about">About us</Link>
+          {/* <Link className="item active" to="/about">About us</Link> */}
           <Link className="item" to="/events">Events</Link>
           <Link className="item" to="/news">News</Link>
           <Link className="item" to="/players-list">Players</Link>          

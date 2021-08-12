@@ -18,7 +18,6 @@ import HomePage from "./pages/homepage/homepage.component";
 import NewsPage from "./pages/news/news.component";
 import EventListPage from "./pages/event/event-list.component";
 import PlayersListPage from "./pages/players-list/players-list.component";
-import AboutUsPage from "./pages/about/about.component";
 import PlayerPage from "./pages/player/player.component";
 import SignInOut from "./pages/sign-in-out/sign-in-out.component";
 import PlayerProfile from './pages/player-profile/player-profile.component';
@@ -74,7 +73,6 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
       <Header />
       <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/about" component={AboutUsPage} />
           <Route exact path="/events" component={EventListPage} />\
           <Route exact path="/event/:id" component={Event} />
           <Route exact path="/news" component={NewsPage} />

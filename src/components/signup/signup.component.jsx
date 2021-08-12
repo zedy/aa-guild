@@ -10,6 +10,7 @@ import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import InputField from "../form/input/input.component";
 
 // TODO Email deduplication Test
+// TODO username deduplication test
 const SingUp = () => {
   const [loading, setLoading] = useState(false);
   const emailConfirmation = false;
