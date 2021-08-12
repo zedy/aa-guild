@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
-import 'firebase/storage';
+import "firebase/storage";
 import "firebase/auth";
 
 var firebaseConfig = {
@@ -19,6 +19,8 @@ firebase.initializeApp(firebaseConfig);
 
 // TODO refactor firebase profile updates functions to reduce duplicate code
 
+// TODO refatctor the response for the firebase update methods to be a object (status, message, reponse)
+
 export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!userAuth) return;
 
@@ -30,7 +32,8 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
     const createdAt = new Date();
     const gamesPlayed = 0;
     const emailConfirmation = false;
-    const profilePic = '';
+    const profilePic = "";
+    const characterPic = "";
     const pc = [];
 
     try {
@@ -53,6 +56,40 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   return userRef;
 };
 
+export const eventRegister = async (event, userId, unregistering) => {
+  if (!userId) return false;
+
+  if (!unregistering && event.attendees.includes(userId)) {
+    return "already on list";
+  }
+
+  const userRef = firestore.doc(`events/${event.id}`);
+  const snapShop = await userRef.get();
+
+  let attendees = event.attendees;
+
+  if (unregistering) {
+    const index = attendees.indexOf(userId);
+    if (index > -1) {
+      attendees.splice(index, 1);
+    }
+  } else {
+    attendees.push(userId);
+  }
+
+  if (snapShop.exists) {
+    try {
+      await userRef.update({
+        attendees: attendees,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return userRef;
+};
+
 export const updatePlayerCharacterProfile = async (user, data) => {
   if (!user) return false;
 
@@ -62,7 +99,7 @@ export const updatePlayerCharacterProfile = async (user, data) => {
   if (snapShop.exists) {
     try {
       await userRef.update({
-        pc: data
+        pc: data,
       });
     } catch (err) {
       console.log(err);
@@ -81,7 +118,7 @@ export const updateUserProfile = async (user, data) => {
   if (snapShop.exists) {
     try {
       await userRef.update({
-        ...data
+        ...data,
       });
     } catch (err) {
       console.log(err);
@@ -100,7 +137,7 @@ export const updateNewUserFlag = async (user) => {
   if (snapShop.exists) {
     try {
       await userRef.update({
-        newUser: false 
+        newUser: false,
       });
     } catch (err) {
       console.log(err);
@@ -116,15 +153,21 @@ export const imageUpload = async (file, filename, path) => {
   const storage = firebase.storage();
   const storageRef = storage.ref();
 
-  await storageRef.child('images/' + path + '/' + filename).put(file).then((snapshot) => {
-    console.log(snapshot);
-    console.log('Uploaded image!');
-  });
+  await storageRef
+    .child("images/" + path + "/" + filename)
+    .put(file)
+    .then((snapshot) => {
+      console.log(snapshot);
+      console.log("Uploaded image!");
+    });
 
-  return storageRef.child('images/' + path + '/' + filename).getDownloadURL().then(fireBaseUrl => {
-    return fireBaseUrl;
-  });
-}
+  return storageRef
+    .child("images/" + path + "/" + filename)
+    .getDownloadURL()
+    .then((fireBaseUrl) => {
+      return fireBaseUrl;
+    });
+};
 
 // create collection in firebase
 // export const addCollectionAndItems = async (collectionKey, items) => {
