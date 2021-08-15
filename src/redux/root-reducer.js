@@ -1,5 +1,6 @@
 // libs
 import { combineReducers } from "redux";
+import {reducer as toastrReducer} from 'react-redux-toastr'
 
 // reducers
 import userReducer from './user/user.reducer';
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   dms: dmReducer,
   events: eventsReducer,
-  dnd: dndReducer
+  dnd: dndReducer,
+  toastr: toastrReducer
 })
 
 export default rootReducer;

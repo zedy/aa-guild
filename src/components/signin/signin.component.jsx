@@ -30,7 +30,7 @@ const SingIn = () => {
       try {
         await auth.signInWithEmailAndPassword(email, password);
       } catch (err) {
-        console.log(err); // TODO toastr message
+        console.log(err);
       }
     },
   });

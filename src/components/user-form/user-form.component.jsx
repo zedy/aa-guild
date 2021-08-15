@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toastr } from 'react-redux-toastr';
 
 // components
 import InputField from "../form/input/input.component";
@@ -47,9 +48,9 @@ const UserForm = ({ user }) => {
       setLoading(true);
 
       const data = gedChangedValues(values);
-      await updateUserProfile(user, data);
+      const response = await updateUserProfile(user, data);
+      toastr[response.status](response.message);
       setLoading(false);
-      // TODO toastr message
     },
   });
 

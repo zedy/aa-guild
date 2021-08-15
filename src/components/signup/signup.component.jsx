@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toastr } from 'react-redux-toastr';
 
 // firebase
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
@@ -41,24 +42,20 @@ const SingUp = () => {
     }),
     onSubmit: async (values) => {
       setLoading(!loading);
+
       const { email, fullName, displayName, password, newUser } = values;
-      
-      try {
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-        await createUserProfileDocument(user, {
-          displayName,
-          emailConfirmation,
-          newUser,
-          fullName,
-        });
-      } catch (err) {
-        console.log(err);
-        setLoading(!loading);
-        // TODO add toastr messages
-      }
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      const response = await createUserProfileDocument(user, {
+        displayName,
+        emailConfirmation,
+        newUser,
+        fullName,
+      });
+
+      toastr[response.status](response.message);
     },
   });
 

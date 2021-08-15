@@ -1,6 +1,7 @@
 // libs
 import React, { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
+import { toastr } from 'react-redux-toastr'
 
 // firebase
 import { imageUpload } from '../../firebase/firebase.utils';
@@ -13,10 +14,10 @@ const ImageUpload = ({ user, profileUpdateCallback, path, presetImage, fieldName
   const onChange = async imageList => {
     setImages(imageList);
     const filename = generateFileName(imageList[0].file);
-    const imgUrl = await imageUpload(imageList[0].file, filename, path);
-    await profileUpdateCallback(user, {[fieldName]: imgUrl});
-
-    // TODO implementer toastr message
+    const response = await imageUpload(imageList[0].file, filename, path);
+    toastr[response.status](response.message);
+    const response2 = await profileUpdateCallback(user, {[fieldName]: response.imgUrl});
+    toastr[response2.status](response2.message);
   };
 
   const generateFileName = file => {

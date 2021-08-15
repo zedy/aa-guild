@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toastr } from 'react-redux-toastr'
 
 // components
 import InputField from "../form/input/input.component";
@@ -46,12 +47,8 @@ const CharacterProfileForm = ({ user }) => {
       race: Yup.string().min(1).required("Required"),
     }),
     onSubmit: async (values) => {
-      try {
-        await updatePlayerCharacterProfile(user, values);
-        alert('eyey');
-      } catch (err) {
-        console.log(err); // TODO toastr message
-      }
+      const response = await updatePlayerCharacterProfile(user, values);
+      toastr[response.status](response.message);
     },
   });
 

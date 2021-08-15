@@ -1,6 +1,7 @@
 // libs
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { toastr } from 'react-redux-toastr'
 
 // redux
 import { getListByID } from "../../redux/events/events.selectors";
@@ -38,11 +39,13 @@ const Event = ({ match, events, currentUser }) => {
 
   const eventRegistration = async () => {
     const response = await eventRegister(event, currentUser.id);
+    toastr[response.status](response.message);
     setIsRegisterModalActive(false);
   };
 
   const eventUnRegistration = async () => {
     const response = await eventRegister(event, currentUser.id, true);
+    toastr[response.status](response.message);
     setIsConfirmModalActive(false);
   };
 
@@ -58,7 +61,7 @@ const Event = ({ match, events, currentUser }) => {
               setIsConfirmModalActive(true);
             }}
           >
-            Odjavi se sa event <i className="right arrow icon"></i>
+            Odjavi se sa event-a <i className="right arrow icon"></i>
           </button>
         ) : (
           <button

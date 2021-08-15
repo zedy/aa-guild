@@ -1,7 +1,11 @@
+// libs
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/storage";
 import "firebase/auth";
+
+// data
+import TOASTR_MESSAGES from "../data/toastr-messages.data";
 
 var firebaseConfig = {
   apiKey: "AIzaSyAaVNKteh7LJFr5QYXYAQXpkGxFp7GQLU4",
@@ -19,13 +23,13 @@ firebase.initializeApp(firebaseConfig);
 
 // TODO refactor firebase profile updates functions to reduce duplicate code
 
-// TODO refatctor the response for the firebase update methods to be a object (status, message, reponse)
-
 export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShop = await userRef.get();
+
+  let status = 'success'; // default
 
   if (!snapShop.exists) {
     const { displayName, email, newUser } = userAuth;
@@ -51,23 +55,26 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
       });
     } catch (err) {
       console.log(err);
+      status = 'error';
     }
   }
 
-  return userRef;
+  return {
+    status: status,
+    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedCharacter,
+    userRef: userRef,
+  };
 };
 
 export const eventRegister = async (event, userId, unregistering) => {
   if (!userId) return false;
 
-  if (!unregistering && event.attendees.includes(userId)) {
-    return "already on list";
-  }
-
   const userRef = firestore.doc(`events/${event.id}`);
   const snapShop = await userRef.get();
 
   let attendees = event.attendees;
+  let status = 'success'; // default
+  let successMessage = '';
 
   if (unregistering) {
     const index = attendees.indexOf(userId);
@@ -83,12 +90,19 @@ export const eventRegister = async (event, userId, unregistering) => {
       await userRef.update({
         attendees: attendees,
       });
+      successMessage = unregistering
+        ? TOASTR_MESSAGES.eventUnregister
+        : TOASTR_MESSAGES.eventRegister;
     } catch (err) {
       console.log(err);
+      status = "error";
     }
   }
 
-  return userRef;
+  return {
+    status: status,
+    message: status === "error" ? TOASTR_MESSAGES.genericError : successMessage
+  };
 };
 
 export const updatePlayerCharacterProfile = async (user, data) => {
@@ -97,6 +111,8 @@ export const updatePlayerCharacterProfile = async (user, data) => {
   const userRef = firestore.doc(`users/${user.id}`);
   const snapShop = await userRef.get();
 
+  let status = 'success'; // default
+
   if (snapShop.exists) {
     try {
       await userRef.update({
@@ -104,10 +120,14 @@ export const updatePlayerCharacterProfile = async (user, data) => {
       });
     } catch (err) {
       console.log(err);
+      status = "error";    
     }
   }
 
-  return userRef;
+  return {
+    status: status,
+    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedCharacter
+  };
 };
 
 export const updateUserProfile = async (user, data) => {
@@ -116,6 +136,8 @@ export const updateUserProfile = async (user, data) => {
   const userRef = firestore.doc(`users/${user.id}`);
   const snapShop = await userRef.get();
 
+  let status = 'success'; // default
+
   if (snapShop.exists) {
     try {
       await userRef.update({
@@ -123,10 +145,14 @@ export const updateUserProfile = async (user, data) => {
       });
     } catch (err) {
       console.log(err);
+      status = 'error';
     }
   }
 
-  return userRef;
+  return {
+    status: status,
+    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedUserProfile
+  };
 };
 
 export const updateNewUserFlag = async (user) => {
@@ -158,30 +184,22 @@ export const imageUpload = async (file, filename, path) => {
     .child("images/" + path + "/" + filename)
     .put(file)
     .then((snapshot) => {
-      console.log(snapshot);
       console.log("Uploaded image!");
     });
 
-  return storageRef
+  const imgUrl = storageRef
     .child("images/" + path + "/" + filename)
     .getDownloadURL()
     .then((fireBaseUrl) => {
       return fireBaseUrl;
     });
+
+  return {
+    status: 'success',
+    message: TOASTR_MESSAGES.imageUpload,
+    imgUrl: imgUrl,
+  };
 };
-
-// create collection in firebase
-// export const addCollectionAndItems = async (collectionKey, items) => {
-//   const collectionRef = firestore.collection(collectionKey);
-//   const batch = firestore.batch();
-
-//   items.forEach((item) => {
-//     const newDocRef = collectionRef.doc();
-//     batch.set(newDocRef, item);
-//   });
-
-//   return await batch.commit();
-// };
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
