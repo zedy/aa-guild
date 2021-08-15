@@ -14,15 +14,17 @@ import {
   ModalContentEventRegister,
   ModalContentEventUnRegister,
 } from "../modal/content/modal-content.component";
+import { EventRegisterButton, EventUnregisterButton, EventRedirectLink } from './event-buttons.component';
 
 // firebase
 import { eventRegister } from "../../firebase/firebase.utils";
+import { Link } from "react-router-dom";
 
 const Event = ({ match, events, currentUser }) => {
   const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
   const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
 
-  if (Object.keys(events).length === 0 || !currentUser) return <Loader />;
+  if (Object.keys(events).length === 0) return <Loader />;
 
   const event = events[match.params.id];
   const getDate = (eventDate) => {
@@ -49,29 +51,19 @@ const Event = ({ match, events, currentUser }) => {
     setIsConfirmModalActive(false);
   };
 
-  const eventButton = () => {
+  const eventButtonRender = () => {
+    if (!currentUser) {
+      return <EventRedirectLink />
+    }
+
     const isGoing = event.attendees.includes(currentUser.id);
 
     return (
       <>
         {isGoing ? (
-          <button
-            className="ui huge red button"
-            onClick={() => {
-              setIsConfirmModalActive(true);
-            }}
-          >
-            Odjavi se sa event-a <i className="right arrow icon"></i>
-          </button>
+          <EventUnregisterButton onClick={setIsConfirmModalActive} />
         ) : (
-          <button
-            className="ui huge primary button"
-            onClick={() => {
-              setIsRegisterModalActive(true);
-            }}
-          >
-            Prijavite se na event <i className="right arrow icon"></i>
-          </button>
+          <EventRegisterButton onClick={setIsRegisterModalActive} />
         )}
       </>
     );
@@ -93,7 +85,7 @@ const Event = ({ match, events, currentUser }) => {
               <div className="ui text ">
                 <h1 className="ui inverted header">{event.headline}</h1>
                 <h2>{getDate(event.date.seconds)}</h2>
-                {eventButton()}
+                { eventButtonRender() }
               </div>
             </div>
           </div>

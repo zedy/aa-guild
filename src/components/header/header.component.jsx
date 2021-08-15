@@ -20,7 +20,6 @@ const Header = ({ currentUser }) => {
           </Link>
         </div>
         <div className="item right">
-          {/* <Link className="item active" to="/about">About us</Link> */}
           <Link className="item" to="/events">Events</Link>
           <Link className="item" to="/news">News</Link>
           <Link className="item" to="/players-list">Players</Link>          
@@ -33,9 +32,10 @@ const Header = ({ currentUser }) => {
             <UserProfileDropdown user={currentUser} />
             :
             <div className="item">
-              <Link to="/signin" className="ui button">
-                <i className="sign-in icon"></i>
-                  Log in
+              <Link to="/signin" className="ui white">
+                Sign in
+                &nbsp;
+                <i className="sign-in icon"></i>                  
               </Link>
             </div>
           }

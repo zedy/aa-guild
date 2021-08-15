@@ -18,9 +18,18 @@ const UserProfileDropdown = ({ user }) => {
             <Link
               style={{ color: "#000" }}
               className="item"
+              to={`/admin/dashboard`}
+            >
+              Admin dashboard
+            </Link>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Link
+              style={{ color: "#000" }}
+              className="item"
               to={`/player/${user.id}/profile`}
             >
-              Profile page
+              User profile
             </Link>
           </Dropdown.Item>
           <Dropdown.Divider />
