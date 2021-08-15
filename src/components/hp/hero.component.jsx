@@ -1,10 +1,19 @@
 // libs
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // assets
 import hero from "../../assets/hero_main.jpg";
 
-const HpHero = () => {
+// redux
+import { getSplitEventList } from '../../redux/events/events.selectors';
+
+const HpHero = ({ futureEvents }) => {
+  const latestEvent = futureEvents.future[0];
+
+  if (futureEvents.future.length === 0) return null;
+
   return (
     <div
         className="ui inverted vertical masthead center aligned segment"
@@ -20,11 +29,11 @@ const HpHero = () => {
               <div className="ui text ">
                 <h1 className="ui inverted header">Asocijacija Avanturista</h1>
                 <h2>
-                  Udruzenje igraca i ljubitelja drustvenith/tabletop igara.
+                  Udruzenje igraca i ljubitelja D&D-a.
                 </h2>
-                <div className="ui huge primary button">
-                  Prijavite se <i className="right arrow icon"></i>
-                </div>
+                <Link to={`/event/${latestEvent.id}`} className="ui huge primary button">
+                  Prijavite se za sledecu sesiju<i className="right arrow icon"></i>
+                </Link>
               </div>
             </div>
           </div>
@@ -33,4 +42,8 @@ const HpHero = () => {
   )
 }
 
-export default HpHero;
+const mapStateToProps = state => ({
+  futureEvents: getSplitEventList(state)
+});
+
+export default connect(mapStateToProps)(HpHero);
