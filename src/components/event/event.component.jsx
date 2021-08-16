@@ -1,13 +1,8 @@
 // libs
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { toastr } from 'react-redux-toastr'
 
-// redux
-import { getListByID } from "../../redux/events/events.selectors";
-
 // components
-import Loader from "../../components/loader/loader.component";
 import { GoogleMaps } from "../google/google.component";
 import { ModalDefault } from "../modal/modal.component";
 import {
@@ -18,15 +13,11 @@ import { EventRegisterButton, EventUnregisterButton, EventRedirectLink } from '.
 
 // firebase
 import { eventRegister } from "../../firebase/firebase.utils";
-import { Link } from "react-router-dom";
 
-const Event = ({ match, events, currentUser }) => {
+const Event = ({ event, currentUser }) => {
   const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
   const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
 
-  if (Object.keys(events).length === 0) return <Loader />;
-
-  const event = events[match.params.id];
   const getDate = (eventDate) => {
     var theDate = new Date(eventDate * 1000);
     const dateString = theDate.toUTCString();
@@ -74,7 +65,6 @@ const Event = ({ match, events, currentUser }) => {
       <div
         className="ui inverted vertical masthead center aligned segment"
         style={{
-          marginTop: "5em",
           backgroundImage: `url("${event.heroImage}")`,
           minHeight: "550px",
         }}
@@ -138,9 +128,4 @@ const Event = ({ match, events, currentUser }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  events: getListByID(state),
-  currentUser: state.user.currentUser,
-});
-
-export default connect(mapStateToProps)(Event);
+export default Event;

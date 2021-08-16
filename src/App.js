@@ -15,18 +15,18 @@ import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer.component";
 import { ModalHero } from "./components/modal/modal.component";
 import { ModalContentNewUser } from "./components/modal/content/modal-content.component";
-import Event from "./components/event/event.component";
 
 // pages
 import Throw403 from "./pages/403/throw403.component";
 import AdminDashboard from "./pages/admin/admin-dashboard.component";
 import HomePage from "./pages/homepage/homepage.component";
 import NewsPage from "./pages/news/news.component";
-import EventPage from "./pages/event/event-page.component";
+import EventListPage from "./pages/event/event-list-page.component";
 import PlayersListPage from "./pages/players-list/players-list.component";
 import PlayerPage from "./pages/player/player.component";
 import SignInOut from "./pages/sign-in-out/sign-in-out.component";
 import PlayerProfile from "./pages/player-profile/player-profile.component";
+import EventPage from './pages/event/event-page.component';
 
 // redux
 import { setCurrentUser } from "./redux/user/user.actions";
@@ -81,8 +81,8 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
       <div className="ui container" style={{ paddingTop: "9em" }}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/events" component={EventPage} />
-          <Route exact path="/event/:id" component={Event} />
+          <Route path="/event/:id" component={EventPage} />
+          <Route exact path="/events" component={EventListPage} />
           <Route exact path="/news" component={NewsPage} />
           <Route exact path="/players-list" component={PlayersListPage} />
           <Route exact path="/player/:id/character" component={PlayerPage} />
