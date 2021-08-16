@@ -2,24 +2,23 @@
 import React from "react";
 import { connect } from "react-redux";
 
-// redux
-
 // components
 import EventList from "../../components/event/event-list.component";
 
-const AdminDashboard = () => {
+// redux
+import { getSplitEventList } from "../../redux/events/events.selectors";
+
+const EventListPage = ({ eventList }) => {
   return (
     <div className="content">
-      <h2>Events</h2>
-      <div className="ui segment">
-        <EventList />
-      </div>
+      <h1>Events</h1>
+      <EventList />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  //eventList: getSplitEventList(state),
+  eventList: getSplitEventList(state),
 });
 
-export default connect(mapStateToProps)(AdminDashboard);
+export default connect(mapStateToProps)(EventListPage);

@@ -22,7 +22,7 @@ import Throw403 from "./pages/403/throw403.component";
 import AdminDashboard from "./pages/admin/admin-dashboard.component";
 import HomePage from "./pages/homepage/homepage.component";
 import NewsPage from "./pages/news/news.component";
-import EventListPage from "./pages/event/event-list.component";
+import EventPage from "./pages/event/event-page.component";
 import PlayersListPage from "./pages/players-list/players-list.component";
 import PlayerPage from "./pages/player/player.component";
 import SignInOut from "./pages/sign-in-out/sign-in-out.component";
@@ -78,25 +78,27 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
   return (
     <div className="app">
       <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/events" component={EventListPage} />\
-        <Route exact path="/event/:id" component={Event} />
-        <Route exact path="/news" component={NewsPage} />
-        <Route exact path="/players-list" component={PlayersListPage} />
-        <Route exact path="/player/:id/character" component={PlayerPage} />
-        <Route exact path="/player/:id/profile" component={PlayerProfile} />
-        <Route
-          exact
-          path="/admin/dashboard"
-          render={() => (!currentUser ? <Throw403 /> : <AdminDashboard />)}
-        />
-        <Route
-          exact
-          path="/signin"
-          render={() => (currentUser ? <Redirect to="/" /> : <SignInOut />)}
-        />
-      </Switch>
+      <div className="ui container" style={{ paddingTop: "9em" }}>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/events" component={EventPage} />\
+          <Route exact path="/event/:id" component={Event} />
+          <Route exact path="/news" component={NewsPage} />
+          <Route exact path="/players-list" component={PlayersListPage} />
+          <Route exact path="/player/:id/character" component={PlayerPage} />
+          <Route exact path="/player/:id/profile" component={PlayerProfile} />
+          <Route
+            exact
+            path="/admin/dashboard"
+            render={() => (!currentUser ? <Throw403 /> : <AdminDashboard />)}
+          />
+          <Route
+            exact
+            path="/signin"
+            render={() => (currentUser ? <Redirect to="/" /> : <SignInOut />)}
+          />
+        </Switch>
+      </div>
       <Footer />
       <ModalHero isActive={isModalActive}>
         <ModalContentNewUser handleClick={hideModal} />
