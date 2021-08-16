@@ -1,12 +1,23 @@
 // libs
 import React from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-const EventListItem = ({ event, isPast }) => {
+const EventListItem = ({ event, match, currentUser }) => {
   const getDate = (eventDate) => {
     var theDate = new Date(eventDate * 1000);
-    const dateString = theDate.toUTCString();
-    return dateString;
+    return theDate.toUTCString();
+  };
+
+  const isPastEvent = () => {
+    const now = new Date().getTime();
+
+    return event.date.seconds * 1000 < now;
+  };
+
+  const isAdmin = () => {
+    return match.path === "/admin/dashboard" && currentUser.isAdmin;
   };
 
   const eventContent = () => (
@@ -31,19 +42,31 @@ const EventListItem = ({ event, isPast }) => {
           </div>
         </div>
       </div>
+      {isAdmin() && !isPastEvent() ? (
+        <div className="actions">
+          <Link className="ui orange button" to={`/event/${event.id}/edit`}>
+            <i className="edit icon"></i>
+          </Link>
+        </div>
+      ) : null}      
     </>
   );
 
   return (
     <>
-    {
-      isPast ?
-      (<div className="item">{ eventContent() }</div>)
-      :
-      (<Link to={`/event/${event.id}`} className="item">{ eventContent() }</Link>)
-    }
+      {isPastEvent() || isAdmin() ? (
+        <div className="item">{eventContent()}</div>
+      ) : (
+        <Link to={`/event/${event.id}`} className="item">
+          {eventContent()}
+        </Link>
+      )}
     </>
   );
 };
 
-export default EventListItem;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default withRouter(connect(mapStateToProps)(EventListItem));

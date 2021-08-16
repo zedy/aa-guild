@@ -14,6 +14,7 @@ const EventList = ({ eventList }) => {
       <h2>Upcoming events</h2>
       <EventListItemWrapper events={eventList.future} />
       <div className="ui divider"></div>
+      <h2>Past events</h2>
       <EventListItemWrapper events={eventList.past} />
     </div>
   );

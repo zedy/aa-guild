@@ -10,7 +10,7 @@ const EventListItemWrapper = ({ events }) => {
     <div className="ui middle aligned divided list">
       {events.length ? (
         events.map((event) => {
-          return <EventListItem key={event.id} event={event} isPast={false} />;
+          return <EventListItem key={event.id} event={event} />;
         })
       ) : (
         <Placeholder />

@@ -81,7 +81,7 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
       <div className="ui container" style={{ paddingTop: "9em" }}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/events" component={EventPage} />\
+          <Route exact path="/events" component={EventPage} />
           <Route exact path="/event/:id" component={Event} />
           <Route exact path="/news" component={NewsPage} />
           <Route exact path="/players-list" component={PlayersListPage} />
