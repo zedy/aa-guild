@@ -8,7 +8,7 @@ const InputField = ({ formik, name, label, children }) => {
         formik.errors[name] && formik.touched[name] ? "error" : ""
       }`}
     >
-      <label htmlFor="signup-email">{label}</label>
+      <label htmlFor={name}>{label}</label>
       {children}
       {formik.errors[name] && formik.touched[name] ? (
         <div>{formik.errors[name]}</div>

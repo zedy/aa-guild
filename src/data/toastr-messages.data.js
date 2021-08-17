@@ -5,7 +5,8 @@ const TOASTR_MESSAGES = {
   imageUpload: 'Successfully uploaded image.',
   updatedCharacter: 'Player characther profile updated.',
   updatedUserProfile: 'Successfully updated your profile.',
-  userCreate: 'Registration successfull. Please check your e-mail.'
+  userCreate: 'Registration successfull. Please check your e-mail.',
+  updatedAttendeesList: 'Successfully updated List of players for current event.'
 }
 
 export default TOASTR_MESSAGES;

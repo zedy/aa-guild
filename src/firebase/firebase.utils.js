@@ -27,11 +27,11 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  const snapShop = await userRef.get();
+  const snapShot = await userRef.get();
 
   let status = 'success'; // default
 
-  if (!snapShop.exists) {
+  if (!snapShot.exists) {
     const { displayName, email, newUser } = userAuth;
     const createdAt = new Date();
     const gamesPlayed = 0;
@@ -70,7 +70,7 @@ export const eventRegister = async (event, userId, unregistering) => {
   if (!userId) return false;
 
   const userRef = firestore.doc(`events/${event.id}`);
-  const snapShop = await userRef.get();
+  const snapShot = await userRef.get();
 
   let attendees = event.attendees;
   let status = 'success'; // default
@@ -85,7 +85,7 @@ export const eventRegister = async (event, userId, unregistering) => {
     attendees.push(userId);
   }
 
-  if (snapShop.exists) {
+  if (snapShot.exists) {
     try {
       await userRef.update({
         attendees: attendees,
@@ -109,11 +109,11 @@ export const updatePlayerCharacterProfile = async (user, data) => {
   if (!user) return false;
 
   const userRef = firestore.doc(`users/${user.id}`);
-  const snapShop = await userRef.get();
+  const snapShot = await userRef.get();
 
   let status = 'success'; // default
 
-  if (snapShop.exists) {
+  if (snapShot.exists) {
     try {
       await userRef.update({
         pc: data,
@@ -134,11 +134,11 @@ export const updateUserProfile = async (user, data) => {
   if (!user) return;
 
   const userRef = firestore.doc(`users/${user.id}`);
-  const snapShop = await userRef.get();
+  const snapShot = await userRef.get();
 
   let status = 'success'; // default
 
-  if (snapShop.exists) {
+  if (snapShot.exists) {
     try {
       await userRef.update({
         ...data,
@@ -159,9 +159,9 @@ export const updateNewUserFlag = async (user) => {
   if (!user) return;
 
   const userRef = firestore.doc(`users/${user.id}`);
-  const snapShop = await userRef.get();
+  const snapShot = await userRef.get();
 
-  if (snapShop.exists) {
+  if (snapShot.exists) {
     try {
       await userRef.update({
         newUser: false,
@@ -172,6 +172,28 @@ export const updateNewUserFlag = async (user) => {
   }
 
   return userRef;
+};
+
+export const updateAttendeesList = async (eventId, list) => {
+  const userRef = firestore.doc(`events/${eventId}`);
+  const snapShot = await userRef.get();
+
+  let status = 'success'; // default
+
+  if (snapShot.exists) {
+    try {
+      await userRef.update({
+        confirmedAttendees: list,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return {
+    status: status,
+    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedAttendeesList
+  };
 };
 
 export const imageUpload = async (file, filename, path) => {
