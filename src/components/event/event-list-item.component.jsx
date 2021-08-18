@@ -42,7 +42,7 @@ const EventListItem = ({ event, match, currentUser }) => {
           </div>
         </div>
       </div>
-      {isAdmin() && !isPastEvent() ? (
+      {isAdmin() ? (
         <div className="actions">
           <Link className="ui orange button" to={`/event/${event.id}/edit`}>
             <i className="edit icon"></i>Edit event

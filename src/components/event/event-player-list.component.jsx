@@ -5,23 +5,17 @@ import { toastr } from "react-redux-toastr";
 
 // firestore
 import { fetchUser } from "../../utils/firebaseFetch";
-import { updateAttendeesList } from '../../firebase/firebase.utils';
+import {
+  updateAttendeesList,
+  updateUserProfile,
+} from "../../firebase/firebase.utils";
 
 const EventPlayerList = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [usersList, setUsersList] = useState([]);
-  const [userIdList, setUserIdList] = useState([]);
 
   useEffect(() => {
-    event.attendees.forEach((userId) => {
-      if (!userIdList.includes(userId)) {
-        setUserIdList((userIdList) => [...userIdList, userId]);
-        (async () => {
-          const user = await getUsersFromFirestore(userId);
-          setUsersList((usersList) => [...usersList, user]);
-        })();
-      }
-    });
+    getUsersList();
   }, []);
 
   const initialValues = () => {
@@ -44,15 +38,66 @@ const EventPlayerList = ({ event }) => {
     return response;
   };
 
-  const getListOfAttendees = (values) => {
-    let data = [];
-    const keys = Object.keys(values);
+  const getUsersList = () => {
+    setUsersList([]);
+    event.attendees.forEach((userId) => {
+      (async () => {
+        const user = await getUsersFromFirestore(userId);
+        setUsersList((usersList) => [...usersList, user]);
+      })();
+    });
+  };
 
-    for (const key of keys) {   
-      if (values[key]) data.push(key);
-    }
+  const getValuesForFirestore = (values) => {
+    const initValues = initialValues();
+    const inc = [];
+    const dec = [];
+    const sync = [];
 
-    return data;
+    Object.keys(values).filter((value, idx) => {
+      if (Object.values(values)[idx]) {
+        sync.push(value);
+      }
+      
+      if (
+        Object.values(values)[idx] !== Object.values(initValues)[idx]      
+      ) {
+        let newObj = {};
+        newObj.id = value;
+
+        if (Object.values(values)[idx]) {
+          newObj.direction = "increase";
+          inc.push(newObj);
+        } else if (!Object.values(values)[idx]) {
+          newObj.direction = "decrease";
+          dec.push(newObj);
+        }                          
+      }
+    });
+
+    return {
+      playerList: sync,
+      gamesPlayedList: [inc, dec]
+    };
+  };
+
+  const updateUsersGamesPlayedField = async (valuesToUpdate) => {
+    let userObjList = {};
+
+    usersList.map(user => userObjList[user.id] = user);
+
+    valuesToUpdate.forEach(array => {
+      if (array.length) {
+        array.forEach(item => {
+          let user = userObjList[item.id];
+          let number = item.direction === 'increase' ? user.gamesPlayed + 1 : user.gamesPlayed - 1;
+          let data = { gamesPlayed: number };
+          (async () => {
+            await updateUserProfile(user, data);
+          })();
+        });
+      }
+    });
   };
 
   const formik = useFormik({
@@ -60,9 +105,16 @@ const EventPlayerList = ({ event }) => {
     initialTouched: false,
     onSubmit: async (values) => {
       setLoading(true);
-      const data = getListOfAttendees(values);
-      const response = await updateAttendeesList(event.id, data);
+
+      const playerValues = getValuesForFirestore(values);
+      await updateUsersGamesPlayedField(playerValues.gamesPlayedList);
+      const response = await updateAttendeesList(
+        event.id,
+        playerValues.playerList
+      );
       toastr[response.status](response.message);
+      
+      getUsersList();
       setLoading(false);
     },
   });
@@ -71,7 +123,10 @@ const EventPlayerList = ({ event }) => {
 
   return (
     <>
-      <h1 style={{marginBottom: '2em'}}>List of players for {getDate(event.date.seconds)}</h1>
+    {    console.log(usersList)}
+      <h1 style={{ marginBottom: "2em" }}>
+        List of players for {getDate(event.date.seconds)}
+      </h1>
       <form
         className={`ui form ${loading ? "loading" : ""}`}
         onSubmit={formik.handleSubmit}
@@ -91,7 +146,7 @@ const EventPlayerList = ({ event }) => {
                         />
                         <div className="content">
                           <span className="header">
-                            {user.fullName.toUpperCase()}
+                            {user.fullName.toUpperCase()} --- {user.id}
                           </span>
                           <div className="description">
                             Games attended: <strong>{user.gamesPlayed}</strong>

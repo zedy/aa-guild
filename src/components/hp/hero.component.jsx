@@ -12,12 +12,14 @@ import { getSplitEventList } from "../../redux/events/events.selectors";
 const HpHero = ({ futureEvents }) => {
   const latestEvent = futureEvents.future.length !== 0 ? futureEvents.future[0] : null;
 
-  const LinkElement = (
+  const LinkElement = () => {
+    return (
     <Link to={`/event/${latestEvent.id}`} className="ui huge primary button">
       Prijavite se za sledecu sesiju
       <i className="right arrow icon"></i>
     </Link>
-  )
+    )
+  }
 
   return (
     <div
@@ -33,7 +35,7 @@ const HpHero = ({ futureEvents }) => {
             <div className="ui text ">
               <h1 className="ui inverted header">Asocijacija Avanturista</h1>
               <h2>Udruzenje igraca i ljubitelja D&D-a.</h2>
-              {latestEvent && LinkElement}
+              {latestEvent && LinkElement()}
             </div>
           </div>
         </div>
