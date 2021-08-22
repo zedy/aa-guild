@@ -27,6 +27,7 @@ import PlayerPage from "./pages/player/player.component";
 import SignInOut from "./pages/sign-in-out/sign-in-out.component";
 import PlayerProfile from "./pages/player-profile/player-profile.component";
 import EventPage from './pages/event/event-page.component';
+import EventForm from './components/event/event-form.component';
 
 // redux
 import { setCurrentUser } from "./redux/user/user.actions";
@@ -81,6 +82,7 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
       <div className="ui container" style={{ paddingTop: "9em" }}>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/event/create" component={EventForm} />
           <Route path="/event/:id" component={EventPage} />
           <Route exact path="/events" component={EventListPage} />
           <Route exact path="/news" component={NewsPage} />

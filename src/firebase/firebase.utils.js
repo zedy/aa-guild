@@ -205,14 +205,14 @@ export const imageUpload = async (file, filename, path) => {
   await storageRef
     .child("images/" + path + "/" + filename)
     .put(file)
-    .then((snapshot) => {
+    .then(snapshot => {
       console.log("Uploaded image!");
     });
 
-  const imgUrl = storageRef
+  const imgUrl = await storageRef
     .child("images/" + path + "/" + filename)
     .getDownloadURL()
-    .then((fireBaseUrl) => {
+    .then(fireBaseUrl => {      
       return fireBaseUrl;
     });
 

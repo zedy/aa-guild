@@ -40,13 +40,6 @@ const EventPage = ({ match, events, currentUser }) => {
           <EventForm event={event} currentUser={currentUser} {...props} />
         )}
       />
-      <Route
-        exact
-        path={`${match.path}/create`}
-        render={(props) => (
-          <EventForm {...props} />
-        )}
-      />
     </div>
   );
 };

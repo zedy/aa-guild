@@ -6,9 +6,7 @@ import { toastr } from 'react-redux-toastr'
 // firebase
 import { imageUpload } from '../../firebase/firebase.utils';
 
-const ImageUpload = ({ user, profileUpdateCallback, path, presetImage, fieldName }) => {
-  // todo move to .env
-  const defaultAvatar = 'https://via.placeholder.com/300x300.png?text=Avatar';
+const ImageUpload = ({ fileName, callback, path, presetImage, defaultImage, isAvatar, children }) => {
   const [images, setImages] = useState([]);
 
   const onChange = async imageList => {
@@ -16,18 +14,17 @@ const ImageUpload = ({ user, profileUpdateCallback, path, presetImage, fieldName
     const filename = generateFileName(imageList[0].file);
     const response = await imageUpload(imageList[0].file, filename, path);
     toastr[response.status](response.message);
-    const response2 = await profileUpdateCallback(user, {[fieldName]: response.imgUrl});
-    toastr[response2.status](response2.message);
+    callback(response.imgUrl);
   };
 
   const generateFileName = file => {
     const ext = file.type.split('/');
-
-    return user.id + '.' + ext[1];
+    
+    return fileName + '.' + ext[1];
   }
 
   return (
-    <div className="ui grid centered">
+    <div className="ui grid centered" style={{margin: '20px 0'}}>
      <ImageUploading        
         value={images}
         onChange={onChange}
@@ -40,13 +37,13 @@ const ImageUpload = ({ user, profileUpdateCallback, path, presetImage, fieldName
           <div className="wrapper">            
             {
               !imageList.length ?
-              <img alt="" className="ui medium circular image" src={presetImage ? presetImage : defaultAvatar} />
+              <img alt="" className={`ui medium image ${isAvatar ? "circular" : ""}`} src={presetImage ? presetImage : defaultImage} />
               :
               null
             }     
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
-                <img className="ui medium circular image" src={image['data_url']} alt="image-upload-placeholder" style={{width: "100%"}} />
+                <img className={`ui medium image ${isAvatar ? "circular" : ""}`} src={image['data_url']} alt="image-upload-placeholder" style={{width: "100%"}} />
               </div>
             ))}
             <button style={{marginTop: "20px"}} 
@@ -58,6 +55,7 @@ const ImageUpload = ({ user, profileUpdateCallback, path, presetImage, fieldName
           </div>
         )}
       </ImageUploading>
+      { children }
     </div>
   )
 }

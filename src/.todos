@@ -2,3 +2,4 @@
 -Auth check on Event registration
 -Auth middleware for admin panel
 -Refactor firebase.fetch and .utils => 1
+-Refactor all forms to create a base form with helper methods
