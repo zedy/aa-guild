@@ -154,6 +154,7 @@ const EventForm = ({ event }) => {
   return (
     <>
       <h1>{!event ? "Event create" : "Edit event"}</h1>
+{/* COMMENT use formik tags + Field */}
       <form
         className={`ui form ${loading ? "loading" : ""}`}
         onSubmit={formik.handleSubmit}

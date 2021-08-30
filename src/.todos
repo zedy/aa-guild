@@ -3,3 +3,8 @@
 -Auth middleware for admin panel
 -Refactor firebase.fetch and .utils => 1
 -Refactor all forms to create a base form with helper methods
+-use memos
+-Move stuff that are const and not changing above component so they dont reinitalize on rerender
+- refactor firebaseFetch as a global service layer  with pre loaded collectionRefs for each type
+-refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
+- ubaci linter (eslint + husky)

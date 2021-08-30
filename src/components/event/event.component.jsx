@@ -1,6 +1,6 @@
 // libs
 import React, { useState } from "react";
-import { toastr } from 'react-redux-toastr'
+import { actions, toastr } from 'react-redux-toastr'
 
 // components
 import { GoogleMaps } from "../google/google.component";
@@ -129,3 +129,25 @@ const Event = ({ event, currentUser }) => {
 };
 
 export default Event;
+
+// COMMENT Modal Example
+{/* <button onClick={()=>{dispatch(setModalOpen({
+  handleConfirm: ()=>{.Date.Dat}
+}))}}>Open Modal</button>
+
+const setModalOpen = (payload) => ({ 
+  type:OPEN_NEKI_MODAL,
+  body: <NekiModal />,
+  payload
+})
+
+...case OPEN_NEKI_MODAL: {
+  return { ...StaticRange,isModalOpen:true, conftent:actions.payload,body:actions.body}
+}
+
+const {body,content} useSelector(state)
+
+
+return <div className= "modalclass"><Body {...content}></Body></div>
+
+const body = ({handleConfirm}) */}

@@ -46,7 +46,7 @@ const EventPlayerList = ({ event }) => {
         setUsersList((usersList) => [...usersList, user]);
       })();
     });
-  };
+  }
 
   const getValuesForFirestore = (values) => {
     const initValues = initialValues();
