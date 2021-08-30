@@ -11,40 +11,57 @@ import "react-datepicker/dist/react-datepicker.css";
 // components
 import InputField from "../form/input/input.component";
 import ImageUpload from "../image-upload/image-upload.component";
-import { FormField } from "semantic-ui-react";
+
+// firebase
+import { createEvent } from '../../firebase/firebase.utils';
+
+const initialValues = {
+  headline: "",
+  location: "",
+  season: "",
+  session: "",
+  text: "",
+  sdate: "",
+  latitude: "",
+  longitude: "",
+  bodyImage: "",
+  heroImage: "",
+};
+
+const formElementsMapLeft = [
+  {
+    type: "image",
+    id: "heroImage",
+    label: "Hero image",
+    placeholder: "Event hero image",
+  },
+  {
+    type: "image",
+    id: "bodyImage",
+    label: "Body image",
+    placeholder: "Event image",
+  },
+];
+
+const formElementsMapRight = [
+  { type: "text", id: "headline", label: "Headline" },
+  { type: "text", id: "location", label: "Location" },
+  { type: "select", id: "season", label: "Season", limit: "6" },
+  { type: "select", id: "session", label: "Session", limit: "16" },
+  { type: "textarea", id: "text", label: "Text" },
+  { type: "text", id: "date", label: "Choose date" },
+  { type: "text", id: "latitude", label: "Latitude" },
+  { type: "text", id: "longitude", label: "Longitude" },
+];
+
+// TODO redirect to new Event page once created
 
 const EventForm = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-
-  const initialValues = {
-    headline: "",
-    location: "",
-    season: "",
-    session: "",
-    text: "",
-    date: "",
-    latitude: "",
-    longitude: "",
-    image: "",
-    heroImage: "",
-  };
-
-  const formElementsMapLeft = [
-    { type: "image", id: "heroImage", label: "Hero image", placeholder: 'Event hero image' },
-    { type: "image", id: "image", label: "Body image", placeholder: 'Event image' },
-  ];
-
-  const formElementsMapRight = [
-    { type: "text", id: "headline", label: "Headline" },
-    { type: "text", id: "location", label: "Location" },
-    { type: "select", id: "season", label: "Season", limit: "6" },
-    { type: "select", id: "session", label: "Session", limit: "16" },
-    { type: "textarea", id: "text", label: "Text" },
-    { type: "text", id: "date", label: "Choose date" },
-    { type: "text", id: "latitude", label: "Latitude" },
-    { type: "text", id: "longitude", label: "Longitude" },
-  ];
+  const [realDate, setRealDate] = useState('');
+  const [heroImage, setHeroImage] = useState('');
+  const [bodyImage, setBodyImage] = useState('');
 
   // TODO export validation schema to separate file
 
@@ -57,19 +74,17 @@ const EventForm = ({ event }) => {
       season: Yup.number().positive().integer().required("Required"),
       session: Yup.number().positive().integer().required("Required"),
       text: Yup.string().min(50).max(2000).required("Required"),
-      date: Yup.string().min(8).max(25).required("Required"),
+      //date: Yup.string().min(8).max(50).required("Required"),
       latitude: Yup.number().required("Required"),
       longitude: Yup.number().required("Required"),
-      image: Yup.string().required("Required"),
+      bodyImage: Yup.string().required("Required"),
       heroImage: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
       setLoading(true);
-      console.log(values);
-      // const data = gedChangedValues(values);
-      // const response = await updateUserProfile(user, data);
-      // toastr[response.status](response.message);
-      // setLoading(false);
+      const response = await createEvent(values);
+      toastr[response.status](response.message);
+      setLoading(false);
     },
   });
 
@@ -83,14 +98,25 @@ const EventForm = ({ event }) => {
   );
 
   const datePicker = (
-    <DatePicker
-      id="date"
-      name="date"
-      selected={startDate}
-      showTimeSelect
-      dateFormat="MMMM d, yyyy h:mm aa"
-      onChange={(date) => setStartDate(date)}
-    />
+    <>
+      <input
+        type="hidden"
+        id="date"
+        {...formik.getFieldProps('date')}
+        value={realDate}
+      />
+      <DatePicker
+        id="dateFake"
+        name="dateFake"
+        selected={startDate}
+        showTimeSelect
+        dateFormat="MMMM d, yyyy h:mm aa"
+        onChange={date => {
+          setRealDate(date);
+          setStartDate(date);
+        }}
+      />
+    </>
   );
 
   const image = (element, callback, formik) => {
@@ -98,11 +124,17 @@ const EventForm = ({ event }) => {
       <ImageUpload
         fileName={element.id}
         path="events"
+        activeteLoader={setLoading}
         presetImage={null}
         callback={callback}
         defaultImage={`https://via.placeholder.com/300x300.png?text=${element.placeholder}`}
       >
-        <input type="hidden" id={element.id}  {...formik.getFieldProps(element.id)} />
+        <input
+          type="hidden"
+          id={element.id}
+          {...formik.getFieldProps(element.id)}
+          value={element.id === 'heroImage' ? heroImage : bodyImage}
+        />
       </ImageUpload>
     );
   };
@@ -137,7 +169,7 @@ const EventForm = ({ event }) => {
     </select>
   );
 
-  const generateSelectOptions = (limit) => {
+  const generateSelectOptions = limit => {
     let options = [];
 
     for (let i = 1; i < limit; i++) {
@@ -147,21 +179,22 @@ const EventForm = ({ event }) => {
     return options;
   };
 
-  const imageCallback = () => {
-    console.log("a");
+  const imageCallback = (element, url) => {
+    element === 'heroImage' ? setHeroImage(url) : setBodyImage(url);
+    formik.setFieldValue(element, url);
+    setLoading(false);
   };
 
   return (
     <>
       <h1>{!event ? "Event create" : "Edit event"}</h1>
-{/* COMMENT use formik tags + Field */}
       <form
         className={`ui form ${loading ? "loading" : ""}`}
         onSubmit={formik.handleSubmit}
       >
         <div className="ui grid">
           <div className="four wide column">
-          {formElementsMapLeft.map(element => {
+            {formElementsMapLeft.map((element) => {
               return (
                 <InputField
                   key={element.id}
@@ -169,13 +202,15 @@ const EventForm = ({ event }) => {
                   name={element.id}
                   formik={formik}
                 >
-                  {element.type === "image" ? image(element, imageCallback, formik) : null}
+                  {element.type === "image"
+                    ? image(element, imageCallback, formik)
+                    : null}
                 </InputField>
               );
-            })}                    
+            })}
           </div>
           <div className="twelve wide column">
-            {formElementsMapRight.map(element => {
+            {formElementsMapRight.map((element) => {
               return (
                 <InputField
                   key={element.id}

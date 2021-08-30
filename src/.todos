@@ -6,5 +6,7 @@
 -use memos
 -Move stuff that are const and not changing above component so they dont reinitalize on rerender
 - refactor firebaseFetch as a global service layer  with pre loaded collectionRefs for each type
--refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
-- ubaci linter (eslint + husky)
+- refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
+- inject linter (eslint + husky)
+- Move modal to Store
+- Switch mapStateToProps and mapDispatchProps with useDispatch and useSelector

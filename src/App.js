@@ -1,7 +1,7 @@
 // libs
 import React, { useEffect, useState } from "react";
 import { Route, Switch, Redirect } from "react-router";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
 // firebase
 import {
@@ -37,13 +37,9 @@ import { setEventsList } from "./redux/events/events.actions";
 import { fetchAllEvents } from "./utils/firebaseFetch";
 
 const App = ({ setCurrentUser, currentUser, storeEvents }) => {
-  // const dispatch = useDispatch();
-  // const nekaFja = useCallback(()=>dispatch(setCurrentUser()),[dispatch])
-  // const selector = useSelector(fetchAllEvents)
   const [isModalActive, setIsModalActive] = useState(false);
   let unsubscribeFromAuth = null;
 
-  //radi citljivosti izdvoji u custom hook
   useEffect(() => {
     (async () => {
       const events = await fetchAllEvents();
@@ -113,7 +109,7 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
     </div>
   );
 };
-// COMMENT use hooks linija 40
+
 const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser,
 });

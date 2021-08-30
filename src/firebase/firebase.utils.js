@@ -174,6 +174,29 @@ export const updateNewUserFlag = async (user) => {
   return userRef;
 };
 
+export const createEvent = async (data) => {
+  if (!data) return;
+
+  const collectionRef = firestore.collection('events');
+  const newDocRef = collectionRef.doc();
+
+  let response = null;
+  let status = 'success'; // default
+
+  try {
+    response = await collectionRef.add(data);
+  } catch (err) {
+    console.log(err);
+    status = 'error';
+  }
+
+  return {
+    response: response.id,
+    status: status,
+    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.createdEvent
+  };
+};
+
 export const updateAttendeesList = async (eventId, list) => {
   const userRef = firestore.doc(`events/${eventId}`);
   const snapShot = await userRef.get();

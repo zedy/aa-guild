@@ -6,15 +6,17 @@ import { toastr } from 'react-redux-toastr'
 // firebase
 import { imageUpload } from '../../firebase/firebase.utils';
 
-const ImageUpload = ({ fileName, callback, path, presetImage, defaultImage, isAvatar, children }) => {
+const ImageUpload = ({ fileName, activeteLoader, callback, path, presetImage, defaultImage, isAvatar, children }) => {
   const [images, setImages] = useState([]);
 
   const onChange = async imageList => {
+    if (activeteLoader) activeteLoader(true);
+
     setImages(imageList);
     const filename = generateFileName(imageList[0].file);
     const response = await imageUpload(imageList[0].file, filename, path);
     toastr[response.status](response.message);
-    callback(response.imgUrl);
+    callback(fileName, response.imgUrl);
   };
 
   const generateFileName = file => {
@@ -25,7 +27,7 @@ const ImageUpload = ({ fileName, callback, path, presetImage, defaultImage, isAv
 
   return (
     <div className="ui grid centered" style={{margin: '20px 0'}}>
-     <ImageUploading        
+     <ImageUploading
         value={images}
         onChange={onChange}
         dataURLKey="data_url"
@@ -48,7 +50,10 @@ const ImageUpload = ({ fileName, callback, path, presetImage, defaultImage, isAv
             ))}
             <button style={{marginTop: "20px"}} 
               className="ui button teal"           
-              onClick={onImageUpload}
+              onClick={(e) => {
+                e.preventDefault();
+                onImageUpload();
+              }}
             >
               Click to upload
             </button>
