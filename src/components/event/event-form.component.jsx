@@ -21,7 +21,7 @@ const initialValues = {
   season: "",
   session: "",
   text: "",
-  sdate: "",
+  //date: "",
   latitude: "",
   longitude: "",
   bodyImage: "",
@@ -59,7 +59,6 @@ const formElementsMapRight = [
 const EventForm = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-  const [realDate, setRealDate] = useState('');
   const [heroImage, setHeroImage] = useState('');
   const [bodyImage, setBodyImage] = useState('');
 
@@ -74,7 +73,7 @@ const EventForm = ({ event }) => {
       season: Yup.number().positive().integer().required("Required"),
       session: Yup.number().positive().integer().required("Required"),
       text: Yup.string().min(50).max(2000).required("Required"),
-      //date: Yup.string().min(8).max(50).required("Required"),
+      date: Yup.string().min(8).max(80).required("Required"),
       latitude: Yup.number().required("Required"),
       longitude: Yup.number().required("Required"),
       bodyImage: Yup.string().required("Required"),
@@ -102,8 +101,7 @@ const EventForm = ({ event }) => {
       <input
         type="hidden"
         id="date"
-        {...formik.getFieldProps('date')}
-        value={realDate}
+        //{...formik.getFieldProps('date')}
       />
       <DatePicker
         id="dateFake"
@@ -112,7 +110,7 @@ const EventForm = ({ event }) => {
         showTimeSelect
         dateFormat="MMMM d, yyyy h:mm aa"
         onChange={date => {
-          setRealDate(date);
+          formik.setFieldValue('date', date);
           setStartDate(date);
         }}
       />

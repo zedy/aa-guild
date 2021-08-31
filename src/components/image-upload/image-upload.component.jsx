@@ -39,13 +39,13 @@ const ImageUpload = ({ fileName, activeteLoader, callback, path, presetImage, de
           <div className="wrapper">            
             {
               !imageList.length ?
-              <img alt="" className={`ui medium image ${isAvatar ? "circular" : ""}`} src={presetImage ? presetImage : defaultImage} />
+              <img alt="alt tag" className={`ui medium image ${isAvatar ? "circular" : ""}`} src={presetImage ? presetImage : defaultImage} />
               :
               null
             }     
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
-                <img className={`ui medium image ${isAvatar ? "circular" : ""}`} src={image['data_url']} alt="image-upload-placeholder" style={{width: "100%"}} />
+                <img className={`ui medium image ${isAvatar ? "circular" : ""}`} src={image['data_url']} alt="upload-placeholder" style={{width: "100%"}} />
               </div>
             ))}
             <button style={{marginTop: "20px"}} 

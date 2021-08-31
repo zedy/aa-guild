@@ -25,7 +25,7 @@ const EventListItem = ({ event, match, currentUser }) => {
       <img
         style={{ width: "100px", height: "100px" }}
         className="ui avatar image"
-        src={`${event.image}`}
+        src={`${event.heroImage}`}
         alt="test"
       />
       <div className="content">

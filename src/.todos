@@ -10,3 +10,4 @@
 - inject linter (eslint + husky)
 - Move modal to Store
 - Switch mapStateToProps and mapDispatchProps with useDispatch and useSelector
+- image editing library for ImageUpload component

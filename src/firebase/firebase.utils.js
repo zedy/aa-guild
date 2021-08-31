@@ -29,7 +29,7 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShot = await userRef.get();
 
-  let status = 'success'; // default
+  let status = "success"; // default
 
   if (!snapShot.exists) {
     const { displayName, email, newUser } = userAuth;
@@ -55,13 +55,16 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
       });
     } catch (err) {
       console.log(err);
-      status = 'error';
+      status = "error";
     }
   }
 
   return {
     status: status,
-    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedCharacter,
+    message:
+      status === "error"
+        ? TOASTR_MESSAGES.genericError
+        : TOASTR_MESSAGES.updatedCharacter,
     userRef: userRef,
   };
 };
@@ -73,8 +76,8 @@ export const eventRegister = async (event, userId, unregistering) => {
   const snapShot = await userRef.get();
 
   let attendees = event.attendees;
-  let status = 'success'; // default
-  let successMessage = '';
+  let status = "success"; // default
+  let successMessage = "";
 
   if (unregistering) {
     const index = attendees.indexOf(userId);
@@ -101,7 +104,7 @@ export const eventRegister = async (event, userId, unregistering) => {
 
   return {
     status: status,
-    message: status === "error" ? TOASTR_MESSAGES.genericError : successMessage
+    message: status === "error" ? TOASTR_MESSAGES.genericError : successMessage,
   };
 };
 
@@ -111,7 +114,7 @@ export const updatePlayerCharacterProfile = async (user, data) => {
   const userRef = firestore.doc(`users/${user.id}`);
   const snapShot = await userRef.get();
 
-  let status = 'success'; // default
+  let status = "success"; // default
 
   if (snapShot.exists) {
     try {
@@ -120,13 +123,16 @@ export const updatePlayerCharacterProfile = async (user, data) => {
       });
     } catch (err) {
       console.log(err);
-      status = "error";    
+      status = "error";
     }
   }
 
   return {
     status: status,
-    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedCharacter
+    message:
+      status === "error"
+        ? TOASTR_MESSAGES.genericError
+        : TOASTR_MESSAGES.updatedCharacter,
   };
 };
 
@@ -136,7 +142,7 @@ export const updateUserProfile = async (user, data) => {
   const userRef = firestore.doc(`users/${user.id}`);
   const snapShot = await userRef.get();
 
-  let status = 'success'; // default
+  let status = "success"; // default
 
   if (snapShot.exists) {
     try {
@@ -145,13 +151,16 @@ export const updateUserProfile = async (user, data) => {
       });
     } catch (err) {
       console.log(err);
-      status = 'error';
+      status = "error";
     }
   }
 
   return {
     status: status,
-    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedUserProfile
+    message:
+      status === "error"
+        ? TOASTR_MESSAGES.genericError
+        : TOASTR_MESSAGES.updatedUserProfile,
   };
 };
 
@@ -177,23 +186,26 @@ export const updateNewUserFlag = async (user) => {
 export const createEvent = async (data) => {
   if (!data) return;
 
-  const collectionRef = firestore.collection('events');
-  const newDocRef = collectionRef.doc();
+  const collectionRef = firestore.collection("events");
 
   let response = null;
-  let status = 'success'; // default
+  let status = "success"; // default
 
   try {
-    response = await collectionRef.add(data);
+    const newDataSet = prepareDataForFirestoreFeildsets(data);
+    response = await collectionRef.add(newDataSet);
   } catch (err) {
     console.log(err);
-    status = 'error';
+    status = "error";
   }
 
   return {
     response: response.id,
     status: status,
-    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.createdEvent
+    message:
+      status === "error"
+        ? TOASTR_MESSAGES.genericError
+        : TOASTR_MESSAGES.createdEvent,
   };
 };
 
@@ -201,7 +213,7 @@ export const updateAttendeesList = async (eventId, list) => {
   const userRef = firestore.doc(`events/${eventId}`);
   const snapShot = await userRef.get();
 
-  let status = 'success'; // default
+  let status = "success"; // default
 
   if (snapShot.exists) {
     try {
@@ -215,7 +227,10 @@ export const updateAttendeesList = async (eventId, list) => {
 
   return {
     status: status,
-    message: status === "error" ? TOASTR_MESSAGES.genericError : TOASTR_MESSAGES.updatedAttendeesList
+    message:
+      status === "error"
+        ? TOASTR_MESSAGES.genericError
+        : TOASTR_MESSAGES.updatedAttendeesList,
   };
 };
 
@@ -228,22 +243,37 @@ export const imageUpload = async (file, filename, path) => {
   await storageRef
     .child("images/" + path + "/" + filename)
     .put(file)
-    .then(snapshot => {
+    .then((snapshot) => {
       console.log("Uploaded image!");
     });
 
   const imgUrl = await storageRef
     .child("images/" + path + "/" + filename)
     .getDownloadURL()
-    .then(fireBaseUrl => {      
+    .then((fireBaseUrl) => {
       return fireBaseUrl;
     });
 
   return {
-    status: 'success',
+    status: "success",
     message: TOASTR_MESSAGES.imageUpload,
     imgUrl: imgUrl,
   };
+};
+
+const prepareDataForFirestoreFeildsets = (data) => {
+  const newData = Object.assign({}, data);
+  newData.date = firebase.firestore.Timestamp.fromDate(data.date).toDate();
+  data.geoLocation = new firebase.firestore.GeoPoint(
+    data.latitude,
+    data.longitude
+  );
+  newData.confirmedAttendees = [];
+  newData.attendees = [];
+  delete newData.latitude;
+  delete newData.longitude;
+
+  return newData;
 };
 
 export const auth = firebase.auth();
