@@ -1,6 +1,6 @@
 // libs
 import React, { useState } from "react";
-import { toastr } from 'react-redux-toastr'
+import { toastr } from "react-redux-toastr";
 
 // components
 import { GoogleMaps } from "../google/google.component";
@@ -9,7 +9,11 @@ import {
   ModalContentEventRegister,
   ModalContentEventUnRegister,
 } from "../modal/content/modal-content.component";
-import { EventRegisterButton, EventUnregisterButton, EventRedirectLink } from './event-buttons.component';
+import {
+  EventRegisterButton,
+  EventUnregisterButton,
+  EventRedirectLink,
+} from "./event-buttons.component";
 
 // firebase
 import { eventRegister } from "../../firebase/firebase.utils";
@@ -44,7 +48,7 @@ const Event = ({ event, currentUser }) => {
 
   const eventButtonRender = () => {
     if (!currentUser) {
-      return <EventRedirectLink />
+      return <EventRedirectLink />;
     }
 
     const isGoing = event.attendees.includes(currentUser.id);
@@ -75,7 +79,7 @@ const Event = ({ event, currentUser }) => {
               <div className="ui text ">
                 <h1 className="ui inverted header">{event.headline}</h1>
                 <h2>{getDate(event.date.seconds)}</h2>
-                { eventButtonRender() }
+                {eventButtonRender()}
               </div>
             </div>
           </div>
@@ -98,6 +102,13 @@ const Event = ({ event, currentUser }) => {
             </tr>
           </tbody>
         </table>
+        <div
+          className="ui inverted vertical masthead center aligned segment"
+          style={{
+            backgroundImage: `url("${event.bodyImage}")`,
+            minHeight: "550px",
+          }}
+        ></div>
         <p>{event.text}</p>
         <div style={{ height: "450px", width: "100%" }}>
           <GoogleMaps geoLoc={event.geoLocation}>
