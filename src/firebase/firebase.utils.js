@@ -200,12 +200,36 @@ export const createEvent = async (data) => {
   }
 
   return {
-    response: response.id,
+    response: status === "error" ? null : response.id,
     status: status,
     message:
       status === "error"
         ? TOASTR_MESSAGES.genericError
         : TOASTR_MESSAGES.createdEvent,
+  };
+};
+
+export const updateEvent = async (eventId, data) => {
+  const userRef = firestore.doc(`events/${eventId}`);
+  const snapShot = await userRef.get();
+
+  let status = "success"; // default
+
+  if (snapShot.exists) {
+    try {
+      const newDataSet = prepareDataForFirestoreFeildsets(data);
+      await userRef.update(newDataSet);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return {
+    status: status,
+    message:
+      status === "error"
+        ? TOASTR_MESSAGES.genericError
+        : TOASTR_MESSAGES.updatedEvent,
   };
 };
 
@@ -263,7 +287,11 @@ export const imageUpload = async (file, filename, path) => {
 
 const prepareDataForFirestoreFeildsets = (data) => {
   const newData = Object.assign({}, data);
-  newData.date = firebase.firestore.Timestamp.fromDate(data.date).toDate();
+  const dateChecker = Number.isNaN(Date.parse(data.date));
+
+  newData.date = firebase.firestore.Timestamp.fromDate(
+    dateChecker ? new Date(data.date * 1000) : data.date
+  ).toDate();
   data.geoLocation = new firebase.firestore.GeoPoint(
     data.latitude,
     data.longitude

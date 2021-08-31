@@ -13,20 +13,7 @@ import InputField from "../form/input/input.component";
 import ImageUpload from "../image-upload/image-upload.component";
 
 // firebase
-import { createEvent } from '../../firebase/firebase.utils';
-
-const initialValues = {
-  headline: "",
-  location: "",
-  season: "",
-  session: "",
-  text: "",
-  //date: "",
-  latitude: "",
-  longitude: "",
-  bodyImage: "",
-  heroImage: "",
-};
+import { createEvent, updateEvent } from "../../firebase/firebase.utils";
 
 const formElementsMapLeft = [
   {
@@ -55,12 +42,29 @@ const formElementsMapRight = [
 ];
 
 // TODO redirect to new Event page once created
+// Sve hero/body image se zovu identicno, napravi unikate
 
-const EventForm = ({ event }) => {
+const EventForm = ({ event, history }) => {
+  console.log(event);
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [heroImage, setHeroImage] = useState('');
-  const [bodyImage, setBodyImage] = useState('');
+  const [startDate, setStartDate] = useState(
+    event ? new Date(event.date.seconds * 1000) : new Date()
+  );
+  const [heroImage, setHeroImage] = useState("");
+  const [bodyImage, setBodyImage] = useState("");
+
+  const initialValues = {
+    headline: event ? event.headline : "",
+    location: event ? event.location : "",
+    season: event ? event.season : "",
+    session: event ? event.session : "",
+    text: event ? event.text : "",
+    date: event ? event.date.seconds : "",
+    latitude: event ? event.geoLocation.latitude : "",
+    longitude: event ? event.geoLocation.longitude : "",
+    bodyImage: event ? event.bodyImage : "",
+    heroImage: event ? event.heroImage : "",
+  };
 
   // TODO export validation schema to separate file
 
@@ -81,9 +85,13 @@ const EventForm = ({ event }) => {
     }),
     onSubmit: async (values) => {
       setLoading(true);
-      const response = await createEvent(values);
+      const response = event ? await updateEvent(event.id, values) : await createEvent(values);
       toastr[response.status](response.message);
       setLoading(false);
+      
+      if (response && response.hasOwnProperty('id')) {
+        history.push(`/event/${response.id}`);
+      }
     },
   });
 
@@ -109,8 +117,8 @@ const EventForm = ({ event }) => {
         selected={startDate}
         showTimeSelect
         dateFormat="MMMM d, yyyy h:mm aa"
-        onChange={date => {
-          formik.setFieldValue('date', date);
+        onChange={(date) => {
+          formik.setFieldValue("date", date);
           setStartDate(date);
         }}
       />
@@ -123,7 +131,7 @@ const EventForm = ({ event }) => {
         fileName={element.id}
         path="events"
         activeteLoader={setLoading}
-        presetImage={null}
+        presetImage={event ? event[element.id] : null}
         callback={callback}
         defaultImage={`https://via.placeholder.com/300x300.png?text=${element.placeholder}`}
       >
@@ -131,7 +139,7 @@ const EventForm = ({ event }) => {
           type="hidden"
           id={element.id}
           {...formik.getFieldProps(element.id)}
-          value={element.id === 'heroImage' ? heroImage : bodyImage}
+          value={element.id === "heroImage" ? heroImage : bodyImage}
         />
       </ImageUpload>
     );
@@ -167,7 +175,7 @@ const EventForm = ({ event }) => {
     </select>
   );
 
-  const generateSelectOptions = limit => {
+  const generateSelectOptions = (limit) => {
     let options = [];
 
     for (let i = 1; i < limit; i++) {
@@ -178,7 +186,7 @@ const EventForm = ({ event }) => {
   };
 
   const imageCallback = (element, url) => {
-    element === 'heroImage' ? setHeroImage(url) : setBodyImage(url);
+    element === "heroImage" ? setHeroImage(url) : setBodyImage(url);
     formik.setFieldValue(element, url);
     setLoading(false);
   };
