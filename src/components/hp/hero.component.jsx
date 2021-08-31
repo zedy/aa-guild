@@ -10,6 +10,7 @@ import hero from "../../assets/hero_main.jpg";
 import { getSplitEventList } from "../../redux/events/events.selectors";
 
 const HpHero = ({ futureEvents }) => {
+  console.log(futureEvents);
   const latestEvent = futureEvents.future.length !== 0 ? futureEvents.future[0] : null;
 
   const LinkElement = () => {

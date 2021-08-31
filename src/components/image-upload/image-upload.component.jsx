@@ -15,14 +15,22 @@ const ImageUpload = ({ fileName, activeteLoader, callback, path, presetImage, de
     setImages(imageList);
     const filename = generateFileName(imageList[0].file);
     const response = await imageUpload(imageList[0].file, filename, path);
+
     toastr[response.status](response.message);
     callback(fileName, response.imgUrl);
   };
 
+  const attachTimeStampToImage = filename => {
+    const timestamp = new Date().getTime();
+
+    return `${filename}_${timestamp}`;
+  }
+
   const generateFileName = file => {
     const ext = file.type.split('/');
-    
-    return fileName + '.' + ext[1];
+    const filenameAttachments = path === 'events' ? attachTimeStampToImage(fileName) : fileName;
+
+    return `${filenameAttachments}.${ext[1]}`;
   }
 
   return (

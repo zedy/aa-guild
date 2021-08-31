@@ -14,6 +14,7 @@ import ImageUpload from "../image-upload/image-upload.component";
 
 // firebase
 import { createEvent, updateEvent } from "../../firebase/firebase.utils";
+import { Link } from "react-router-dom";
 
 const formElementsMapLeft = [
   {
@@ -41,11 +42,7 @@ const formElementsMapRight = [
   { type: "text", id: "longitude", label: "Longitude" },
 ];
 
-// TODO redirect to new Event page once created
-// Sve hero/body image se zovu identicno, napravi unikate
-
 const EventForm = ({ event, history }) => {
-  console.log(event);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(
     event ? new Date(event.date.seconds * 1000) : new Date()
@@ -85,12 +82,13 @@ const EventForm = ({ event, history }) => {
     }),
     onSubmit: async (values) => {
       setLoading(true);
+      
       const response = event ? await updateEvent(event.id, values) : await createEvent(values);
       toastr[response.status](response.message);
       setLoading(false);
       
       if (response && response.hasOwnProperty('id')) {
-        history.push(`/event/${response.id}`);
+        history.push(`/events`);
       }
     },
   });
@@ -238,6 +236,9 @@ const EventForm = ({ event, history }) => {
         <button type="submit" className="ui button teal">
           Submit
         </button>
+        <Link to="/admin/dashboard" className="ui button orange">
+            Cancel
+        </Link>
       </form>
     </>
   );

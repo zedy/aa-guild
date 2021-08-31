@@ -183,7 +183,7 @@ export const updateNewUserFlag = async (user) => {
   return userRef;
 };
 
-export const createEvent = async (data) => {
+export const createEvent = async data => {
   if (!data) return;
 
   const collectionRef = firestore.collection("events");
@@ -193,6 +193,7 @@ export const createEvent = async (data) => {
 
   try {
     const newDataSet = prepareDataForFirestoreFeildsets(data);
+    console.log(newDataSet);
     response = await collectionRef.add(newDataSet);
   } catch (err) {
     console.log(err);
@@ -200,7 +201,7 @@ export const createEvent = async (data) => {
   }
 
   return {
-    response: status === "error" ? null : response.id,
+    id: status === "error" ? null : response.id,
     status: status,
     message:
       status === "error"
@@ -292,7 +293,7 @@ const prepareDataForFirestoreFeildsets = (data) => {
   newData.date = firebase.firestore.Timestamp.fromDate(
     dateChecker ? new Date(data.date * 1000) : data.date
   ).toDate();
-  data.geoLocation = new firebase.firestore.GeoPoint(
+  newData.geoLocation = new firebase.firestore.GeoPoint(
     data.latitude,
     data.longitude
   );
