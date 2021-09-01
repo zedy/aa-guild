@@ -18,8 +18,6 @@ import {
   FIELDS_MAP,
 } from "./signup-form.utils";
 
-// TODO Email deduplication Test
-// TODO username deduplication test
 const SingUp = () => {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
@@ -29,17 +27,24 @@ const SingUp = () => {
       setLoading(!loading);
 
       const { email, fullName, displayName, password, newUser } = values;
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      const response = await createUserProfileDocument(user, {
-        displayName,
-        newUser,
-        fullName,
-      });
 
-      toastr[response.status](response.message);
+      try {
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+
+        const response = await createUserProfileDocument(user, {
+          displayName,
+          newUser,
+          fullName,
+        });
+
+        toastr[response.status](response.message);
+      } catch (err) {
+        toastr.error(err.message);
+        setLoading(false);
+      }
     },
   });
 
