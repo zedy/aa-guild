@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 // firebase
 import { auth } from "../../firebase/firebase.utils";
@@ -9,7 +10,7 @@ import { auth } from "../../firebase/firebase.utils";
 // component
 import Button from "../buttons/button.components";
 
-const UserProfileDropdown = ({ user }) => {
+const UserProfileDropdown = ({ user, history }) => {
   return (
     <div className="item">
       <Dropdown icon="user outline">
@@ -36,7 +37,10 @@ const UserProfileDropdown = ({ user }) => {
           <Dropdown.Item>
             <Button
               style={{ color: "#000" }}
-              onClick={() => auth.signOut()}
+              onClick={() => {
+                auth.signOut();
+                history.push('/signin');
+              }}
               className="ui button item"
             >
               <i className="sign out icon"></i>
@@ -49,4 +53,4 @@ const UserProfileDropdown = ({ user }) => {
   );
 };
 
-export default UserProfileDropdown;
+export default withRouter(UserProfileDropdown);

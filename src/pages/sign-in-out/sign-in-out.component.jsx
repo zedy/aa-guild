@@ -2,8 +2,8 @@
 import React from "react";
 
 // components
-import SignIn from "../../components/signin/signin.component";
-import SignUp from "../../components/signup/signup.component";
+import SignIn from "../../components/signin/signin-form.component";
+import SignUp from "../../components/signup/signup-form.component";
 
 const SingInOut = () => (
   <div className="ui container content" style={{ paddingTop: "9em" }}>

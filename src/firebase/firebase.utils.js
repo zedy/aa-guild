@@ -32,7 +32,7 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
   let status = "success"; // default
 
   if (!snapShot.exists) {
-    const { displayName, email, newUser } = userAuth;
+    const { displayName, email } = userAuth;
     const createdAt = new Date();
     const gamesPlayed = 0;
     const emailConfirmation = false;
@@ -49,7 +49,6 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
         createdAt,
         characterPic,
         profilePic,
-        newUser,
         pc,
         ...otherData,
       });

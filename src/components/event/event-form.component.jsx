@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 // components
-import InputField from "../form/input/input.component";
+import InputField from "../form/form-element-wrapper.component";
 import ImageUpload from "../image-upload/image-upload.component";
 
 // firebase
