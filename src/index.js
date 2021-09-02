@@ -1,9 +1,9 @@
-// libs 
+// libs
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import ReduxToastr from 'react-redux-toastr'
+import ReduxToastr from 'react-redux-toastr';
 
 // components
 import App from './App';
@@ -22,11 +22,12 @@ ReactDOM.render(
       timeOut={3000}
       newestOnTop={false}
       preventDuplicates
-      getState={(state) => state.toastr} // This is the default
-      transitionIn="fadeIn"
-      transitionOut="fadeOut"
+      getState={state => state.toastr} // This is the default
+      transitionIn='fadeIn'
+      transitionOut='fadeOut'
       progressBar
-      closeOnToastrClick/>
+      closeOnToastrClick
+    />
   </Provider>,
   document.getElementById('root')
 );

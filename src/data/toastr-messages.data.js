@@ -6,9 +6,10 @@ const TOASTR_MESSAGES = {
   updatedCharacter: 'Player characther profile updated.',
   updatedUserProfile: 'Successfully updated your profile.',
   userCreate: 'Registration successfull. Please check your e-mail.',
-  updatedAttendeesList: 'Successfully updated List of players for current event.',
+  updatedAttendeesList:
+    'Successfully updated List of players for current event.',
   createdEvent: 'Successfully created a new Event',
-  updatedEvent: 'Successfully updated Event',
-}
+  updatedEvent: 'Successfully updated Event'
+};
 
 export default TOASTR_MESSAGES;

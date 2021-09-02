@@ -1,16 +1,14 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 const selectEvents = state => state.events;
 
-export const getSplitEventList = createSelector(
-  [selectEvents],
-  events => splitEventsBasedOnDate(events.list)
-)
+export const getSplitEventList = createSelector([selectEvents], events =>
+  splitEventsBasedOnDate(events.list)
+);
 
-export const getListByID = createSelector(
-  [selectEvents],
-  events => sortEvents(events.list)
-)
+export const getListByID = createSelector([selectEvents], events =>
+  sortEvents(events.list)
+);
 
 const splitEventsBasedOnDate = events => {
   let data = {
@@ -25,7 +23,7 @@ const splitEventsBasedOnDate = events => {
   });
 
   return data;
-}
+};
 
 const sortEvents = events => {
   let sortedEvents = {};
@@ -35,4 +33,4 @@ const sortEvents = events => {
   });
 
   return sortedEvents;
-}
+};

@@ -1,28 +1,28 @@
 // libs
-import React, { useState } from "react";
-import { toastr } from "react-redux-toastr";
+import React, { useState } from 'react';
+import { toastr } from 'react-redux-toastr';
 
 // components
-import { GoogleMaps } from "../google/google.component";
-import { ModalDefault } from "../modal/modal.component";
+import { GoogleMaps } from '../google/google.component';
+import { ModalDefault } from '../modal/modal.component';
 import {
   ModalContentEventRegister,
-  ModalContentEventUnRegister,
-} from "../modal/content/modal-content.component";
+  ModalContentEventUnRegister
+} from '../modal/content/modal-content.component';
 import {
   EventRegisterButton,
   EventUnregisterButton,
-  EventRedirectLink,
-} from "./event-buttons.component";
+  EventRedirectLink
+} from './event-buttons.component';
 
 // firebase
-import { eventRegister } from "../../firebase/firebase.utils";
+import { eventRegister } from '../../firebase/firebase.utils';
 
 const Event = ({ event, currentUser }) => {
   const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
   const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
 
-  const getDate = (eventDate) => {
+  const getDate = eventDate => {
     var theDate = new Date(eventDate * 1000);
     const dateString = theDate.toUTCString();
     return dateString;
@@ -30,7 +30,7 @@ const Event = ({ event, currentUser }) => {
 
   const LocationMarker = () => (
     <div>
-      <i style={{ fontSize: "40px" }} className="icon map marker alternate"></i>
+      <i style={{ fontSize: '40px' }} className='icon map marker alternate'></i>
     </div>
   );
 
@@ -67,17 +67,16 @@ const Event = ({ event, currentUser }) => {
   return (
     <div>
       <div
-        className="ui inverted vertical masthead center aligned segment"
+        className='ui inverted vertical masthead center aligned segment'
         style={{
           backgroundImage: `url("${event.heroImage}")`,
-          minHeight: "550px",
-        }}
-      >
-        <div className="ui grid middle aligned">
-          <div className="row">
-            <div className="column">
-              <div className="ui text ">
-                <h1 className="ui inverted header">{event.headline}</h1>
+          minHeight: '550px'
+        }}>
+        <div className='ui grid middle aligned'>
+          <div className='row'>
+            <div className='column'>
+              <div className='ui text '>
+                <h1 className='ui inverted header'>{event.headline}</h1>
                 <h2>{getDate(event.date.seconds)}</h2>
                 {eventButtonRender()}
               </div>
@@ -85,8 +84,8 @@ const Event = ({ event, currentUser }) => {
           </div>
         </div>
       </div>
-      <div className="ui container content" style={{ paddingTop: "4em" }}>
-        <table className="ui table">
+      <div className='ui container content' style={{ paddingTop: '4em' }}>
+        <table className='ui table'>
           <tbody>
             <tr>
               <td>Season</td>
@@ -103,14 +102,13 @@ const Event = ({ event, currentUser }) => {
           </tbody>
         </table>
         <div
-          className="ui inverted vertical masthead center aligned segment"
+          className='ui inverted vertical masthead center aligned segment'
           style={{
             backgroundImage: `url("${event.bodyImage}")`,
-            minHeight: "550px",
-          }}
-        ></div>
+            minHeight: '550px'
+          }}></div>
         <p>{event.text}</p>
-        <div style={{ height: "450px", width: "100%" }}>
+        <div style={{ height: '450px', width: '100%' }}>
           <GoogleMaps geoLoc={event.geoLocation}>
             <LocationMarker
               lat={event.geoLocation.latitude}

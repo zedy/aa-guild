@@ -1,11 +1,11 @@
 // libs
-import React from "react";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const EventListItem = ({ event, match, currentUser }) => {
-  const getDate = (eventDate) => {
+  const getDate = eventDate => {
     var theDate = new Date(eventDate * 1000);
     return theDate.toUTCString();
   };
@@ -17,50 +17,52 @@ const EventListItem = ({ event, match, currentUser }) => {
   };
 
   const isAdmin = () => {
-    return match.path === "/admin/dashboard" && currentUser.isAdmin;
+    return match.path === '/admin/dashboard' && currentUser.isAdmin;
   };
 
   const eventContent = () => (
     <>
       <img
-        style={{ width: "100px", height: "100px" }}
-        className="ui avatar image"
+        style={{ width: '100px', height: '100px' }}
+        className='ui avatar image'
         src={`${event.heroImage}`}
-        alt="test"
+        alt='test'
       />
-      <div className="content">
-        <span className="header">{event.headline.toUpperCase()}</span>
-        <div className="description">
-          <div className="info">
+      <div className='content'>
+        <span className='header'>{event.headline.toUpperCase()}</span>
+        <div className='description'>
+          <div className='info'>
             Date: <strong>{getDate(event.date.seconds)}</strong>
           </div>
-          <div className="info">
+          <div className='info'>
             Sezona: <strong>{event.season}</strong>
           </div>
-          <div className="info">
+          <div className='info'>
             Sesija: <strong>{event.session}</strong>
           </div>
         </div>
       </div>
       {isAdmin() ? (
-        <div className="actions">
-          <Link className="ui orange button" to={`/event/${event.id}/edit`}>
-            <i className="edit icon"></i>Edit event
+        <div className='actions'>
+          <Link className='ui orange button' to={`/event/${event.id}/edit`}>
+            <i className='edit icon'></i>Edit event
           </Link>
-          <Link className="ui olive button" to={`/event/${event.id}/player-list`}>
-            <i className="users icon"></i>Manage players
+          <Link
+            className='ui olive button'
+            to={`/event/${event.id}/player-list`}>
+            <i className='users icon'></i>Manage players
           </Link>
         </div>
-      ) : null}      
+      ) : null}
     </>
   );
 
   return (
     <>
       {isPastEvent() || isAdmin() ? (
-        <div className="item">{eventContent()}</div>
+        <div className='item'>{eventContent()}</div>
       ) : (
-        <Link to={`/event/${event.id}`} className="item">
+        <Link to={`/event/${event.id}`} className='item'>
           {eventContent()}
         </Link>
       )}
@@ -68,8 +70,8 @@ const EventListItem = ({ event, match, currentUser }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser
 });
 
 export default withRouter(connect(mapStateToProps)(EventListItem));

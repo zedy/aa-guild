@@ -1,9 +1,9 @@
 // libs
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
 // components
-import DMItem from "./dm-item.component";
+import DMItem from './dm-item.component';
 
 // redux
 import { getDMList } from '../../redux/dm/dm.actions';
@@ -25,20 +25,20 @@ const DMList = ({ putDMData }) => {
   if (!dmList) return null;
 
   return (
-    <div className="dm-list" style={{ marginTop: "5em" }}>
-      <div className="ui container">
-        <h2 className="middle aligned">Nasi DM-ovi</h2>
-        <div className="ui grid">
-          {
-            dmList.map((dm, index) => <DMItem item={dm} index={index} key={index} />)
-          }
+    <div className='dm-list' style={{ marginTop: '5em' }}>
+      <div className='ui container'>
+        <h2 className='middle aligned'>Nasi DM-ovi</h2>
+        <div className='ui grid'>
+          {dmList.map((dm, index) => (
+            <DMItem item={dm} index={index} key={index} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   putDMData: data => dispatch(getDMList(data))
 });
 

@@ -1,5 +1,5 @@
 // libs
-import React from "react";
+import React from 'react';
 
 export const textarea = (element, formik) => {
   return (
@@ -14,10 +14,10 @@ export const textarea = (element, formik) => {
 
 export const select = (element, formik, options) => (
   <select id={element.id} {...formik.getFieldProps(element.id)}>
-    <option value="" disabled>
+    <option value='' disabled>
       Choose an option
     </option>
-    { options }
+    {options}
   </select>
 );
 
@@ -34,7 +34,7 @@ export const text = (element, formik) => {
       id={element.id}
       placeholder={element.label}
       {...formik.getFieldProps(element.id)}
-      autoComplete="off"
+      autoComplete='off'
     />
   );
 };

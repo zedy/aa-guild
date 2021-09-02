@@ -1,9 +1,9 @@
 // libs
-import React from "react";
+import React from 'react';
 
 const PlayerPage = () => {
   return (
-    <div className="ui container content" style={{ paddingTop: "9em" }}>
+    <div className='ui container content' style={{ paddingTop: '9em' }}>
       <div>Player page</div>
     </div>
   );
