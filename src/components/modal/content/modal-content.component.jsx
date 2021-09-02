@@ -1,3 +1,6 @@
+// libs
+import React from 'react';
+
 import hero from "../../../assets/hero.jpg";
 
 export const ModalContentNewUser = ({ handleClick }) => (

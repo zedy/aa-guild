@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 const AboutUs = () => {
   return (
-    <div className="about-us">
-      <div className="ui container content" style={{ paddingTop: "3em" }}>
+    <div className='about-us'>
+      <div className='ui container content' style={{ paddingTop: '3em' }}>
         <h2>About us</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
@@ -17,7 +17,10 @@ const AboutUs = () => {
           nisi facilisis, finibus tortor sit amet, efficitur lectus. Integer vel
           lectus tincidunt, rhoncus elit vel, tincidunt diam.
         </p>
-        <img src="https://via.placeholder.com/700x300.png?text=About us" alt="about1" />
+        <img
+          src='https://via.placeholder.com/700x300.png?text=About us'
+          alt='about1'
+        />
         <p>
           Quisque ultricies pretium tortor. Nunc eget lectus sed ipsum congue
           ultricies nec id ipsum. Nullam egestas lorem nec pharetra pharetra.

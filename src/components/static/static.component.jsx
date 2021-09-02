@@ -1,3 +1,6 @@
+// libs
+import React from 'react';
+
 export const Placeholder = () => (
   <div className="ui placeholder">
     <div className="image header">

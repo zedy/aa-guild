@@ -1,12 +1,12 @@
 // libs
-import React from "react";
-import { connect } from "react-redux";
-import { Tab } from "semantic-ui-react";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Tab } from 'semantic-ui-react';
 
 // components
-import Throw403 from "../403/throw403.component.jsx";
-import UserProfile from "../../components/user-profile/user-profile.component.jsx";
-import CharacterProfile from "../../components/character-profile/character-profile.component";
+import Throw403 from '../403/throw403.component.jsx';
+import UserProfile from '../../components/user-profile/user-profile.component.jsx';
+import CharacterProfile from '../../components/character-profile/character-profile.component';
 
 const PlayerProfile = ({ match, currentUser }) => {
   if (currentUser && match.params.id !== currentUser.id) {
@@ -15,29 +15,33 @@ const PlayerProfile = ({ match, currentUser }) => {
     return null;
   }
 
+  const renderCharacterProfile = () => (
+    <Tab.Pane>
+      <CharacterProfile />
+    </Tab.Pane>
+  );
+
+  const renderUserProfile = () => (
+    <Tab.Pane>
+      <UserProfile />
+    </Tab.Pane>
+  );
+
   // TODO add Loading to class
   const panes = [
     {
-      menuItem: "User profile",
-      render: () => (
-        <Tab.Pane>
-          <UserProfile />
-        </Tab.Pane>
-      ),
+      menuItem: 'User profile',
+      render: renderUserProfile
     },
     {
-      menuItem: "Player character profile",
-      render: () => (
-        <Tab.Pane>
-          <CharacterProfile />
-        </Tab.Pane>
-      ),
-    },
+      menuItem: 'Player character profile',
+      render: renderCharacterProfile
+    }
   ];
 
   return (
-    <div className="ui container content" style={{ paddingTop: "9em" }}>
-      <div className="ui content">
+    <div className='ui container content' style={{ paddingTop: '9em' }}>
+      <div className='ui content'>
         <h1>Profiles page</h1>
         <Tab panes={panes} />
       </div>
@@ -46,7 +50,7 @@ const PlayerProfile = ({ match, currentUser }) => {
 };
 
 const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+  currentUser: user.currentUser
 });
 
 export default connect(mapStateToProps)(PlayerProfile);
