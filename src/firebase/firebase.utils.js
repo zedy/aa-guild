@@ -4,9 +4,13 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import 'firebase/auth';
 
-// data
-import TOASTR_MESSAGES from '../data/toastr-messages.data';
+// utils
+import {
+  firebaseResponseSuccess,
+  firebaseResponseError
+} from './firebase-response';
 
+// TODO move to ENV file
 var firebaseConfig = {
   apiKey: 'AIzaSyAaVNKteh7LJFr5QYXYAQXpkGxFp7GQLU4',
   authDomain: 'adventurers-association.firebaseapp.com',
@@ -19,64 +23,65 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// TODO make bypass for emailConfirmation for googleSignIn
+// APIS
+const firestoreApiUpdate = async (docType, id, payload = null) => {
+  const collectionRef = firestore.doc(`${docType}/${id}`);
+  const snapShot = await collectionRef.get();
 
-// TODO refactor firebase profile updates functions to reduce duplicate code
-
-export const createUserProfileDocument = async (userAuth, otherData) => {
-  if (!userAuth) return;
-
-  const userRef = firestore.doc(`users/${userAuth.uid}`);
-  const snapShot = await userRef.get();
-
-  let status = 'success'; // default
-
-  if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
-    const createdAt = new Date();
-    const gamesPlayed = 0;
-    const emailConfirmation = false;
-    const profilePic = '';
-    const characterPic = '';
-    const pc = [];
-
+  if (snapShot.exists) {
     try {
-      await userRef.set({
-        displayName,
-        email,
-        emailConfirmation,
-        gamesPlayed,
-        createdAt,
-        characterPic,
-        profilePic,
-        pc,
-        ...otherData
-      });
+      await collectionRef.update(payload);
+      return new firebaseResponseSuccess();
     } catch (err) {
       console.log(err);
-      status = 'error';
+      return new firebaseResponseError(err.message);
     }
   }
-
-  return {
-    status: status,
-    message:
-      status === 'error'
-        ? TOASTR_MESSAGES.genericError
-        : TOASTR_MESSAGES.updatedCharacter,
-    userRef: userRef
-  };
 };
 
-export const eventRegister = async (event, userId, unregistering) => {
-  if (!userId) return false;
+const firestoreApiCreate = async (docType, payload) => {
+  const collectionRef = firestore.collection(docType);
 
-  const userRef = firestore.doc(`events/${event.id}`);
-  const snapShot = await userRef.get();
+  try {
+    const response = await collectionRef.add(payload);
+    const firestoreResponse = new firebaseResponseSuccess();
+    firestoreResponse.payload = { id: response.id };
+    return firestoreResponse;
+  } catch (err) {
+    console.log(err);
+    return new firebaseResponseError(err.message);
+  }
+};
+
+const firestoreApiSet = async (docType, id, payload) => {
+  const collectionRef = firestore.doc(`${docType}/${id}`);
+  console.log('firebasse 58');
+  console.log(collectionRef);
+  const snapShot = await collectionRef.get();
+  const firestoreResponse = new firebaseResponseSuccess();
+
+  if (!snapShot.exists) {
+    try {
+      await collectionRef.set(payload);
+      firestoreResponse.payload = { collectionRef: collectionRef };
+    } catch (err) {
+      console.log(err);
+      return new firebaseResponseError(err.message);
+    }
+  } else {
+    firestoreResponse.payload = { collectionRef: collectionRef };
+    firestoreResponse.status = 'unchanged';
+  }
+
+  return firestoreResponse;
+};
+//
+
+// Events
+export const eventRegister = async (event, userId, unregistering) => {
+  if (!event && !userId.length) return new firebaseResponseError().response;
 
   let attendees = event.attendees;
-  let status = 'success'; // default
-  let successMessage = '';
 
   if (unregistering) {
     const index = attendees.indexOf(userId);
@@ -87,179 +92,152 @@ export const eventRegister = async (event, userId, unregistering) => {
     attendees.push(userId);
   }
 
-  if (snapShot.exists) {
-    try {
-      await userRef.update({
-        attendees: attendees
-      });
-      successMessage = unregistering
-        ? TOASTR_MESSAGES.eventUnregister
-        : TOASTR_MESSAGES.eventRegister;
-    } catch (err) {
-      console.log(err);
-      status = 'error';
-    }
-  }
-
-  return {
-    status: status,
-    message: status === 'error' ? TOASTR_MESSAGES.genericError : successMessage
+  const payload = {
+    attendees: attendees
   };
-};
 
-export const updatePlayerCharacterProfile = async (user, data) => {
-  if (!user) return false;
+  const firestoreResponse = await firestoreApiUpdate(
+    'events',
+    event.id,
+    payload
+  );
 
-  const userRef = firestore.doc(`users/${user.id}`);
-  const snapShot = await userRef.get();
-
-  let status = 'success'; // default
-
-  if (snapShot.exists) {
-    try {
-      await userRef.update({
-        pc: data
-      });
-    } catch (err) {
-      console.log(err);
-      status = 'error';
-    }
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = unregistering
+      ? 'eventUnregister'
+      : 'eventRegister';
   }
 
-  return {
-    status: status,
-    message:
-      status === 'error'
-        ? TOASTR_MESSAGES.genericError
-        : TOASTR_MESSAGES.updatedCharacter
-  };
-};
-
-export const updateUserProfile = async (user, data) => {
-  if (!user) return;
-
-  const userRef = firestore.doc(`users/${user.id}`);
-  const snapShot = await userRef.get();
-
-  let status = 'success'; // default
-
-  if (snapShot.exists) {
-    try {
-      await userRef.update({
-        ...data
-      });
-    } catch (err) {
-      console.log(err);
-      status = 'error';
-    }
-  }
-
-  return {
-    status: status,
-    message:
-      status === 'error'
-        ? TOASTR_MESSAGES.genericError
-        : TOASTR_MESSAGES.updatedUserProfile
-  };
-};
-
-export const updateNewUserFlag = async user => {
-  if (!user) return;
-
-  const userRef = firestore.doc(`users/${user.id}`);
-  const snapShot = await userRef.get();
-
-  if (snapShot.exists) {
-    try {
-      await userRef.update({
-        newUser: false
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  return userRef;
-};
-
-export const createEvent = async data => {
-  if (!data) return;
-
-  const collectionRef = firestore.collection('events');
-
-  let response = null;
-  let status = 'success'; // default
-
-  try {
-    const newDataSet = prepareDataForFirestoreFeildsets(data);
-    console.log(newDataSet);
-    response = await collectionRef.add(newDataSet);
-  } catch (err) {
-    console.log(err);
-    status = 'error';
-  }
-
-  return {
-    id: status === 'error' ? null : response.id,
-    status: status,
-    message:
-      status === 'error'
-        ? TOASTR_MESSAGES.genericError
-        : TOASTR_MESSAGES.createdEvent
-  };
+  return firestoreResponse.response;
 };
 
 export const updateEvent = async (eventId, data) => {
-  const userRef = firestore.doc(`events/${eventId}`);
-  const snapShot = await userRef.get();
+  if (!data && !eventId.length) return new firebaseResponseError().response;
 
-  let status = 'success'; // default
+  const newDataSet = prepareDataForFirestoreFeildsets(data);
+  const firestoreResponse = await firestoreApiUpdate(
+    'events',
+    eventId,
+    newDataSet
+  );
 
-  if (snapShot.exists) {
-    try {
-      const newDataSet = prepareDataForFirestoreFeildsets(data);
-      await userRef.update(newDataSet);
-    } catch (err) {
-      console.log(err);
-    }
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = 'updatedEvent';
   }
 
-  return {
-    status: status,
-    message:
-      status === 'error'
-        ? TOASTR_MESSAGES.genericError
-        : TOASTR_MESSAGES.updatedEvent
-  };
+  return firestoreResponse.response;
+};
+
+export const createEvent = async data => {
+  if (!data) return new firebaseResponseError().response;
+
+  const newDataSet = prepareDataForFirestoreFeildsets(data);
+  const response = await firestoreApiCreate('events', newDataSet);
+
+  if (response.status === 'success') {
+    response.message = 'createdEvent';
+  }
+
+  return response.response;
 };
 
 export const updateAttendeesList = async (eventId, list) => {
-  const userRef = firestore.doc(`events/${eventId}`);
-  const snapShot = await userRef.get();
+  if (!eventId.length && !list.length)
+    return new firebaseResponseError().response;
 
-  let status = 'success'; // default
+  const payload = {
+    confirmedAttendees: list
+  };
 
-  if (snapShot.exists) {
-    try {
-      await userRef.update({
-        confirmedAttendees: list
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  const firestoreResponse = await firestoreApiUpdate(
+    'events',
+    eventId,
+    payload
+  );
+
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = 'updatedAttendeesList';
   }
 
-  return {
-    status: status,
-    message:
-      status === 'error'
-        ? TOASTR_MESSAGES.genericError
-        : TOASTR_MESSAGES.updatedAttendeesList
+  return firestoreResponse.response;
+};
+//
+
+// Users
+export const updateNewUserFlag = async user => {
+  if (!user) return new firebaseResponseError().response;
+
+  const payload = {
+    newUser: false
   };
+
+  await firestoreApiUpdate('users', user.id, payload);
 };
 
+export const updatePlayerCharacterProfile = async (user, data) => {
+  if (!user && !data) return new firebaseResponseError().response;
+
+  const payload = {
+    pc: data
+  };
+
+  const firestoreResponse = await firestoreApiUpdate('users', user.id, payload);
+
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = 'updatedCharacter';
+  }
+
+  return firestoreResponse.response;
+};
+
+export const updateUserProfile = async (user, data) => {
+  if (!user && !data) return new firebaseResponseError().response;
+
+  const payload = {
+    ...data
+  };
+
+  const firestoreResponse = await firestoreApiUpdate('users', user.id, payload);
+
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = 'updatedUserProfile';
+  }
+
+  return firestoreResponse.response;
+};
+
+export const createUserProfileDocument = async (userAuth, otherData) => {
+  if (!userAuth) return new firebaseResponseError().response;
+
+  const { displayName, email } = userAuth;
+  const payload = {
+    displayName,
+    email,
+    emailConfirmation: false,
+    gamesPlayed: 0,
+    createdAt: new Date(),
+    characterPic: '',
+    profilePic: '',
+    pc: [],
+    ...otherData
+  };
+
+  const firestoreResponse = await firestoreApiSet(
+    'users',
+    userAuth.uid,
+    payload
+  );
+
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = 'updatedCharacter';
+  }
+
+  return firestoreResponse.response;
+};
+
+// IMAGE [self contained, for now]
 export const imageUpload = async (file, filename, path) => {
-  if (!file) return;
+  if (!file) return new firebaseResponseError().response;
 
   const storage = firebase.storage();
   const storageRef = storage.ref();
@@ -278,13 +256,18 @@ export const imageUpload = async (file, filename, path) => {
       return fireBaseUrl;
     });
 
-  return {
-    status: 'success',
-    message: TOASTR_MESSAGES.imageUpload,
+  const firestoreResponse = new firebaseResponseSuccess();
+
+  firestoreResponse.message = 'imageUpload';
+  firestoreResponse.payload = {
     imgUrl: imgUrl
   };
-};
 
+  return firestoreResponse.response;
+};
+//
+
+// Helper methods
 const prepareDataForFirestoreFeildsets = data => {
   const newData = Object.assign({}, data);
   const dateChecker = Number.isNaN(Date.parse(data.date));
@@ -303,6 +286,7 @@ const prepareDataForFirestoreFeildsets = data => {
 
   return newData;
 };
+//
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

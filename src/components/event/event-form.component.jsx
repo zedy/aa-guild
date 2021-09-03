@@ -89,7 +89,7 @@ const EventForm = ({ event, history }) => {
       toastr[response.status](response.message);
       setLoading(false);
 
-      if (response && response.hasOwnProperty('id')) {
+      if (response && response.payload.hasOwnProperty('id')) {
         history.push(`/events`);
       }
     }

@@ -48,10 +48,10 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
 
     unsubscribeFromAuth = auth.onAuthStateChanged(async userAuthObj => {
       if (userAuthObj) {
-        const firebaseResponse = await createUserProfileDocument(userAuthObj);
-        const { userRef } = firebaseResponse;
-
-        userRef.onSnapshot(response => {
+        const firebaseResponse = await createUserProfileDocument(userAuthObj);        
+        const { collectionRef } = firebaseResponse.payload;
+        
+        collectionRef.onSnapshot(response => {
           const data = response.data();
 
           setCurrentUser({

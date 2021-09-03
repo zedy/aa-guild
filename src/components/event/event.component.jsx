@@ -34,6 +34,7 @@ const Event = ({ event, currentUser }) => {
     </div>
   );
 
+  // TODO refactor these two methods
   const eventRegistration = async () => {
     const response = await eventRegister(event, currentUser.id);
     toastr[response.status](response.message);
@@ -45,6 +46,7 @@ const Event = ({ event, currentUser }) => {
     toastr[response.status](response.message);
     setIsConfirmModalActive(false);
   };
+  //
 
   const eventButtonRender = () => {
     if (!currentUser) {

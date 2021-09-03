@@ -26,7 +26,7 @@ const ImageUpload = ({
     const response = await imageUpload(imageList[0].file, filename, path);
 
     toastr[response.status](response.message);
-    callback(fileName, response.imgUrl);
+    callback(fileName, response.payload.imgUrl);
   };
 
   const attachTimeStampToImage = filename => {
