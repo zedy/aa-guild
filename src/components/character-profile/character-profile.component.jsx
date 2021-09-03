@@ -11,9 +11,7 @@ import CharacterProfileForm from './character-profile-form.component';
 import { updateUserProfile } from '../../firebase/firebase.utils';
 
 const CharacterProfile = ({ currentUser }) => {
-  // todo move to .env
-  const defaultAvatar =
-    'https://via.placeholder.com/300x300.png?text=Dnd Avatar';
+  const defaultAvatar = process.env.REACT_APP_DEFAULT_AVATAR;
 
   const CharacterProfileUpdate = async callbackResponse => {
     const response = await updateUserProfile(currentUser, {
