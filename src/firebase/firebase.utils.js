@@ -55,8 +55,6 @@ const firestoreApiCreate = async (docType, payload) => {
 
 const firestoreApiSet = async (docType, id, payload) => {
   const collectionRef = firestore.doc(`${docType}/${id}`);
-  console.log('firebasse 58');
-  console.log(collectionRef);
   const snapShot = await collectionRef.get();
   const firestoreResponse = new firebaseResponseSuccess();
 
@@ -102,13 +100,9 @@ export const eventRegister = async (event, userId, unregistering) => {
     payload
   );
 
-  if (firestoreResponse.status === 'success') {
-    firestoreResponse.message = unregistering
-      ? 'eventUnregister'
-      : 'eventRegister';
-  }
+  const message = unregistering ? 'eventUnregister' : 'eventRegister';
 
-  return firestoreResponse.response;
+  return sendFirebaseResponse(message, firestoreResponse);
 };
 
 export const updateEvent = async (eventId, data) => {
@@ -121,11 +115,7 @@ export const updateEvent = async (eventId, data) => {
     newDataSet
   );
 
-  if (firestoreResponse.status === 'success') {
-    firestoreResponse.message = 'updatedEvent';
-  }
-
-  return firestoreResponse.response;
+  return sendFirebaseResponse('updatedEvent', firestoreResponse);
 };
 
 export const createEvent = async data => {
@@ -134,11 +124,7 @@ export const createEvent = async data => {
   const newDataSet = prepareDataForFirestoreFeildsets(data);
   const response = await firestoreApiCreate('events', newDataSet);
 
-  if (response.status === 'success') {
-    response.message = 'createdEvent';
-  }
-
-  return response.response;
+  return sendFirebaseResponse('createdEvent', response);
 };
 
 export const updateAttendeesList = async (eventId, list) => {
@@ -155,11 +141,7 @@ export const updateAttendeesList = async (eventId, list) => {
     payload
   );
 
-  if (firestoreResponse.status === 'success') {
-    firestoreResponse.message = 'updatedAttendeesList';
-  }
-
-  return firestoreResponse.response;
+  return sendFirebaseResponse('updatedAttendeesList', firestoreResponse);
 };
 //
 
@@ -183,11 +165,7 @@ export const updatePlayerCharacterProfile = async (user, data) => {
 
   const firestoreResponse = await firestoreApiUpdate('users', user.id, payload);
 
-  if (firestoreResponse.status === 'success') {
-    firestoreResponse.message = 'updatedCharacter';
-  }
-
-  return firestoreResponse.response;
+  return sendFirebaseResponse('updatedCharacter', firestoreResponse);
 };
 
 export const updateUserProfile = async (user, data) => {
@@ -199,11 +177,7 @@ export const updateUserProfile = async (user, data) => {
 
   const firestoreResponse = await firestoreApiUpdate('users', user.id, payload);
 
-  if (firestoreResponse.status === 'success') {
-    firestoreResponse.message = 'updatedUserProfile';
-  }
-
-  return firestoreResponse.response;
+  return sendFirebaseResponse('updatedUserProfile', firestoreResponse);
 };
 
 export const createUserProfileDocument = async (userAuth, otherData) => {
@@ -228,11 +202,7 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
     payload
   );
 
-  if (firestoreResponse.status === 'success') {
-    firestoreResponse.message = 'updatedCharacter';
-  }
-
-  return firestoreResponse.response;
+  return sendFirebaseResponse('updatedCharacter', firestoreResponse);
 };
 
 // IMAGE [self contained, for now]
@@ -257,13 +227,9 @@ export const imageUpload = async (file, filename, path) => {
     });
 
   const firestoreResponse = new firebaseResponseSuccess();
+  const payload = { imgUrl: imgUrl };
 
-  firestoreResponse.message = 'imageUpload';
-  firestoreResponse.payload = {
-    imgUrl: imgUrl
-  };
-
-  return firestoreResponse.response;
+  return sendFirebaseResponse('imageUpload', payload, firestoreResponse);
 };
 //
 
@@ -281,10 +247,23 @@ const prepareDataForFirestoreFeildsets = data => {
   );
   newData.confirmedAttendees = [];
   newData.attendees = [];
+
   delete newData.latitude;
   delete newData.longitude;
 
   return newData;
+};
+
+const sendFirebaseResponse = (message, firestoreResponse, payload) => {
+  if (firestoreResponse.status === 'success') {
+    firestoreResponse.message = message;
+  }
+
+  if (payload) {
+    firestoreResponse.payload = payload;
+  }
+
+  return firestoreResponse.response;
 };
 //
 
