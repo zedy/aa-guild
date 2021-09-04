@@ -10,7 +10,7 @@ import {
   firebaseResponseError
 } from './firebase-response';
 
-// TODO move to ENV file
+// configs
 var firebaseConfig = {
   apiKey: 'AIzaSyAaVNKteh7LJFr5QYXYAQXpkGxFp7GQLU4',
   authDomain: 'adventurers-association.firebaseapp.com',
