@@ -7,22 +7,23 @@ export const getAllNewsArticles = createSelector(
   news => news.list
 );
 
-// TODO sort item in news query
 export const getLatestNewsArticles = createSelector(
   [getAllNewsArticles],
   news => news.list[0]
 );
 
-// export const getListByID = createSelector([selectEvents], events =>
-//   sortCollection(events.list)
-// );
+export const getListByID = createSelector([selectNews], news =>
+  sortCollection(news.list)
+);
 
-// const sortCollection = collection => {
-//   let sortedCollection = {};
+// todo move to service/utils file (reusable)
 
-//   collection.forEach(function (item) {
-//     sortedCollection[item.id] = item;
-//   });
+const sortCollection = collection => {
+  let sortedCollection = {};
 
-//   return sortedCollection;
-// };
+  collection.forEach(function (item) {
+    sortedCollection[item.id] = item;
+  });
+
+  return sortedCollection;
+};

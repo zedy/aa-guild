@@ -8,3 +8,5 @@
 - Switch mapStateToProps and mapDispatchProps with useDispatch and useSelector
 - image editing library for ImageUpload component
 - create Custom Route for Events and News
+- crawl through all the helper functions and methods and create a new service called "general" or idk
+- refactor event form as previous forms

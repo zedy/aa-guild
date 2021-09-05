@@ -12,7 +12,7 @@ import Event from '../../components/event/event.component';
 import EventPlayerList from '../../components/event/event-player-list.component';
 import EventForm from '../../components/event/event-form.component';
 
-const EventPage = ({ match, events, currentUser }) => {
+const EventRoutePage = ({ match, events, currentUser }) => {
   if (Object.keys(events).length === 0) return <Loader />;
 
   const event = events[match.params.id];
@@ -49,4 +49,4 @@ const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 });
 
-export default connect(mapStateToProps)(EventPage);
+export default connect(mapStateToProps)(EventRoutePage);

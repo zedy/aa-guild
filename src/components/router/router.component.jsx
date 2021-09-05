@@ -31,13 +31,17 @@ export const Router = ({ currentUser }) => {
     <Switch>
       <GuestRoute exact path={route.HOME_PAGE} componentPath='homepage' />
       <GuestRoute exact path={route.EVENT_FORM} componentPath='eventform' />
-      <GuestRoute path={route.EVENT_PAGE} componentPath='eventpage' />
+      <GuestRoute
+        path={route.EVENT_ROUTE_PAGE}
+        componentPath='eventroutepage'
+      />
       <GuestRoute
         exact
         path={route.EVENT_LISTING}
         componentPath='eventlisting'
       />
       <GuestRoute exact path={route.NEWS_LISTING} componentPath='newslisting' />
+      <GuestRoute path={route.NEWS_ROUTE_PAGE} componentPath='newsroutepage' />
       <GuestRoute
         exact
         path={route.PLAYER_LISTING}
