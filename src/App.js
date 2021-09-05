@@ -19,16 +19,20 @@ import { ModalContentNewUser } from './components/modal/content/modal-content.co
 // redux
 import { setCurrentUser } from './redux/user/user.actions';
 import { setEventsList } from './redux/events/events.actions';
+import { setNewsList } from './redux/news/news.actions';
 
 // utils
 import { fetchAllEvents } from './utils/firebaseFetch';
+import { fetchAllNews } from './utils/firebaseFetch';
 
-const App = ({ setCurrentUser, currentUser, storeEvents }) => {
+const App = ({ setCurrentUser, currentUser, storeEvents, storeNews }) => {
   const [isModalActive, setIsModalActive] = useState(false);
   let unsubscribeFromAuth = null;
 
   useEffect(() => {
     (async () => {
+      const news = await fetchAllNews();
+      storeNews(news);
       const events = await fetchAllEvents();
       storeEvents(events);
     })();
@@ -68,7 +72,6 @@ const App = ({ setCurrentUser, currentUser, storeEvents }) => {
     <div className='app'>
       <Header />
       <div className='ui container' style={{ paddingTop: '9em' }}>
-        {console.log(currentUser)}
         <Router currentUser={currentUser} />
       </div>
       <Footer />
@@ -85,7 +88,8 @@ const mapStateToProps = ({ user }) => ({
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
-  storeEvents: events => dispatch(setEventsList(events))
+  storeEvents: events => dispatch(setEventsList(events)),
+  storeNews: news => dispatch(setNewsList(news))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

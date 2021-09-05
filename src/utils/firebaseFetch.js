@@ -15,14 +15,29 @@ export const fetchDMList = async () => {
 };
 
 export const fetchAllEvents = async () => {
-  const collectionRef = firestore.collection('events');
-  const snapShot = await collectionRef.get();
+  return fetchAllOfType('events');
+};
 
-  const data = snapShot.docs.map(event => {
-    let eventData = event.data();
-    eventData.id = event.id;
+export const fetchAllNews = async () => {
+  return fetchAllOfType('news', { createdAt: 'desc' });
+};
 
-    return eventData;
+export const fetchAllOfType = async (collectionName, order = null) => {
+  let snapShot;
+  const collectionRef = firestore.collection(collectionName);
+
+  if (order) {
+    const keys = Object.keys(order);
+    snapShot = await collectionRef.orderBy(keys[0], order[keys[0]]).get();
+  } else {
+    snapShot = await collectionRef.get();
+  }
+
+  const data = snapShot.docs.map(item => {
+    let itemData = item.data();
+    itemData.id = item.id;
+
+    return itemData;
   });
 
   return data;

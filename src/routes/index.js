@@ -2,7 +2,7 @@ import AdminDashboard from '../pages/admin/admin-dashboard.component';
 import EventPage from '../pages/event/event-page.component';
 import EventForm from '../components/event/event-form.component';
 import HomePage from '../pages/homepage/homepage.component';
-import NewsPage from '../pages/news/news.component';
+import NewsListingPage from '../pages/news/news-listing-page.component';
 import EventListPage from '../pages/event/event-list-page.component';
 import PlayersListPage from '../pages/players-list/players-list.component';
 import PlayerPage from '../pages/player/player.component';
@@ -28,7 +28,7 @@ export const componentPaths = {
   eventform: EventForm,
   eventlisting: EventListPage,
   homepage: HomePage,
-  newslisting: NewsPage,
+  newslisting: NewsListingPage,
   playerlisting: PlayersListPage,
   playerpage: PlayerPage,
   playerprofile: PlayerProfile,

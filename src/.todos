@@ -7,3 +7,4 @@
 - Move modal to Store
 - Switch mapStateToProps and mapDispatchProps with useDispatch and useSelector
 - image editing library for ImageUpload component
+- create Custom Route for Events and News

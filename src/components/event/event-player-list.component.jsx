@@ -124,7 +124,6 @@ const EventPlayerList = ({ event }) => {
 
   return (
     <>
-      {console.log(usersList)}
       <h1 style={{ marginBottom: '2em' }}>
         List of players for {getDate(event.date.seconds)}
       </h1>
