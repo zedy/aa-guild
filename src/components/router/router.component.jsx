@@ -10,14 +10,14 @@ const AsyncRoute = ({ componentPath, ...props }) => {
 };
 
 const AdminRoute = props => {
-  if (!props.currentUser && !props.currentUser.isAdmin)
+  if (!props.user && !props.user.isAdmin)
     return <Redirect to={route.HOME_PAGE} />;
 
   return <AsyncRoute {...props} />;
 };
 
 const AuthenticatedRoute = props => {
-  if (!props.currentUser) return <Redirect to={route.SIGN_IN_OUT} />;
+  if (!props.user) return <Redirect to={route.SIGN_IN_OUT} />;
 
   return <AsyncRoute {...props} />;
 };
@@ -27,6 +27,8 @@ const GuestRoute = props => {
 };
 
 export const Router = ({ currentUser }) => {
+  if (!currentUser) return null;
+
   return (
     <Switch>
       <GuestRoute exact path={route.HOME_PAGE} componentPath='homepage' />
@@ -63,7 +65,7 @@ export const Router = ({ currentUser }) => {
         exact
         user={currentUser}
         path={route.DASHBOARD}
-        componentPath='dashbaord'
+        componentPath='dashboard'
       />
       <GuestRoute exact path={route.SIGN_IN_OUT} componentPath='signinout' />
     </Switch>
