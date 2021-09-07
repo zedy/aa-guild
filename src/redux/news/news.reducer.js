@@ -15,7 +15,7 @@ const newsReducer = (state = INITIAL_STATE, action) => {
     case 'ADD_NEWS_TO_LIST':
       return {
         ...state,
-        list: [ action.payload, ...state.list]
+        list: [action.payload, ...state.list]
       };
     case 'UPDATE_NEWS_ARTICLE':
       return {

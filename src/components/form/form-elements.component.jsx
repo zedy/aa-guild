@@ -1,5 +1,9 @@
 // libs
 import React from 'react';
+import DatePicker from 'react-datepicker';
+
+// styles
+import 'react-datepicker/dist/react-datepicker.css';
 
 // components
 import ImageUpload from '../image-upload/image-upload.component';
@@ -67,5 +71,28 @@ export const text = (element, formik) => {
       {...formik.getFieldProps(element.id)}
       autoComplete='off'
     />
+  );
+};
+
+export const datePicker = (startDate, callback, id, formik) => {
+  return (
+    <>
+      <input
+        type='hidden'
+        id={id}
+        //{...formik.getFieldProps('date')}
+      />
+      <DatePicker
+        id='dateFake'
+        name='dateFake'
+        selected={startDate}
+        showTimeSelect
+        dateFormat='MMMM d, yyyy h:mm aa'
+        onChange={date => {
+          formik.setFieldValue('date', date);
+          callback(date);
+        }}
+      />
+    </>
   );
 };

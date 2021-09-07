@@ -63,7 +63,7 @@ const firestoreApiCreate = async (docType, payload) => {
     const response = await collectionRef.add(payload);
     const firestoreResponse = new firebaseResponseSuccess();
     const createdDoc = await firestoreGetDoc(collectionRef.doc(response.id));
-console.log(createdDoc);
+
     firestoreResponse.payload = createdDoc;
 
     return firestoreResponse;
