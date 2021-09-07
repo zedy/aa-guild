@@ -29,7 +29,7 @@ const NewsArticle = ({ newsArticle }) => {
       <div className='ui container content' style={{ paddingTop: '4em' }}>
         <div className='ui'>
           <span>{getDate(newsArticle.createdAt)}</span>
-          <p>{newsArticle.article}</p>
+          <div dangerouslySetInnerHTML={{ __html: newsArticle.article }} />
         </div>
         <div
           className='ui inverted vertical masthead center aligned segment'

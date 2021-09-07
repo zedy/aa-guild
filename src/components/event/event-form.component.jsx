@@ -1,5 +1,5 @@
 // libs
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -8,12 +8,12 @@ import { toastr } from 'react-redux-toastr';
 // components
 import InputField from '../form/form-element-wrapper.component';
 import {
-  textarea,
   text,
   image,
   datePicker,
   select,
-  optionsItem
+  optionsItem,
+  rte
 } from '../form/form-elements.component';
 
 // firebase
@@ -36,6 +36,7 @@ import {
 } from './event-form.utils';
 
 const EventForm = ({ event, history, updateEventInList, addEventToList }) => {
+  const editorRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(
     event ? new Date(event.date.seconds * 1000) : new Date()
@@ -49,6 +50,7 @@ const EventForm = ({ event, history, updateEventInList, addEventToList }) => {
     validationSchema: Yup.object(VALIDATION_SCHEMA),
     onSubmit: async values => {
       setLoading(true);
+      values.text = editorRef.current.getContent();
 
       const response = event
         ? await updateEvent(event.id, values)
@@ -122,7 +124,7 @@ const EventForm = ({ event, history, updateEventInList, addEventToList }) => {
                   name={element.id}
                   formik={formik}>
                   {element.type === 'textarea'
-                    ? textarea(element, formik)
+                    ? rte(event ? event.text : '', editorRef)
                     : null}
                   {element.type === 'select'
                     ? select(element, formik, optionsBuilder(element))

@@ -109,7 +109,7 @@ const Event = ({ event, currentUser }) => {
             backgroundImage: `url("${event.bodyImage}")`,
             minHeight: '550px'
           }}></div>
-        <p>{event.text}</p>
+        <div dangerouslySetInnerHTML={{ __html: event.text }} />
         <div style={{ height: '450px', width: '100%' }}>
           <GoogleMaps geoLoc={event.geoLocation}>
             <LocationMarker

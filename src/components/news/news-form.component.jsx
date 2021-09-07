@@ -1,5 +1,5 @@
 // libs
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,7 +7,7 @@ import { toastr } from 'react-redux-toastr';
 
 // components
 import InputField from '../form/form-element-wrapper.component';
-import { textarea, text, image } from '../form/form-elements.component';
+import { text, image, rte } from '../form/form-elements.component';
 
 // redux
 import {
@@ -33,6 +33,7 @@ const NewsForm = ({
   addNewsArticle,
   updateNewsArticle
 }) => {
+  const editorRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [heroImage, setHeroImage] = useState('');
   const [bodyImage, setBodyImage] = useState('');
@@ -43,6 +44,7 @@ const NewsForm = ({
     validationSchema: Yup.object(VALIDATION_SCHEMA),
     onSubmit: async values => {
       setLoading(true);
+      values.article = editorRef.current.getContent();
 
       const response = newsArticle
         ? await updateNews(newsArticle.id, values)
@@ -103,7 +105,7 @@ const NewsForm = ({
                   name={element.id}
                   formik={formik}>
                   {element.type === 'textarea'
-                    ? textarea(element, formik)
+                    ? rte(newsArticle ? newsArticle.article : '', editorRef)
                     : null}
                   {element.type === 'text' ? text(element, formik) : null}
                 </InputField>

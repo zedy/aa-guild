@@ -1,12 +1,12 @@
 // libs
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
 
 // components
 import InputField from '../form/form-element-wrapper.component';
-import { textarea, text } from '../form/form-elements.component';
+import { text, rte } from '../form/form-elements.component';
 
 // firebase
 import { updateUserProfile } from '../../firebase/firebase.utils';
@@ -15,6 +15,7 @@ import { updateUserProfile } from '../../firebase/firebase.utils';
 import { VALIDATION_SCHEMA, FIELDS_MAP, initValues } from './user-form.utils';
 
 const UserForm = ({ user }) => {
+  const editorRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const initialValues = initValues(user);
   const formik = useFormik({
@@ -54,7 +55,7 @@ const UserForm = ({ user }) => {
               name={element.id}
               formik={formik}>
               {element.type === 'textarea'
-                ? textarea(element, formik)
+                ? rte(user.about, editorRef)
                 : text(element, formik)}
             </InputField>
           );
