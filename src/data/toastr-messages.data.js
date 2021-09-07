@@ -10,7 +10,9 @@ const TOASTR_MESSAGES = {
     'Successfully updated List of players for current event.',
   createdEvent: 'Successfully created a new Event',
   updatedEvent: 'Successfully updated Event',
-  collectionAlreadyExists: 'This collection already exists. Contact support'
+  collectionAlreadyExists: 'This collection already exists. Contact support',
+  createdNews: 'Successfully created a new news article',
+  updatedNews: 'Successfully updated news article'
 };
 
 export default TOASTR_MESSAGES;

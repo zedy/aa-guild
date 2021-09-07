@@ -38,7 +38,9 @@ const ImageUpload = ({
   const generateFileName = file => {
     const ext = file.type.split('/');
     const filenameAttachments =
-      path === 'events' ? attachTimeStampToImage(fileName) : fileName;
+      path === 'events' || path === 'news'
+        ? attachTimeStampToImage(fileName)
+        : fileName;
 
     return `${filenameAttachments}.${ext[1]}`;
   };

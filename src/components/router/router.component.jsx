@@ -32,7 +32,12 @@ export const Router = ({ currentUser }) => {
   return (
     <Switch>
       <GuestRoute exact path={route.HOME_PAGE} componentPath='homepage' />
-      <GuestRoute exact path={route.EVENT_FORM} componentPath='eventform' />
+      <AdminRoute
+        exact
+        path={route.EVENT_CREATE}
+        user={currentUser}
+        componentPath='eventcreate'
+      />
       <GuestRoute
         path={route.EVENT_ROUTE_PAGE}
         componentPath='eventroutepage'
@@ -43,6 +48,12 @@ export const Router = ({ currentUser }) => {
         componentPath='eventlisting'
       />
       <GuestRoute exact path={route.NEWS_LISTING} componentPath='newslisting' />
+      <AdminRoute
+        exact
+        path={route.NEWS_CREATE}
+        user={currentUser}
+        componentPath='newscreate'
+      />
       <GuestRoute path={route.NEWS_ROUTE_PAGE} componentPath='newsroutepage' />
       <GuestRoute
         exact

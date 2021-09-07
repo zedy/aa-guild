@@ -1,6 +1,37 @@
 // libs
 import React from 'react';
 
+// components
+import ImageUpload from '../image-upload/image-upload.component';
+
+export const image = (
+  element,
+  callback,
+  formik,
+  presetImage,
+  setLoading,
+  value,
+  placeholder,
+  path
+) => {
+  return (
+    <ImageUpload
+      fileName={element.id}
+      path={path}
+      activeteLoader={setLoading}
+      presetImage={presetImage}
+      callback={callback}
+      defaultImage={`https://via.placeholder.com/300x300.png?text=${placeholder}`}>
+      <input
+        type='hidden'
+        id={element.id}
+        {...formik.getFieldProps(element.id)}
+        value={value}
+      />
+    </ImageUpload>
+  );
+};
+
 export const textarea = (element, formik) => {
   return (
     <textarea

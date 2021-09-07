@@ -9,6 +9,7 @@ import { getListByID } from '../../redux/news/news.selectors';
 // components
 import Loader from '../../components/loader/loader.component';
 import NewsArticle from '../../components/news/news.component';
+import NewsForm from '../../components/news/news-form.component';
 
 const NawsRoutePage = ({ match, news }) => {
   if (Object.keys(news).length === 0) return <Loader />;
@@ -22,13 +23,11 @@ const NawsRoutePage = ({ match, news }) => {
         path={`${match.path}`}
         render={props => <NewsArticle newsArticle={newsArticle} {...props} />}
       />
-      {/* <Route
+      <Route
         exact
         path={`${match.path}/edit`}
-        render={props => (
-          <EventForm news={newsArticle} currentUser={currentUser} {...props} />
-        )}
-      /> */}
+        render={props => <NewsForm newsArticle={newsArticle} {...props} />}
+      />
     </div>
   );
 };

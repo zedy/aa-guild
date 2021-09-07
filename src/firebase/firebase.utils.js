@@ -24,6 +24,18 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // APIS
+const firestoreGetDoc = async collectionRef => {
+  const doc = await collectionRef.get().then(object => {
+    const data = object.data();
+
+    data.id = object.id;
+
+    return data;
+  });
+
+  return doc;
+};
+
 const firestoreApiUpdate = async (docType, id, payload = null) => {
   const collectionRef = firestore.doc(`${docType}/${id}`);
   const snapShot = await collectionRef.get();
@@ -31,7 +43,12 @@ const firestoreApiUpdate = async (docType, id, payload = null) => {
   if (snapShot.exists) {
     try {
       await collectionRef.update(payload);
-      return new firebaseResponseSuccess();
+      const updatedDoc = await firestoreGetDoc(collectionRef);
+      const firestoreResponse = new firebaseResponseSuccess();
+
+      firestoreResponse.payload = updatedDoc;
+
+      return firestoreResponse;
     } catch (err) {
       console.log(err);
       return new firebaseResponseError(err.message);
@@ -45,7 +62,10 @@ const firestoreApiCreate = async (docType, payload) => {
   try {
     const response = await collectionRef.add(payload);
     const firestoreResponse = new firebaseResponseSuccess();
-    firestoreResponse.payload = { id: response.id };
+    const createdDoc = await firestoreGetDoc(collectionRef.doc(response.id));
+console.log(createdDoc);
+    firestoreResponse.payload = createdDoc;
+
     return firestoreResponse;
   } catch (err) {
     console.log(err);
@@ -74,6 +94,27 @@ const firestoreApiSet = async (docType, id, payload) => {
   return firestoreResponse;
 };
 //
+
+// NEWS
+export const createNews = async data => {
+  if (!data) return new firebaseResponseError().response;
+
+  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+
+  const response = await firestoreApiCreate('news', data);
+
+  return sendFirebaseResponse('createdNews', response);
+};
+
+export const updateNews = async (newsId, data) => {
+  if (!data && !newsId.length) return new firebaseResponseError().response;
+
+  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+
+  const firestoreResponse = await firestoreApiUpdate('news', newsId, data);
+
+  return sendFirebaseResponse('updatedNews', firestoreResponse);
+};
 
 // Events
 export const eventRegister = async (event, userId, unregistering) => {
@@ -229,7 +270,7 @@ export const imageUpload = async (file, filename, path) => {
   const firestoreResponse = new firebaseResponseSuccess();
   const payload = { imgUrl: imgUrl };
 
-  return sendFirebaseResponse('imageUpload', payload, firestoreResponse);
+  return sendFirebaseResponse('imageUpload', firestoreResponse, payload);
 };
 //
 
