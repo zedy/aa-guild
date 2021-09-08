@@ -8,4 +8,3 @@
 - Switch mapStateToProps and mapDispatchProps with useDispatch and useSelector
 - image editing library for ImageUpload component
 - crawl through all the helper functions and methods and create a new service called "general" or idk
-- Add RTE

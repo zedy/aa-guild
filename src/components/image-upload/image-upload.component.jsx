@@ -6,6 +6,14 @@ import { toastr } from 'react-redux-toastr';
 // firebase
 import { imageUpload } from '../../firebase/firebase.utils';
 
+// helper functions
+const attachTimeStampToImage = filename => {
+  const timestamp = new Date().getTime();
+
+  return `${filename}_${timestamp}`;
+};
+
+// component
 const ImageUpload = ({
   fileName,
   activeteLoader,
@@ -27,12 +35,6 @@ const ImageUpload = ({
 
     toastr[response.status](response.message);
     callback(fileName, response.payload.imgUrl);
-  };
-
-  const attachTimeStampToImage = filename => {
-    const timestamp = new Date().getTime();
-
-    return `${filename}_${timestamp}`;
   };
 
   const generateFileName = file => {

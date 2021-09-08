@@ -4,7 +4,7 @@ import React from 'react';
 const DMItem = ({ item, index }) => {
   const image = () => (
     <div className='four wide column'>
-      <img className='ui circular image' src={item.image} />
+      <img alt='' className='ui circular image' src={item.image} />
     </div>
   );
 

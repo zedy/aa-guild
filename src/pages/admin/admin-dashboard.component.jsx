@@ -1,6 +1,5 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Tab } from 'semantic-ui-react';
 
@@ -38,6 +37,7 @@ const panes = [
   }
 ];
 
+// component
 const AdminDashboard = () => {
   return (
     <div className='content'>
@@ -47,8 +47,4 @@ const AdminDashboard = () => {
   );
 };
 
-const mapStateToProps = state => ({
-  //eventList: getSplitEventList(state),
-});
-
-export default connect(mapStateToProps)(AdminDashboard);
+export default AdminDashboard;

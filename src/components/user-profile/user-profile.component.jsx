@@ -10,12 +10,12 @@ import UserForm from '../user-form/user-form.component';
 // firebase
 import { updateUserProfile } from '../../firebase/firebase.utils';
 
+// helper
+const defaultAvatar = process.env.REACT_APP_USER_AVATAR;
+
+// component
 const UserProfile = ({ currentUser }) => {
   if (!currentUser) return null;
-
-  // todo move to .env
-  const defaultAvatar =
-    'https://via.placeholder.com/300x300.png?text=User Avatar';
 
   const UserProfileUpdate = async callbackResponse => {
     const response = await updateUserProfile(currentUser, {

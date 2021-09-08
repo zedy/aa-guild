@@ -10,6 +10,17 @@ import {
   updateUserProfile
 } from '../../firebase/firebase.utils';
 
+const getDate = eventDate => {
+  var theDate = new Date(eventDate * 1000);
+  return theDate.toUTCString();
+};
+
+const getUsersFromFirestore = async userId => {
+  const response = await fetchUser(userId);
+  return response;
+};
+
+// component
 const EventPlayerList = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [usersList, setUsersList] = useState([]);
@@ -26,16 +37,6 @@ const EventPlayerList = ({ event }) => {
     });
 
     return init;
-  };
-
-  const getDate = eventDate => {
-    var theDate = new Date(eventDate * 1000);
-    return theDate.toUTCString();
-  };
-
-  const getUsersFromFirestore = async userId => {
-    const response = await fetchUser(userId);
-    return response;
   };
 
   const getUsersList = () => {

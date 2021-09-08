@@ -18,6 +18,14 @@ import {
 // firebase
 import { eventRegister } from '../../firebase/firebase.utils';
 
+// helper functions
+const LocationMarker = () => (
+  <div>
+    <i style={{ fontSize: '40px' }} className='icon map marker alternate'></i>
+  </div>
+);
+
+// component
 const Event = ({ event, currentUser }) => {
   const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
   const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
@@ -27,12 +35,6 @@ const Event = ({ event, currentUser }) => {
     const dateString = theDate.toUTCString();
     return dateString;
   };
-
-  const LocationMarker = () => (
-    <div>
-      <i style={{ fontSize: '40px' }} className='icon map marker alternate'></i>
-    </div>
-  );
 
   // TODO refactor these two methods
   const eventRegistration = async () => {

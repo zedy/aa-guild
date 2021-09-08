@@ -1,13 +1,15 @@
 // libs
 import React from 'react';
 
-const NewsArticle = ({ newsArticle }) => {
-  const getDate = date => {
-    var theDate = new Date(date * 1000);
-    const dateString = theDate.toUTCString();
-    return dateString;
-  };
+// helper functions
+const getDate = date => {
+  var theDate = new Date(date * 1000);
+  const dateString = theDate.toUTCString();
+  return dateString;
+};
 
+// component
+const NewsArticle = ({ newsArticle }) => {
   return (
     <div>
       <div
