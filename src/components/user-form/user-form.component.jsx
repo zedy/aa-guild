@@ -55,7 +55,7 @@ const UserForm = ({ user }) => {
               name={element.id}
               formik={formik}>
               {element.type === 'textarea'
-                ? rte(user.about, editorRef)
+                ? rte(user ? user.about : '', editorRef)
                 : text(element, formik)}
             </InputField>
           );

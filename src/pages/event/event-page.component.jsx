@@ -1,10 +1,11 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 // redux
 import { getListByID } from '../../redux/events/events.selectors';
+import { getCurrentUser } from '../../redux/user/user.selectors';
 
 // components
 import Loader from '../../components/loader/loader.component';
@@ -12,7 +13,10 @@ import Event from '../../components/event/event.component';
 import EventPlayerList from '../../components/event/event-player-list.component';
 import EventForm from '../../components/event/event-form.component';
 
-const EventRoutePage = ({ match, events, currentUser }) => {
+const EventRoutePage = ({ match }) => {
+  const events = useSelector(getListByID);
+  const currentUser = useSelector(getCurrentUser);
+
   if (Object.keys(events).length === 0) return <Loader />;
 
   const event = events[match.params.id];
@@ -44,9 +48,4 @@ const EventRoutePage = ({ match, events, currentUser }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  events: getListByID(state),
-  currentUser: state.user.currentUser
-});
-
-export default connect(mapStateToProps)(EventRoutePage);
+export default EventRoutePage;

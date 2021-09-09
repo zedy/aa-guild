@@ -1,6 +1,6 @@
 // libs
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // firebase
 import {
@@ -25,16 +25,19 @@ import { setNewsList } from './redux/news/news.actions';
 import { fetchAllEvents } from './utils/firebaseFetch';
 import { fetchAllNews } from './utils/firebaseFetch';
 
-const App = ({ setCurrentUser, currentUser, storeEvents, storeNews }) => {
-  const [isModalActive, setIsModalActive] = useState(false);
+const App = () => {
   let unsubscribeFromAuth = null;
+
+  const [authUser, setAuthUser] = useState(null);
+  const dispatch = useDispatch();
+  const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
     (async () => {
       const news = await fetchAllNews();
-      storeNews(news);
+      dispatch(setNewsList(news));
       const events = await fetchAllEvents();
-      storeEvents(events);
+      dispatch(setEventsList(events));
     })();
 
     // TODO create service for this
@@ -45,17 +48,20 @@ const App = ({ setCurrentUser, currentUser, storeEvents, storeNews }) => {
 
         collectionRef.onSnapshot(response => {
           const data = response.data();
-
-          setCurrentUser({
+          const authObject = {
             id: response.id,
             ...data
-          });
+          };
+
+          dispatch(setCurrentUser(authObject));
+          setAuthUser(authObject);
 
           if (data && data.newUser) setIsModalActive(true);
         });
       }
 
-      setCurrentUser(userAuthObj);
+      dispatch(setCurrentUser(userAuthObj));
+      setAuthUser(userAuthObj);
     });
 
     return () => {
@@ -64,7 +70,7 @@ const App = ({ setCurrentUser, currentUser, storeEvents, storeNews }) => {
   }, [unsubscribeFromAuth]);
 
   const hideModal = async () => {
-    await updateNewUserFlag(currentUser);
+    await updateNewUserFlag(authUser);
     setIsModalActive(false);
   };
 
@@ -72,7 +78,7 @@ const App = ({ setCurrentUser, currentUser, storeEvents, storeNews }) => {
     <div className='app'>
       <Header />
       <div className='ui container' style={{ paddingTop: '9em' }}>
-        <Router currentUser={currentUser} />
+        <Router currentUser={authUser} />
       </div>
       <Footer />
       <ModalHero isActive={isModalActive}>
@@ -82,14 +88,4 @@ const App = ({ setCurrentUser, currentUser, storeEvents, storeNews }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-});
-
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)),
-  storeEvents: events => dispatch(setEventsList(events)),
-  storeNews: news => dispatch(setNewsList(news))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

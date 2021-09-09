@@ -2,14 +2,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+// redux
+import { getCurrentUser } from '../../redux/user/user.selectors';
+
+// helper functions
 const getDate = date => {
   var theDate = new Date(date * 1000);
   return theDate.toUTCString();
 };
 
-const NewsListItem = ({ news, match, currentUser }) => {
+// component
+const NewsListItem = ({ news, match }) => {
+  const currentUser = useSelector(getCurrentUser);
+
   const isAdmin = () => {
     return match.path === '/admin/dashboard' && currentUser.isAdmin;
   };
@@ -46,8 +53,4 @@ const NewsListItem = ({ news, match, currentUser }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
-});
-
-export default withRouter(connect(mapStateToProps)(NewsListItem));
+export default withRouter(NewsListItem);

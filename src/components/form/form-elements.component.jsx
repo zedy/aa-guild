@@ -70,7 +70,7 @@ export const text = (element, formik) => {
       id={element.id}
       placeholder={element.label}
       {...formik.getFieldProps(element.id)}
-      autoComplete='off'
+      //autoComplete='off'
     />
   );
 };

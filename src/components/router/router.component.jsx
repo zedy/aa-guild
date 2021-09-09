@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 // routes
 import * as route from '../../routes';
 
+// helper functions
 const AsyncRoute = ({ componentPath, ...props }) => {
   return <Route {...props} component={route.componentPaths[componentPath]} />;
 };
@@ -17,18 +18,21 @@ const AdminRoute = props => {
 };
 
 const AuthenticatedRoute = props => {
-  if (!props.user) return <Redirect to={route.SIGN_IN_OUT} />;
+  if (!props.user) return <Redirect to={route.THROW_403} />;
 
   return <AsyncRoute {...props} />;
 };
 
 const GuestRoute = props => {
+  if (props.componentPath === 'signinout' && props.user) {
+    return <Redirect to={route.HOME_PAGE} />;
+  }
+
   return <AsyncRoute {...props} />;
 };
 
+// component
 export const Router = ({ currentUser }) => {
-  if (!currentUser) return null;
-
   return (
     <Switch>
       <GuestRoute exact path={route.HOME_PAGE} componentPath='homepage' />
@@ -78,7 +82,13 @@ export const Router = ({ currentUser }) => {
         path={route.DASHBOARD}
         componentPath='dashboard'
       />
-      <GuestRoute exact path={route.SIGN_IN_OUT} componentPath='signinout' />
+      <GuestRoute
+        exact
+        path={route.SIGN_IN_OUT}
+        user={currentUser}
+        componentPath='signinout'
+      />
+      <GuestRoute exact path={route.THROW_403} componentPath='fourohthree' />
     </Switch>
   );
 };

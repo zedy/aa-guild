@@ -1,16 +1,20 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
 
 // components
 import ImageUpload from '../image-upload/image-upload.component';
 import CharacterProfileForm from './character-profile-form.component';
 
+// redux
+import { getCurrentUser } from '../../redux/user/user.selectors';
+
 // firebase
 import { updateUserProfile } from '../../firebase/firebase.utils';
 
-const CharacterProfile = ({ currentUser }) => {
+const CharacterProfile = () => {
+  const currentUser = useSelector(getCurrentUser);
   const defaultAvatar = process.env.REACT_APP_DEFAULT_AVATAR;
 
   const CharacterProfileUpdate = async callbackResponse => {
@@ -39,8 +43,4 @@ const CharacterProfile = ({ currentUser }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-});
-
-export default connect(mapStateToProps)(CharacterProfile);
+export default CharacterProfile;

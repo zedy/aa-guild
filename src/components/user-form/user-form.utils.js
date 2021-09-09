@@ -22,11 +22,11 @@ export const FIELDS_MAP = [
 
 export const initValues = user => {
   return {
-    email: user.email,
-    fullName: user.fullName,
-    displayName: user.displayName,
+    email: user ? user.email : '',
+    fullName: user ? user.fullName : '',
+    displayName: user ? user.displayName : '',
     password: '',
     confirmPassword: '',
-    about: user.about
+    about: user ? user.about : ''
   };
 };

@@ -1,16 +1,21 @@
 // libs
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // components
 import LanguageSwitcher from '../language/language-switcher.components';
 import UserProfileDropdown from '../user-profile/user-profile-dropdown.component';
 
+// redux
+import { getCurrentUser } from '../../redux/user/user.selectors';
+
 // assets
 import logo from '../../assets/logo.png';
 
-const Header = ({ currentUser }) => {
+const Header = () => {
+  const currentUser = useSelector(getCurrentUser);
+
   return (
     <div className='ui inverted menu top fixed'>
       <div className='ui container'>
@@ -53,8 +58,4 @@ const Header = ({ currentUser }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

@@ -1,6 +1,6 @@
 // libs
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
@@ -27,12 +27,8 @@ import {
 import { createNews, updateNews } from '../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
 
-const NewsForm = ({
-  newsArticle,
-  history,
-  addNewsArticle,
-  updateNewsArticle
-}) => {
+const NewsForm = ({ newsArticle, history }) => {
+  const dispatch = useDispatch();
   const editorRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [heroImage, setHeroImage] = useState('');
@@ -51,8 +47,8 @@ const NewsForm = ({
         : await createNews(values);
 
       newsArticle
-        ? updateNewsArticle(response.payload)
-        : addNewsArticle(response.payload);
+        ? dispatch(updateNewsArticleById(response.payload))
+        : dispatch(addArticleToState(response.payload));
       toastr[response.status](response.message);
       setLoading(false);
       history.push(`/news`);
@@ -125,9 +121,4 @@ const NewsForm = ({
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  addNewsArticle: newsArticle => dispatch(addArticleToState(newsArticle)),
-  updateNewsArticle: newsArticle => dispatch(updateNewsArticleById(newsArticle))
-});
-
-export default connect(null, mapDispatchToProps)(NewsForm);
+export default NewsForm;

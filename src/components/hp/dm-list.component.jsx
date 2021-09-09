@@ -1,6 +1,6 @@
 // libs
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // components
 import DMItem from './dm-item.component';
@@ -11,14 +11,15 @@ import { getDMList } from '../../redux/dm/dm.actions';
 // utils
 import { fetchDMList } from '../../utils/firebaseFetch';
 
-const DMList = ({ putDMData }) => {
+const DMList = () => {
+  const dispatch = useDispatch();
   const [dmList, setDmList] = useState(null);
 
   useEffect(() => {
     (async () => {
       const data = await fetchDMList();
       setDmList(data);
-      putDMData(data);
+      dispatch(getDMList(data));
     })();
   }, []);
 
@@ -38,8 +39,4 @@ const DMList = ({ putDMData }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  putDMData: data => dispatch(getDMList(data))
-});
-
-export default connect(null, mapDispatchToProps)(DMList);
+export default DMList;

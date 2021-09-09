@@ -1,6 +1,6 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 // redux
@@ -11,7 +11,9 @@ import Loader from '../../components/loader/loader.component';
 import NewsArticle from '../../components/news/news.component';
 import NewsForm from '../../components/news/news-form.component';
 
-const NawsRoutePage = ({ match, news }) => {
+const NawsRoutePage = ({ match }) => {
+  const news = useSelector(getListByID);
+
   if (Object.keys(news).length === 0) return <Loader />;
 
   const newsArticle = news[match.params.id];
@@ -32,9 +34,4 @@ const NawsRoutePage = ({ match, news }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  news: getListByID(state)
-  //currentUser: state.user.currentUser
-});
-
-export default connect(mapStateToProps)(NawsRoutePage);
+export default NawsRoutePage;

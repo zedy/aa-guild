@@ -21,7 +21,7 @@ const PlayersPage = () => {
   if (!playerData || playerData.length === 0) return <Loader />;
 
   return (
-    <div className='ui container content' style={{ paddingTop: '9em' }}>
+    <div className='ui container content'>
       <h1>Player list</h1>
       <div className='ui middle aligned divided list'>
         {playerData.map(player => (

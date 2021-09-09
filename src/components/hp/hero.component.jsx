@@ -1,17 +1,19 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // assets
 import hero from '../../assets/hero_main.jpg';
 
 // redux
-import { getSplitEventList } from '../../redux/events/events.selectors';
+import { getFutureEvents } from '../../redux/events/events.selectors';
 
-const HpHero = ({ futureEvents }) => {
-  const latestEvent =
-    futureEvents.future.length !== 0 ? futureEvents.future[0] : null;
+// component
+const HpHero = () => {
+  const futureEvents = useSelector(getFutureEvents);
+  const latestEvent = futureEvents.length !== 0 ? futureEvents[0] : null;
+
   const LinkElement = () => {
     return (
       <Link to={`/event/${latestEvent.id}`} className='ui huge primary button'>
@@ -43,8 +45,4 @@ const HpHero = ({ futureEvents }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  futureEvents: getSplitEventList(state)
-});
-
-export default connect(mapStateToProps)(HpHero);
+export default HpHero;

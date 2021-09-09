@@ -11,7 +11,7 @@ import PlayersListPage from '../pages/players-list/players-list.component';
 import PlayerPage from '../pages/player/player.component';
 import PlayerProfile from '../pages/player-profile/player-profile.component';
 import SignInOut from '../pages/sign-in-out/sign-in-out.component';
-//import Throw403 from '../pages/403/throw403.component';
+import Throw403 from '../pages/403/throw403.component';
 
 export const DASHBOARD = '/admin/dashboard';
 export const EVENT_ROUTE_PAGE = '/event/:id';
@@ -25,7 +25,7 @@ export const PLAYER_LISTING = '/players-list';
 export const PLAYER_PAGE = '/player/:id/character';
 export const PLAYER_PROFILE = '/player/:id/profile';
 export const SIGN_IN_OUT = '/signin';
-//export const Throw403 = '/';
+export const THROW_403 = '/403';
 
 export const componentPaths = {
   dashboard: AdminDashboard,
@@ -40,5 +40,6 @@ export const componentPaths = {
   playerlisting: PlayersListPage,
   playerpage: PlayerPage,
   playerprofile: PlayerProfile,
-  signinout: SignInOut
+  signinout: SignInOut,
+  fourohthree: Throw403
 };

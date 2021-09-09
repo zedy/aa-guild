@@ -1,6 +1,6 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // components
 import NewsListItem from '../news/news-list-item.component';
@@ -9,7 +9,9 @@ import NewsListItem from '../news/news-list-item.component';
 import { getAllNewsArticles } from '../../redux/news/news.selectors';
 import { Placeholder } from 'semantic-ui-react';
 
-const NewsList = ({ newsList }) => {
+const NewsList = () => {
+  const newsList = useSelector(getAllNewsArticles);
+
   return (
     <div className='news-list'>
       <div className='ui middle aligned divided list'>
@@ -25,8 +27,4 @@ const NewsList = ({ newsList }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  newsList: getAllNewsArticles(state)
-});
-
-export default connect(mapStateToProps)(NewsList);
+export default NewsList;

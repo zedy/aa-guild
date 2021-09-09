@@ -1,6 +1,6 @@
 // libs
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
@@ -35,7 +35,8 @@ import {
   generateSelectOptions
 } from './event-form.utils';
 
-const EventForm = ({ event, history, updateEventInList, addEventToList }) => {
+const EventForm = ({ event, history }) => {
+  const dispatch = useDispatch();
   const editorRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(
@@ -57,8 +58,8 @@ const EventForm = ({ event, history, updateEventInList, addEventToList }) => {
         : await createEvent(values);
 
       event
-        ? updateEventInList(response.payload)
-        : addEventToList(response.payload);
+        ? dispatch(updateEventById(response.payload))
+        : dispatch(addEventToState(response.payload));
 
       toastr[response.status](response.message);
       setLoading(false);
@@ -150,9 +151,4 @@ const EventForm = ({ event, history, updateEventInList, addEventToList }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  addEventToList: event => dispatch(addEventToState(event)),
-  updateEventInList: event => dispatch(updateEventById(event))
-});
-
-export default connect(null, mapDispatchToProps)(EventForm);
+export default EventForm;

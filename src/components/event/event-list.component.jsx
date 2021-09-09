@@ -1,6 +1,6 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // components
 import EventListItemWrapper from './event-list-item-wrapper.component';
@@ -8,7 +8,10 @@ import EventListItemWrapper from './event-list-item-wrapper.component';
 // redux
 import { getSplitEventList } from '../../redux/events/events.selectors';
 
-const EventList = ({ eventList }) => {
+const EventList = () => {
+  const eventList = useSelector(getSplitEventList);
+  console.log(eventList);
+
   return (
     <div className='event-list'>
       <h2>Upcoming events</h2>
@@ -20,8 +23,4 @@ const EventList = ({ eventList }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  eventList: getSplitEventList(state)
-});
-
-export default connect(mapStateToProps)(EventList);
+export default EventList;

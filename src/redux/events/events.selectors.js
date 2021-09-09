@@ -6,16 +6,28 @@ export const getSplitEventList = createSelector([selectEvents], events =>
   splitEventsBasedOnDate(events.list)
 );
 
+export const getFutureEvents = createSelector([selectEvents], events =>
+  splitEventsBasedOnDate(events.list, 'past')
+);
+
+export const getPastEvents = createSelector([selectEvents], events =>
+  splitEventsBasedOnDate(events.list, 'future')
+);
+
 export const getListByID = createSelector([selectEvents], events =>
   sortEvents(events.list)
 );
 
-const splitEventsBasedOnDate = events => {
+const splitEventsBasedOnDate = (events, key) => {
   let data = {
     future: [],
     past: []
   };
   let now = Date.parse(new Date()) / 1000;
+
+  if (key) {
+    delete data['key'];
+  }
 
   events.forEach(function (value) {
     const index = now > value.date.seconds ? 'past' : 'future';

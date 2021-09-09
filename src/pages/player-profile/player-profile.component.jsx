@@ -1,10 +1,8 @@
 // libs
 import React from 'react';
-import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 
 // components
-import Throw403 from '../403/throw403.component.jsx';
 import UserProfile from '../../components/user-profile/user-profile.component.jsx';
 import CharacterProfile from '../../components/character-profile/character-profile.component';
 
@@ -31,15 +29,9 @@ const panes = [
   }
 ];
 
-const PlayerProfile = ({ match, currentUser }) => {
-  if (currentUser && match.params.id !== currentUser.id) {
-    return <Throw403 />;
-  } else if (!currentUser) {
-    return null;
-  }
-
+const PlayerProfile = () => {
   return (
-    <div className='ui container content' style={{ paddingTop: '9em' }}>
+    <div className='ui container content'>
       <div className='ui content'>
         <h1>Profiles page</h1>
         <Tab panes={panes} />
@@ -48,8 +40,4 @@ const PlayerProfile = ({ match, currentUser }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-});
-
-export default connect(mapStateToProps)(PlayerProfile);
+export default PlayerProfile;
