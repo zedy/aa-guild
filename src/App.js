@@ -77,9 +77,7 @@ const App = () => {
   return (
     <div className='app'>
       <Header />
-      <div className='ui container' style={{ paddingTop: '9em' }}>
-        <Router currentUser={authUser} />
-      </div>
+      <Router currentUser={authUser} />
       <Footer />
       <ModalHero isActive={isModalActive}>
         <ModalContentNewUser handleClick={hideModal} />

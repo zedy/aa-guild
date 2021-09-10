@@ -2,9 +2,9 @@ import React from 'react';
 
 const AboutUs = () => {
   return (
-    <div className='about-us'>
+    <section className='about-us'>
       <div className='ui container content' style={{ paddingTop: '3em' }}>
-        <h2>About us</h2>
+        <h1>About us</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
           vulputate efficitur ipsum, eget condimentum nisi viverra ac. Class
@@ -32,7 +32,7 @@ const AboutUs = () => {
           Ut vitae posuere ante, ac lobortis metus. Phasellus ac lacinia erat.
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

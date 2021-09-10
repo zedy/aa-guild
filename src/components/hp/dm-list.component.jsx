@@ -26,16 +26,16 @@ const DMList = () => {
   if (!dmList) return null;
 
   return (
-    <div className='dm-list' style={{ marginTop: '5em' }}>
+    <section className='dm-list' style={{ marginTop: '5em' }}>
       <div className='ui container'>
-        <h2 className='middle aligned'>Nasi DM-ovi</h2>
+        <h1>Nasi DM-ovi</h1>
         <div className='ui grid'>
           {dmList.map((dm, index) => (
             <DMItem item={dm} index={index} key={index} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
