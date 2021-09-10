@@ -61,6 +61,7 @@ export const fetchAllPlayersData = async () => {
 
   snapShot.docs.forEach(user => {
     const playerData = user.data();
+    playerData.id = user.id;
 
     if (hasOwnProperty.call(playerData, 'pc')) data.push(playerData);
   });

@@ -28,8 +28,8 @@ import { fetchAllNews } from './utils/firebaseFetch';
 const App = () => {
   let unsubscribeFromAuth = null;
 
-  const [authUser, setAuthUser] = useState(null);
   const dispatch = useDispatch();
+  const [authUser, setAuthUser] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
@@ -59,9 +59,9 @@ const App = () => {
           if (data && data.newUser) setIsModalActive(true);
         });
       }
-
-      dispatch(setCurrentUser(userAuthObj));
-      setAuthUser(userAuthObj);
+      // console.log(userAuthObj);
+      //       dispatch(setCurrentUser(userAuthObj));
+      //       setAuthUser(userAuthObj);
     });
 
     return () => {

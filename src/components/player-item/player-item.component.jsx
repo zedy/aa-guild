@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const PlayerItem = ({ data }) => {
   return (
-    <Link to={`/player/${data.id}/character`} className='item'>
+    <Link to={`/player/${data.id}`} className='item'>
       <img
         style={{ width: '100px', height: '100px' }}
         className='ui avatar image'

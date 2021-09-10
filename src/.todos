@@ -1,14 +1,10 @@
 -Standardise component loading => Placeholder or Loader per component.
 -Auth check on Event registration
--Auth middleware for admin panel
 -use memos
 - refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
 - Move modal to Store
-- Switch mapStateToProps and mapDispatchProps with useDispatch and useSelector
 - image editing library for ImageUpload component
 - crawl through all the helper functions and methods and create a new service called "general" or idk
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!
-- EMAIL Sign IN Broke!
-- crtl f5 (Chrome) user profile page for logged in user shows 403

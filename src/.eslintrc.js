@@ -1,25 +1,22 @@
 module.exports = {
-  extends: [
-    "plugin:react/recommended",
-    "plugin:prettier/recommended"
-  ],
+  extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 12,
-    sourceType: "module",
+    sourceType: 'module'
   },
-  plugins: ["react"],
+  plugins: ['react'],
   rules: {
-    "import/extensions": "off",
-    "prettier/prettier": "warn",
-    "react/jsx-filename-extension": "off",
-    "react/prop-types": "off"
+    'import/extensions': 'off',
+    'prettier/prettier': 'warn',
+    'react/jsx-filename-extension': 'off',
+    'react/prop-types': 'off'
   },
   settings: {
-    "react": {
-      "version": "detect"
+    react: {
+      version: 'detect'
     }
   }
 };

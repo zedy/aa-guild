@@ -12,7 +12,8 @@ import { getFutureEvents } from '../../redux/events/events.selectors';
 // component
 const HpHero = () => {
   const futureEvents = useSelector(getFutureEvents);
-  const latestEvent = futureEvents.length !== 0 ? futureEvents[0] : null;
+  const latestEvent =
+    futureEvents.future.length !== 0 ? futureEvents.future[0] : null;
 
   const LinkElement = () => {
     return (

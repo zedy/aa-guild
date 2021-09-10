@@ -1,5 +1,6 @@
 // libs
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 // routes
@@ -12,13 +13,14 @@ const AsyncRoute = ({ componentPath, ...props }) => {
 
 const AdminRoute = props => {
   if (!props.user && !props.user.isAdmin)
-    return <Redirect to={route.HOME_PAGE} />;
+    return <Redirect to={route.THROW_403} />;
 
   return <AsyncRoute {...props} />;
 };
 
 const AuthenticatedRoute = props => {
-  if (!props.user) return <Redirect to={route.THROW_403} />;
+  if (!props.user || props.user.id !== props.computedMatch.params.id)
+    return <Redirect to={route.THROW_403} />;
 
   return <AsyncRoute {...props} />;
 };
@@ -32,7 +34,9 @@ const GuestRoute = props => {
 };
 
 // component
-export const Router = ({ currentUser }) => {
+export const Router = ({ match, currentUser }) => {
+  if (!currentUser) return null;
+
   return (
     <Switch>
       <GuestRoute exact path={route.HOME_PAGE} componentPath='homepage' />
@@ -64,15 +68,11 @@ export const Router = ({ currentUser }) => {
         path={route.PLAYER_LISTING}
         componentPath='playerlisting'
       />
+      <GuestRoute exact path={route.PLAYER_PAGE} componentPath='playerpage' />
       <AuthenticatedRoute
         exact
         user={currentUser}
-        path={route.PLAYER_PAGE}
-        componentPath='playerpage'
-      />
-      <AuthenticatedRoute
-        exact
-        user={currentUser}
+        match={match}
         path={route.PLAYER_PROFILE}
         componentPath='playerprofile'
       />
@@ -93,4 +93,4 @@ export const Router = ({ currentUser }) => {
   );
 };
 
-export default Router;
+export default withRouter(Router);
