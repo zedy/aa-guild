@@ -14,9 +14,7 @@ import store from './redux/store';
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </BrowserRouter>
     <ReduxToastr
       timeOut={3000}

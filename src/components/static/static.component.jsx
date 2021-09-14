@@ -1,8 +1,8 @@
 // libs
 import React from 'react';
 
-export const Placeholder = () => (
-  <div className='ui placeholder'>
+export const Placeholder = placeholderClass => (
+  <div className={`ui ${placeholderClass} placeholder`}>
     <div className='image header'>
       <div className='medium line'></div>
       <div className='full line'></div>

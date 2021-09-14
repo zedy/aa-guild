@@ -4,8 +4,16 @@ import { Link } from 'react-router-dom';
 import { Tab } from 'semantic-ui-react';
 
 // components
+import AboutUsForm from '../../components/about-us/about-us-form.component';
 import EventList from '../../components/event/event-list.component';
 import NewsList from '../../components/news/news-list.components';
+
+// helper functions
+const renderAboutUs = () => (
+  <Tab.Pane>
+    <AboutUsForm />
+  </Tab.Pane>
+);
 
 const renderEvents = () => (
   <Tab.Pane>
@@ -28,6 +36,10 @@ const renderNews = () => (
 // TODO add Loading to class
 const panes = [
   {
+    menuItem: 'About us',
+    render: renderAboutUs
+  },
+  {
     menuItem: 'Events',
     render: renderEvents
   },
@@ -40,9 +52,11 @@ const panes = [
 // component
 const AdminDashboard = () => {
   return (
-    <div className='content'>
-      <h1>Admin dashboard</h1>
-      <Tab panes={panes} />
+    <div className='ui container'>
+      <div className='content'>
+        <h1>Admin dashboard</h1>
+        <Tab panes={panes} />
+      </div>
     </div>
   );
 };

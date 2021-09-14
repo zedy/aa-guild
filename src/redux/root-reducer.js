@@ -7,7 +7,8 @@ import userReducer from './user/user.reducer';
 import dmReducer from './dm/dm.reducer';
 import eventsReducer from './events/events.reducer';
 import dndReducer from './dnd/dnd.reducer';
-import NewsReducer from './news/news.reducer';
+import newsReducer from './news/news.reducer';
+import miscReducer from './misc/misc.reducer';
 
 // TODO => redux-persist
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   events: eventsReducer,
   dnd: dndReducer,
   toastr: toastrReducer,
-  news: NewsReducer
+  news: newsReducer,
+  misc: miscReducer
 });
 
 export default rootReducer;

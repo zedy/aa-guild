@@ -73,12 +73,12 @@ const firestoreApiCreate = async (docType, payload) => {
   }
 };
 
-const firestoreApiSet = async (docType, id, payload) => {
+const firestoreApiSet = async (docType, id, payload, overwrite = false) => {
   const collectionRef = firestore.doc(`${docType}/${id}`);
   const snapShot = await collectionRef.get();
   const firestoreResponse = new firebaseResponseSuccess();
 
-  if (!snapShot.exists) {
+  if (!snapShot.exists || overwrite) {
     try {
       await collectionRef.set(payload);
       firestoreResponse.payload = { collectionRef: collectionRef };
@@ -93,6 +93,20 @@ const firestoreApiSet = async (docType, id, payload) => {
 
   return firestoreResponse;
 };
+//
+
+// Misc
+// About us
+export const updateAboutUs = async data => {
+  if (!data) return new firebaseResponseError().response;
+
+  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+
+  const response = await firestoreApiSet('misc', 'aboutus', data, true);
+
+  return sendFirebaseResponse('aboutUsUpdate', response);
+};
+
 //
 
 // NEWS

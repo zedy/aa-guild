@@ -14,6 +14,12 @@ export const fetchDMList = async () => {
   return data;
 };
 
+export const fetchAboutUs = async () => {
+  const collectionRef = firestore.doc('misc/aboutus');
+  const data = await collectionRef.get().then(data => data.data());
+  return data;
+};
+
 export const fetchAllEvents = async () => {
   return fetchAllOfType('events');
 };

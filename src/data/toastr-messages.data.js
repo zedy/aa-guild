@@ -12,7 +12,11 @@ const TOASTR_MESSAGES = {
   updatedEvent: 'Successfully updated Event',
   collectionAlreadyExists: 'This collection already exists. Contact support',
   createdNews: 'Successfully created a new news article',
-  updatedNews: 'Successfully updated news article'
+  updatedNews: 'Successfully updated news article',
+  maxElementCount: 'You cannot add more elements of this type',
+  aboutUsUpdate: 'Updated the about us page',
+  emptyFields: 'At least one paragraph and one image is required',
+  removedElement: 'Removed element from about us form'
 };
 
 export default TOASTR_MESSAGES;

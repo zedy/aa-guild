@@ -20,10 +20,14 @@ import { ModalContentNewUser } from './components/modal/content/modal-content.co
 import { setCurrentUser } from './redux/user/user.actions';
 import { setEventsList } from './redux/events/events.actions';
 import { setNewsList } from './redux/news/news.actions';
+import { setAboutUs } from './redux/misc/misc.actions';
 
 // utils
-import { fetchAllEvents } from './utils/firebaseFetch';
-import { fetchAllNews } from './utils/firebaseFetch';
+import {
+  fetchAllEvents,
+  fetchAllNews,
+  fetchAboutUs
+} from './utils/firebaseFetch';
 
 const App = () => {
   let unsubscribeFromAuth = null;
@@ -36,6 +40,8 @@ const App = () => {
     (async () => {
       const news = await fetchAllNews();
       dispatch(setNewsList(news));
+      const aboutus = await fetchAboutUs();
+      dispatch(setAboutUs(aboutus));
       const events = await fetchAllEvents();
       dispatch(setEventsList(events));
     })();
