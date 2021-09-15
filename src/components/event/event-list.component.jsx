@@ -10,7 +10,6 @@ import { getSplitEventList } from '../../redux/events/events.selectors';
 
 const EventList = () => {
   const eventList = useSelector(getSplitEventList);
-  console.log(eventList);
 
   return (
     <div className='event-list'>

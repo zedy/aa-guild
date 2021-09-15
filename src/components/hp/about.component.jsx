@@ -10,11 +10,13 @@ import { getAboutUs } from '../../redux/misc/misc.selectors';
 
 // consts & helpers
 const image = src => (
-  <img alt='about-us' className='ui fluid image' src={src} />
+  <div className='image-wrapper element'>
+    <img alt='about-us' className='ui fluid image' src={src} />
+  </div>
 );
 
 const parapraph = p => (
-  <div className='ui text' dangerouslySetInnerHTML={{ __html: p }} />
+  <div className='ui text element' dangerouslySetInnerHTML={{ __html: p }} />
 );
 
 const renderData = data => {

@@ -1,0 +1,15 @@
+.throw403 {
+  &.content {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 200px;
+    text-align: center;
+  }
+  p {
+    font-size: 19px;
+  }
+}

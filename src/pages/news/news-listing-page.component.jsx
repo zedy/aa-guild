@@ -4,9 +4,11 @@ import NewsList from '../../components/news/news-list.components';
 
 const NewsListingPage = () => {
   return (
-    <div className='content'>
-      <h1>News</h1>
-      <NewsList />
+    <div className='ui container content'>
+      <div className='listing-page'>
+        <h1>News</h1>
+        <NewsList />
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@
 import React from 'react';
 
 // styles
-import '../../components/hp/hp.styles.scss';
+import './homepage.styles.scss';
 
 // components
 import DMList from '../../components/hp/dm-list.component';

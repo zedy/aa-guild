@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
+// styles
+import './user-profile.styles.scss';
+
 // firebase
 import { auth } from '../../firebase/firebase.utils';
 
@@ -12,22 +15,24 @@ import Button from '../buttons/button.components';
 
 const UserProfileDropdown = ({ user, history }) => {
   return (
-    <div className='item'>
-      <Dropdown icon='user outline'>
+    <div className='item user-profile-dropdown'>
+      <Dropdown floating icon='user outline'>
         <Dropdown.Menu>
           <Dropdown.Item>
             <Link
               style={{ color: '#000' }}
-              className='item'
+              className=''
               to={`/admin/dashboard`}>
+                <i className='ui settings icon'></i>
               Admin dashboard
             </Link>
           </Dropdown.Item>
           <Dropdown.Item>
             <Link
               style={{ color: '#000' }}
-              className='item'
+              className=''
               to={`/player/${user.id}/profile`}>
+                <i className='ui user circle icon'></i>
               User profile
             </Link>
           </Dropdown.Item>

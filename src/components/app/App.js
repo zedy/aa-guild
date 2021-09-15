@@ -7,27 +7,30 @@ import {
   updateNewUserFlag,
   auth,
   createUserProfileDocument
-} from './firebase/firebase.utils';
+} from '../../firebase/firebase.utils';
+
+// styles
+import './app.styles.scss';
 
 // components
-import Router from './components/router/router.component';
-import Header from './components/header/header.component';
-import Footer from './components/footer/footer.component';
-import { ModalHero } from './components/modal/modal.component';
-import { ModalContentNewUser } from './components/modal/content/modal-content.component';
+import Router from '../router/router.component';
+import Header from '../header/header.component';
+import Footer from '../footer/footer.component';
+import { ModalHero } from '../modal/modal.component';
+import { ModalContentNewUser } from '../modal/content/modal-content.component';
 
 // redux
-import { setCurrentUser } from './redux/user/user.actions';
-import { setEventsList } from './redux/events/events.actions';
-import { setNewsList } from './redux/news/news.actions';
-import { setAboutUs } from './redux/misc/misc.actions';
+import { setCurrentUser } from '../../redux/user/user.actions';
+import { setEventsList } from '../../redux/events/events.actions';
+import { setNewsList } from '../../redux/news/news.actions';
+import { setAboutUs } from '../../redux/misc/misc.actions';
 
 // utils
 import {
   fetchAllEvents,
   fetchAllNews,
   fetchAboutUs
-} from './utils/firebaseFetch';
+} from '../../utils/firebaseFetch';
 
 const App = () => {
   let unsubscribeFromAuth = null;

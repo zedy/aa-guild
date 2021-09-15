@@ -3,6 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tab } from 'semantic-ui-react';
 
+// styles
+import './admin-dashboard.styles.scss';
+
 // components
 import AboutUsForm from '../../components/about-us/about-us-form.component';
 import EventList from '../../components/event/event-list.component';
@@ -17,18 +20,24 @@ const renderAboutUs = () => (
 
 const renderEvents = () => (
   <Tab.Pane>
-    <Link to='/event/create' className='ui teal button'>
-      Create new Event &nbsp;<i className='plus icon'></i>
-    </Link>
+    <div className='ui headline'>
+      <Link to='/event/create' className='ui teal right floated button'>
+        Create new Event &nbsp;<i className='plus icon'></i>
+      </Link>
+      <h2>All events</h2>
+    </div>
     <EventList />
   </Tab.Pane>
 );
 
 const renderNews = () => (
   <Tab.Pane>
-    <Link to='/news/create' className='ui teal button'>
-      Write new article &nbsp;<i className='plus icon'></i>
-    </Link>
+    <div className='ui headline'>
+      <Link to='/news/create' className='ui teal right floated button'>
+        Write new article &nbsp;<i className='plus icon'></i>
+      </Link>
+      <h2>All news</h2>
+    </div>
     <NewsList />
   </Tab.Pane>
 );
@@ -53,7 +62,7 @@ const panes = [
 const AdminDashboard = () => {
   return (
     <div className='ui container'>
-      <div className='content'>
+      <div className='dashboard content'>
         <h1>Admin dashboard</h1>
         <Tab panes={panes} />
       </div>

@@ -12,7 +12,7 @@ const AsyncRoute = ({ componentPath, ...props }) => {
 };
 
 const AdminRoute = props => {
-  if (!props.user && !props.user.isAdmin)
+  if (!props.user || !props.user.isAdmin)
     return <Redirect to={route.THROW_403} />;
 
   return <AsyncRoute {...props} />;
@@ -35,7 +35,7 @@ const GuestRoute = props => {
 
 // component
 export const Router = ({ match, currentUser }) => {
-  if (!currentUser) return null;
+  //if (!currentUser) return null;
 
   return (
     <Switch>

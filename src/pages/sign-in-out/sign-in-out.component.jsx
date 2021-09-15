@@ -6,7 +6,7 @@ import SignIn from '../../components/signin/signin-form.component';
 import SignUp from '../../components/signup/signup-form.component';
 
 const SingInOut = () => (
-  <div className='ui container content' style={{ paddingTop: '9em' }}>
+  <div className='ui container content'>
     <div className='ui grid container sign-in-and-sign-up'>
       <SignIn />
       <SignUp />

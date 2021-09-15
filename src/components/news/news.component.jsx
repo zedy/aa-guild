@@ -11,7 +11,7 @@ const getDate = date => {
 // component
 const NewsArticle = ({ newsArticle }) => {
   return (
-    <div>
+    <>
       <div
         className='ui inverted vertical masthead center aligned segment'
         style={{
@@ -41,7 +41,7 @@ const NewsArticle = ({ newsArticle }) => {
           }}></div>
         <p>{newsArticle.text}</p>
       </div>
-    </div>
+    </>
   );
 };
 

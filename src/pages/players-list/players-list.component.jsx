@@ -22,11 +22,13 @@ const PlayersPage = () => {
 
   return (
     <div className='ui container content'>
-      <h1>Player list</h1>
-      <div className='ui middle aligned divided list'>
-        {playerData.map(player => (
-          <PlayerItem key={player.displayName} data={player} />
-        ))}
+      <div className='listing-page'>
+        <h1>Player list</h1>
+        <div className='ui middle aligned divided list'>
+          {playerData.map(player => (
+            <PlayerItem key={player.displayName} data={player} />
+          ))}
+        </div>
       </div>
     </div>
   );

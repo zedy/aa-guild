@@ -1,0 +1,27 @@
+.header {
+  & > div {
+    padding: 0 !important;
+  }
+  .ui.menu {
+    .signin-link {
+      color: white;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .item {
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+
+  & + div.content {
+    & > .grid {
+      margin-top: 0 !important;
+    }
+    min-height: calc(100vh - 159px);
+  }
+}

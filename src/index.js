@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import ReduxToastr from 'react-redux-toastr';
 
 // components
-import App from './App';
+import App from './components/app/App';
 
 // redux
 import store from './redux/store';
