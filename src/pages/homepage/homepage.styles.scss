@@ -5,6 +5,11 @@
     }
   }
   .dm-list {
+    .profile {
+      img {
+        max-width: 200px !important;
+      }
+    }
     .bio {    
       display: flex;
       flex-direction: column;

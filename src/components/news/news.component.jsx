@@ -1,6 +1,9 @@
 // libs
 import React from 'react';
 
+// styles
+import './news.styles.scss';
+
 // helper functions
 const getDate = date => {
   var theDate = new Date(date * 1000);
@@ -15,8 +18,7 @@ const NewsArticle = ({ newsArticle }) => {
       <div
         className='ui inverted vertical masthead center aligned segment'
         style={{
-          backgroundImage: `url("${newsArticle.heroImage}")`,
-          minHeight: '550px'
+          backgroundImage: `url("${newsArticle.heroImage}")`
         }}>
         <div className='ui grid middle aligned'>
           <div className='row'>
@@ -28,16 +30,17 @@ const NewsArticle = ({ newsArticle }) => {
           </div>
         </div>
       </div>
-      <div className='ui container content' style={{ paddingTop: '4em' }}>
+      <div className='ui container content'>
         <div className='ui'>
-          <span>{getDate(newsArticle.createdAt)}</span>
+          <strong className='date'>
+            Objavljeno {getDate(newsArticle.createdAt)}
+          </strong>
           <div dangerouslySetInnerHTML={{ __html: newsArticle.article }} />
         </div>
         <div
-          className='ui inverted vertical masthead center aligned segment'
+          className='ui body-image'
           style={{
-            backgroundImage: `url("${newsArticle.bodyImage}")`,
-            minHeight: '550px'
+            backgroundImage: `url("${newsArticle.bodyImage}")`
           }}></div>
         <p>{newsArticle.text}</p>
       </div>

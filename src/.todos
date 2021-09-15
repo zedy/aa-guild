@@ -8,6 +8,7 @@
 - REfactor imageupload elemnt defaultPlaceholder to accept object with size props and placeholder
 - add icons for dnd classes and sheet upload
 - refaktorisi DMList + koju god komponentu da prikaje Placeholder umesto return null;
+- responsive (mobile)
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!

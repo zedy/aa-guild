@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 // components
 import DMItem from './dm-item.component';
+import { Placeholder } from '../../components/static/static.component';
 
 // redux
 import { getDMList } from '../../redux/dm/dm.actions';
@@ -11,6 +12,21 @@ import { getDMList } from '../../redux/dm/dm.actions';
 // utils
 import { fetchDMList } from '../../utils/firebaseFetch';
 
+// helper functions
+const renderPlaceholder = () => (
+  <div className='twelve wide column'>
+    <Placeholder placeholderClass='fluid' />
+  </div>
+);
+
+const renderData = dmList => {
+  return dmList.map((dm, index) => (
+    <DMItem item={dm} index={index} key={index} />
+  ));
+};
+//
+
+// component
 const DMList = () => {
   const dispatch = useDispatch();
   const [dmList, setDmList] = useState(null);
@@ -23,16 +39,12 @@ const DMList = () => {
     })();
   }, []);
 
-  if (!dmList) return null;
-
   return (
-    <section className='dm-list' style={{ marginTop: '5em' }}>
-      <div className='ui container'>
+    <section className='dm-list'>
+      <div className='ui container content'>
         <h1>Nasi DM-ovi</h1>
         <div className='ui grid'>
-          {dmList.map((dm, index) => (
-            <DMItem item={dm} index={index} key={index} />
-          ))}
+          {!dmList ? renderPlaceholder() : renderData(dmList)}
         </div>
       </div>
     </section>

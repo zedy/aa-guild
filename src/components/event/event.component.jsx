@@ -15,6 +15,9 @@ import {
   EventRedirectLink
 } from './event-buttons.component';
 
+// styles
+import './event.styles.scss';
+
 // firebase
 import { eventRegister } from '../../firebase/firebase.utils';
 
@@ -25,16 +28,17 @@ const LocationMarker = () => (
   </div>
 );
 
+const getDate = eventDate => {
+  var theDate = new Date(eventDate * 1000);
+  const dateString = theDate.toUTCString();
+  return dateString;
+};
+//
+
 // component
 const Event = ({ event, currentUser }) => {
   const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
   const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
-
-  const getDate = eventDate => {
-    var theDate = new Date(eventDate * 1000);
-    const dateString = theDate.toUTCString();
-    return dateString;
-  };
 
   // TODO refactor these two methods
   const eventRegistration = async () => {
@@ -73,8 +77,7 @@ const Event = ({ event, currentUser }) => {
       <div
         className='ui inverted vertical masthead center aligned segment'
         style={{
-          backgroundImage: `url("${event.heroImage}")`,
-          minHeight: '550px'
+          backgroundImage: `url("${event.heroImage}")`
         }}>
         <div className='ui grid middle aligned'>
           <div className='row'>
@@ -88,7 +91,8 @@ const Event = ({ event, currentUser }) => {
           </div>
         </div>
       </div>
-      <div className='ui container content' style={{ paddingTop: '4em' }}>
+      <div className='ui container content'>
+        <h3>Detalji o eventu</h3>
         <table className='ui table'>
           <tbody>
             <tr>
@@ -106,12 +110,14 @@ const Event = ({ event, currentUser }) => {
           </tbody>
         </table>
         <div
-          className='ui inverted vertical masthead center aligned segment'
+          className='ui body-image'
           style={{
-            backgroundImage: `url("${event.bodyImage}")`,
-            minHeight: '550px'
+            backgroundImage: `url("${event.bodyImage}")`
           }}></div>
-        <div dangerouslySetInnerHTML={{ __html: event.text }} />
+        <div
+          className='text'
+          dangerouslySetInnerHTML={{ __html: event.text }}
+        />
         <div style={{ height: '450px', width: '100%' }}>
           <GoogleMaps geoLoc={event.geoLocation}>
             <LocationMarker
