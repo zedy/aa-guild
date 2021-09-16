@@ -25,19 +25,20 @@ const HpHero = () => {
   };
 
   return (
-    <div
-      className='ui inverted vertical masthead center aligned segment'
-      style={{
-        backgroundImage: 'url(' + hero + ')',
-        minHeight: '550px'
-      }}>
-      <div className='ui grid middle aligned'>
-        <div className='row'>
-          <div className='column'>
-            <div className='ui text '>
-              <h1 className='ui inverted header'>Asocijacija Avanturista</h1>
-              <h2>Udruzenje igraca i ljubitelja D&D-a.</h2>
-              {latestEvent && LinkElement()}
+    <div className='hero-banner'>
+      <div
+        className='ui inverted vertical masthead center aligned segment'
+        style={{
+          backgroundImage: 'url(' + hero + ')'
+        }}>
+        <div className='ui grid middle aligned'>
+          <div className='row'>
+            <div className='column'>
+              <div className='ui text '>
+                <h1 className='ui inverted header'>Asocijacija Avanturista</h1>
+                <h2>Udruzenje igraca i ljubitelja D&D-a.</h2>
+                {latestEvent && LinkElement()}
+              </div>
             </div>
           </div>
         </div>
