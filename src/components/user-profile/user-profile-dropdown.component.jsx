@@ -23,7 +23,7 @@ const UserProfileDropdown = ({ user, history }) => {
               style={{ color: '#000' }}
               className=''
               to={`/admin/dashboard`}>
-                <i className='ui settings icon'></i>
+              <i className='ui settings icon'></i>
               Admin dashboard
             </Link>
           </Dropdown.Item>
@@ -32,7 +32,7 @@ const UserProfileDropdown = ({ user, history }) => {
               style={{ color: '#000' }}
               className=''
               to={`/player/${user.id}/profile`}>
-                <i className='ui user circle icon'></i>
+              <i className='ui user circleu icon'></i>
               User profile
             </Link>
           </Dropdown.Item>

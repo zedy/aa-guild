@@ -1,5 +1,5 @@
 // libs
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
@@ -7,7 +7,12 @@ import { toastr } from 'react-redux-toastr';
 // components
 import InputField from '../form/form-element-wrapper.component';
 import Loader from '../loader/loader.component';
-import { select, optionsItem, text } from '../form/form-elements.component';
+import {
+  select,
+  optionsItem,
+  text,
+  rte
+} from '../form/form-elements.component';
 
 // utils
 import { fetchDndData } from '../../utils/firebaseFetch';
@@ -21,7 +26,9 @@ import {
 // firebase
 import { updatePlayerCharacterProfile } from '../../firebase/firebase.utils';
 
+// component
 const CharacterProfileForm = ({ user }) => {
+  const editorRef = useRef(null);
   const [dndData, setDndData] = useState([]);
 
   useEffect(() => {
@@ -37,7 +44,9 @@ const CharacterProfileForm = ({ user }) => {
     initialTouched: false,
     validationSchema: Yup.object(VALIDATION_SCHEMA),
     onSubmit: async values => {
-      const response = await updatePlayerCharacterProfile(user, values);
+      const newValues = Object.assign({}, values);
+      newValues.bio = editorRef.current.getContent();
+      const response = await updatePlayerCharacterProfile(user, newValues);
       toastr[response.status](response.message);
     }
   });
@@ -55,6 +64,14 @@ const CharacterProfileForm = ({ user }) => {
       case 'class':
         return dndData.class.map(charClass => {
           return optionsItem(charClass);
+        });
+      case 'alignment':
+        return dndData.alignment.map(alignment => {
+          return optionsItem(alignment);
+        });
+      case 'sex':
+        return ['female', 'male', 'other'].map(alignment => {
+          return optionsItem(alignment);
         });
       case 'subClass':
         return dndData.subClass[formik.values.charClass.toLowerCase()]
@@ -85,6 +102,9 @@ const CharacterProfileForm = ({ user }) => {
               name={element.id}
               formik={formik}>
               {element.type === 'text' ? text(element, formik) : null}
+              {element.type === 'rte'
+                ? rte(pcData ? pcData.bio : '', editorRef)
+                : null}
               {element.type === 'select'
                 ? select(element, formik, optionsBuilder(element.id))
                 : null}

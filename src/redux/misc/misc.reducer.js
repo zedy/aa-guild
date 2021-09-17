@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-  aboutus: null
+  aboutus: null,
+  badges: null
 };
 
 const miscReducer = (state = INITIAL_STATE, action) => {
@@ -8,6 +9,11 @@ const miscReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         aboutus: action.payload
+      };
+    case 'SET_BADGES':
+      return {
+        ...state,
+        badges: action.payload
       };
     default:
       return state;

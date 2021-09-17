@@ -35,7 +35,8 @@ const GuestRoute = props => {
 
 // component
 export const Router = ({ match, currentUser }) => {
-  //if (!currentUser) return null;
+  if (!currentUser) return null;
+  // TODO
 
   return (
     <Switch>
@@ -55,6 +56,7 @@ export const Router = ({ match, currentUser }) => {
         path={route.EVENT_LISTING}
         componentPath='eventlisting'
       />
+      <GuestRoute exact path={route.BADGES_PAGE} componentPath='badgespage' />
       <GuestRoute exact path={route.NEWS_LISTING} componentPath='newslisting' />
       <AdminRoute
         exact

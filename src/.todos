@@ -10,6 +10,8 @@
 - refaktorisi DMList + koju god komponentu da prikaje Placeholder umesto return null;
 - responsive (mobile)
 - napravi About us > slider
+- napravi layout componente
+- router ln 39: refresh >> 403 (logged in)
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!

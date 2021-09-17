@@ -1,0 +1,119 @@
+.player-list {
+//
+}
+
+.accordion {
+  &__item {
+    border-bottom: 1px solid;
+  }
+  &__panel {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 30px;
+  }
+  &__button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    padding: 15px;
+    position: relative;
+
+    &[aria-expanded="true"] {
+      .pointers {
+        i {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+  .pointers {
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+
+    i {
+      transition: transform 0.3s;
+    }
+  }
+
+  .badges,
+  .bio {
+    display: flex;
+    padding-top: 15px;
+
+    & > span {
+      width: 200px;
+    }
+    div {
+      width: calc(100% - 200px);
+    }
+  }
+  .content {
+    padding-left: 25px;
+  }
+  .top_panel {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+  .top_left_stats,
+  .top_right_stats {
+    display: flex;
+    flex-direction: column;
+  }
+  .middle_panel {
+    .image {
+      background-position: center center;
+      background-size: cover;
+      border-radius: 50%;
+      height: 200px;
+      width: 200px;
+    }
+  }
+  .stat {
+    font-size: 16px;
+    padding-bottom: 5px;
+  }
+  .badge-list {
+    display: flex;
+    padding-top: 10px;
+  }
+}
+
+.badge {
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  margin-right: 15px;
+  height: 100px;
+  width: 100px;
+
+  &.tpk {
+    background-image: url('../../assets/badge_tpk.png');
+  }
+
+  &.necromancer {
+    background-image: url('../../assets/badge_necromancer.png');
+  }
+
+  &.soul {
+    background-image: url('../../assets/badge_soul.png');
+  }
+
+  &.goblin_slayer {
+    background-image: url('../../assets/badge_goblin_slayer.png');
+  }
+
+  &.druid {
+    background-image: url('../../assets/badge_druid.png');
+  }
+
+  &.dragon_slayer {
+    background-image: url('../../assets/badge_dragon_slayer.png');
+  }
+
+  &.beholder{
+    background-image: url('../../assets/badge_beholder.png');
+  }
+}

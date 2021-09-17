@@ -1,4 +1,5 @@
 import AdminDashboard from '../pages/admin/admin-dashboard.component';
+import BadgesPage from '../pages/badges/badges-page.component';
 import EventRoutePage from '../pages/event/event-page.component';
 import EventForm from '../components/event/event-form.component';
 import EventListPage from '../pages/event/event-list-page.component';
@@ -13,6 +14,7 @@ import PlayerProfile from '../pages/player-profile/player-profile.component';
 import SignInOut from '../pages/sign-in-out/sign-in-out.component';
 import Throw403 from '../pages/403/throw403.component';
 
+export const BADGES_PAGE = '/adventurer-badges';
 export const DASHBOARD = '/admin/dashboard';
 export const EVENT_ROUTE_PAGE = '/event/:id';
 export const EVENT_CREATE = '/event/create';
@@ -28,10 +30,12 @@ export const SIGN_IN_OUT = '/signin';
 export const THROW_403 = '/403';
 
 export const componentPaths = {
+  badgespage: BadgesPage,
   dashboard: AdminDashboard,
   eventcreate: EventForm,
   eventlisting: EventListPage,
   eventroutepage: EventRoutePage,
+  fourohthree: Throw403,
   homepage: HomePage,
   newsarticle: NewsArticle,
   newscreate: NewsForm,
@@ -40,6 +44,5 @@ export const componentPaths = {
   playerlisting: PlayersListPage,
   playerpage: PlayerPage,
   playerprofile: PlayerProfile,
-  signinout: SignInOut,
-  fourohthree: Throw403
+  signinout: SignInOut
 };

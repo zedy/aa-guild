@@ -1,5 +1,9 @@
 // libs
 import React, { useEffect, useState } from 'react';
+import { Accordion } from 'react-accessible-accordion';
+
+// styles
+import './player-list.styles.scss';
 
 // components
 import PlayerItem from '../../components/player-item/player-item.component';
@@ -19,7 +23,7 @@ const renderData = playerData => {
 //
 
 // component
-const PlayersPage = () => {
+const PlayersPage = () => {  
   const [playerData, setPlayerData] = useState([]);
 
   useEffect(() => {
@@ -33,11 +37,13 @@ const PlayersPage = () => {
     <section className='ui container content'>
       <div className='listing-page'>
         <h1>Player list</h1>
-        <div className='ui middle aligned divided list'>
-          {!playerData || playerData.length === 0
-            ? renderPlaceholder()
-            : renderData(playerData)}
-          {}
+        <div className='ui player-list'>
+          <Accordion allowZeroExpanded='true'>
+            {!playerData || playerData.length === 0
+              ? renderPlaceholder()
+              : renderData(playerData)}
+            {}
+          </Accordion>
         </div>
       </div>
     </section>

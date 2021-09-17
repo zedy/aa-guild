@@ -20,6 +20,12 @@ export const fetchAboutUs = async () => {
   return data;
 };
 
+export const fetchBadges = async () => {
+  const collectionRef = firestore.doc('misc/badges');
+  const data = await collectionRef.get().then(data => data.data());
+  return data;
+};
+
 export const fetchAllEvents = async () => {
   return fetchAllOfType('events');
 };
@@ -76,7 +82,6 @@ export const fetchAllPlayersData = async () => {
 };
 
 export const fetchDndData = async () => {
-  let data = {};
   const collectionRef = firestore.collection('dnd');
   const snapShot = await collectionRef.get();
 
@@ -84,8 +89,7 @@ export const fetchDndData = async () => {
     return item.data();
   });
 
-  data.class = results1[0].class;
-  data.race = results1[0].race;
+  const data = Object.assign({}, results1[0]);
 
   const snapShot2 = await collectionRef
     .doc('SreTdEm1OwPrqp7s73dF')
