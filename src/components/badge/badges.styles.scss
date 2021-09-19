@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   padding-top: 20px;
 
-  .item {
+  & > .item {
     align-items: center;
     display: flex;
     flex-direction: column;

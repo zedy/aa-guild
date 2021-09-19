@@ -23,7 +23,7 @@ const renderData = playerData => {
 //
 
 // component
-const PlayersPage = () => {  
+const PlayersPage = () => {
   const [playerData, setPlayerData] = useState([]);
 
   useEffect(() => {

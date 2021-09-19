@@ -9,19 +9,25 @@ import { Placeholder } from '../static/static.component';
 import { getAboutUs } from '../../redux/misc/misc.selectors';
 
 // consts & helpers
-const image = src => (
-  <div className='image-wrapper element'>
+const image = (src, key) => (
+  <div key={key} className='image-wrapper element'>
     <img alt='about-us' className='ui fluid image' src={src} />
   </div>
 );
 
-const parapraph = p => (
-  <div className='ui text element' dangerouslySetInnerHTML={{ __html: p }} />
+const parapraph = (p, key) => (
+  <div
+    key={key}
+    className='ui text element'
+    dangerouslySetInnerHTML={{ __html: p }}
+  />
 );
 
 const renderData = data => {
   return data.keyOrder.map(key => {
-    return key.includes('rte') ? parapraph(data[key]) : image(data[key]);
+    return key.includes('rte')
+      ? parapraph(data[key], key)
+      : image(data[key], key);
   });
 };
 

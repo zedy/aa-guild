@@ -10,11 +10,6 @@ const miscReducer = (state = INITIAL_STATE, action) => {
         ...state,
         aboutus: action.payload
       };
-    case 'SET_BADGES':
-      return {
-        ...state,
-        badges: action.payload
-      };
     default:
       return state;
   }

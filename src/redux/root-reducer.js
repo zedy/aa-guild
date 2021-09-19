@@ -9,6 +9,7 @@ import eventsReducer from './events/events.reducer';
 import dndReducer from './dnd/dnd.reducer';
 import newsReducer from './news/news.reducer';
 import miscReducer from './misc/misc.reducer';
+import badgeReducer from './badges/badges.reducer';
 
 // TODO => redux-persist
 
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   dnd: dndReducer,
   toastr: toastrReducer,
   news: newsReducer,
-  misc: miscReducer
+  misc: miscReducer,
+  badges: badgeReducer
 });
 
 export default rootReducer;

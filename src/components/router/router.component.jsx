@@ -56,7 +56,17 @@ export const Router = ({ match, currentUser }) => {
         path={route.EVENT_LISTING}
         componentPath='eventlisting'
       />
-      <GuestRoute exact path={route.BADGES_PAGE} componentPath='badgespage' />
+      <AdminRoute
+        exact
+        path={route.BADGE_CREATE}
+        user={currentUser}
+        componentPath='badgecreate'
+      />
+      <GuestRoute
+        exact
+        path={route.BADGES_LISTING}
+        componentPath='badgeslisting'
+      />
       <GuestRoute exact path={route.NEWS_LISTING} componentPath='newslisting' />
       <AdminRoute
         exact

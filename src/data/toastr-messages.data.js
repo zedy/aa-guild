@@ -16,7 +16,9 @@ const TOASTR_MESSAGES = {
   maxElementCount: 'You cannot add more elements of this type',
   aboutUsUpdate: 'Updated the about us page',
   emptyFields: 'At least one paragraph and one image is required',
-  removedElement: 'Removed element from about us form'
+  removedElement: 'Removed element from about us form',
+  badgeCreate: 'Created a new badge',
+  updatedBadge: 'Successfully update badge'
 };
 
 export default TOASTR_MESSAGES;

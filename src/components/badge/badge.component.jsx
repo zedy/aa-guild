@@ -2,11 +2,13 @@
 import React from 'react';
 
 // component
-const Badge = ({ name, description }) => {
+const Badge = ({ badge: { name, description, badgeImage } }) => {
   return (
     <div className='item'>
-      <span className={`badge ${name}`}></span>
-      <p>{description}</p>
+      <span
+        className={`badge ${name}`}
+        style={{ backgroundImage: `url(${badgeImage})` }}></span>
+      <p className='description'>{description}</p>
     </div>
   );
 };

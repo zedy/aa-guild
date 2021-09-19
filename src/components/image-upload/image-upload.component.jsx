@@ -38,13 +38,12 @@ const ImageUpload = ({
   };
 
   const generateFileName = file => {
-    const ext = file.type.split('/');
-    const filenameAttachments =
-      path === 'events' || path === 'news'
-        ? attachTimeStampToImage(fileName)
-        : fileName;
+    if (path === 'events' || path === 'news') {
+      const ext = file.type.split('/');
+      return `${attachTimeStampToImage(fileName)}.${ext[1]}`;
+    }
 
-    return `${filenameAttachments}.${ext[1]}`;
+    return file.name.replace(/[\W_]+/g, ' ');
   };
 
   return (

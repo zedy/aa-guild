@@ -8,6 +8,7 @@ import './admin-dashboard.styles.scss';
 
 // components
 import AboutUsForm from '../../components/about-us/about-us-form.component';
+import BadgeList from '../../components/badge/badge-list.component';
 import EventList from '../../components/event/event-list.component';
 import NewsList from '../../components/news/news-list.components';
 
@@ -15,6 +16,18 @@ import NewsList from '../../components/news/news-list.components';
 const renderAboutUs = () => (
   <Tab.Pane>
     <AboutUsForm />
+  </Tab.Pane>
+);
+
+const renderBadges = () => (
+  <Tab.Pane>
+    <div className='ui headline'>
+      <Link to='/badge/create' className='ui teal right floated button'>
+        Create new Badge &nbsp;<i className='plus icon'></i>
+      </Link>
+      <h2>All badges</h2>
+    </div>
+    <BadgeList />
   </Tab.Pane>
 );
 
@@ -47,6 +60,10 @@ const panes = [
   {
     menuItem: 'About us',
     render: renderAboutUs
+  },
+  {
+    menuItem: 'Badges',
+    render: renderBadges
   },
   {
     menuItem: 'Events',

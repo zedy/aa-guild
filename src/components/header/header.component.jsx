@@ -28,6 +28,9 @@ const Header = () => {
               </Link>
             </div>
             <div className='item right'>
+              <Link className='item' to='/badges'>
+                Badges
+              </Link>
               <Link className='item' to='/events'>
                 Events
               </Link>

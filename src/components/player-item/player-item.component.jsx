@@ -9,16 +9,18 @@ import {
 import { Popup } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+// components
+import Badge from '../badge/badge.component';
+
 // helper functions
 const renderBadges = ({ badges }) => {
   if (!badges) return <span>Go on advantures and earn some!</span>;
 
-  return badges.map(item => {
+  return badges.map(badge => {
     return (
-      <Link
-        to='/adventurer-badges'
-        key={item}
-        className={`badge ${item}`}></Link>
+      <Link to='/badges' key={badge.id} className='badge'>
+        <Badge key={badge.id} badge={badge} />
+      </Link>
     );
   });
 };

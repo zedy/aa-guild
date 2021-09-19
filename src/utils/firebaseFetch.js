@@ -20,10 +20,8 @@ export const fetchAboutUs = async () => {
   return data;
 };
 
-export const fetchBadges = async () => {
-  const collectionRef = firestore.doc('misc/badges');
-  const data = await collectionRef.get().then(data => data.data());
-  return data;
+export const fetchAllBadges = async () => {
+  return fetchAllOfType('badges');
 };
 
 export const fetchAllEvents = async () => {

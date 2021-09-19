@@ -27,7 +27,6 @@ firebase.initializeApp(firebaseConfig);
 const firestoreGetDoc = async collectionRef => {
   const doc = await collectionRef.get().then(object => {
     const data = object.data();
-
     data.id = object.id;
 
     return data;
@@ -107,6 +106,24 @@ export const updateAboutUs = async data => {
   return sendFirebaseResponse('aboutUsUpdate', response);
 };
 
+// Badges
+export const createBadge = async data => {
+  if (!data) return new firebaseResponseError().response;
+
+  const response = await firestoreApiCreate('badges', data);
+
+  return sendFirebaseResponse('badgeCreate', response);
+};
+
+export const updateBadges = async (docID, data) => {
+  if (!data && !docID.length) return new firebaseResponseError().response;
+
+  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+
+  const firestoreResponse = await firestoreApiUpdate('badges', docID, data);
+
+  return sendFirebaseResponse('updatedBadge', firestoreResponse);
+};
 //
 
 // NEWS
@@ -129,6 +146,7 @@ export const updateNews = async (newsId, data) => {
 
   return sendFirebaseResponse('updatedNews', firestoreResponse);
 };
+//
 
 // Events
 export const eventRegister = async (event, userId, unregistering) => {
@@ -247,6 +265,7 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
     createdAt: new Date(),
     characterPic: '',
     profilePic: '',
+    badges: [],
     pc: [],
     ...otherData
   };

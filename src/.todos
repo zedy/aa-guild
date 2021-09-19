@@ -12,6 +12,8 @@
 - napravi About us > slider
 - napravi layout componente
 - router ln 39: refresh >> 403 (logged in)
+- forms => remove actions and <form> into Form component
+- !!! Add rules and Badge pages !!!
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!
