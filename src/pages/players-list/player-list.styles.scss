@@ -1,5 +1,5 @@
 .player-list {
-//
+  //
 }
 
 .accordion {
@@ -17,7 +17,7 @@
     padding: 15px;
     position: relative;
 
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       .pointers {
         i {
           transform: rotate(180deg);
@@ -82,14 +82,4 @@
       display: none;
     }
   }
-}
-
-.badge {
-  background-position: center center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: block;
-  margin-right: 15px;
-  height: 100px;
-  width: 100px;
 }

@@ -62,6 +62,11 @@ export const Router = ({ match, currentUser }) => {
         user={currentUser}
         componentPath='badgecreate'
       />
+      <AdminRoute
+        path={route.BADGE_ROUTE_PAGE}
+        user={currentUser}
+        componentPath='badgeroutepage'
+      />
       <GuestRoute
         exact
         path={route.BADGES_LISTING}

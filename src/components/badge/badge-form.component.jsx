@@ -1,6 +1,5 @@
 // libs
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
@@ -12,6 +11,7 @@ import FormLayout from '../../layouts/form.component';
 // components
 import InputField from '../form/form-element-wrapper.component';
 import { text, image } from '../form/form-elements.component';
+import { Placeholder } from '../static/static.component';
 
 // utils
 import { VALIDATION_SCHEMA, FIELDS_MAP, initValues } from './badge-form.utils';
@@ -46,6 +46,8 @@ const BadgeForm = ({ badge, history }) => {
     formik.setFieldValue(element, url);
     setLoading(false);
   };
+
+  if (!badge) return <Placeholder placeholderClass='fluid' />;
 
   return (
     <>

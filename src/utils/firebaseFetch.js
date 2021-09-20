@@ -53,6 +53,17 @@ export const fetchAllOfType = async (collectionName, order = null) => {
   return data;
 };
 
+export const fetchBadge = async id => {
+  const collectionRef = firestore.doc(`badges/${id}`);
+  const data = await collectionRef.get().then(ref => {
+    const badgeDate = ref.data();
+    badgeDate.id = id;
+    return badgeDate;
+  });
+
+  return data;
+};
+
 export const fetchUser = async userId => {
   const userRef = firestore.doc(`users/${userId}`);
   const data = await userRef.get().then(user => {

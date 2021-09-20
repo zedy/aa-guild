@@ -27,6 +27,7 @@ import {
 import { createNews, updateNews } from '../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
 
+// component
 const NewsForm = ({ newsArticle, history }) => {
   const dispatch = useDispatch();
   const editorRef = useRef(null);

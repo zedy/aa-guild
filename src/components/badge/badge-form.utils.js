@@ -17,10 +17,8 @@ export const FIELDS_MAP = [
   }
 ];
 
-export const initValues = badge => {
-  return {
-    description: badge ? badge.description : '',
-    badgeImage: badge ? badge.badgeImage : '',
-    name: badge ? badge.name : ''
-  };
-};
+export const initValues = badge => ({
+  description: badge ? badge.description : '',
+  badgeImage: badge ? badge.badgeImage : '',
+  name: badge ? badge.name : ''
+});
