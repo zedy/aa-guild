@@ -27,7 +27,7 @@ const renderBadges = () => (
       </Link>
       <h2>All badges</h2>
     </div>
-    <BadgeList />
+    <BadgeList showActions='true' />
   </Tab.Pane>
 );
 
@@ -78,8 +78,8 @@ const panes = [
 // component
 const AdminDashboard = () => {
   return (
-    <div className='ui container'>
-      <div className='dashboard content'>
+    <div className='ui container content'>
+      <div className='dashboard'>
         <h1>Admin dashboard</h1>
         <Tab panes={panes} />
       </div>

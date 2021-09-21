@@ -1,15 +1,12 @@
 // libs
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // styles
 import './badges.styles.scss';
 
 // firestore
 import { fetchAllBadges } from '../../utils/firebaseFetch';
-
-// redux
-import { getCurrentUser } from '../../redux/user/user.selectors';
 
 // components
 import { Placeholder } from '../static/static.component';
@@ -25,16 +22,15 @@ const renderPlaceholder = () => (
   </div>
 );
 
-const renderData = (badges, currentUser) => {
+const renderData = (badges, showActions) => {
   return badges.map(badge => {
-    return <Badge key={badge.id} badge={badge} currentUser={currentUser} />;
+    return <Badge key={badge.id} badge={badge} showActions={showActions} />;
   });
 };
 //
 
 // component
-const BadgeList = () => {
-  const currentUser = useSelector(getCurrentUser);
+const BadgeList = ({ showActions }) => {
   const dispatch = useDispatch();
   const [badgesList, setBadgesList] = useState(null);
 
@@ -48,7 +44,7 @@ const BadgeList = () => {
 
   return (
     <div className='badge-list'>
-      {!badgesList ? renderPlaceholder() : renderData(badgesList, currentUser)}
+      {!badgesList ? renderPlaceholder() : renderData(badgesList, showActions)}
     </div>
   );
 };

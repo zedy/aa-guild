@@ -40,7 +40,7 @@ const AboutUs = () => {
 
   return (
     <section className='about-us'>
-      <div className='ui container content' style={{ paddingTop: '3em' }}>
+      <div className='ui container content'>
         <h1>About us</h1>
         {!data || Object.keys(data).length === 0
           ? renderPlaceholder()

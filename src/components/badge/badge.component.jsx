@@ -12,7 +12,7 @@ const renderActions = id => (
 // component
 const Badge = ({
   badge: { name, description, badgeImage, id },
-  currentUser
+  showActions
 }) => {
   return (
     <div className='badge item'>
@@ -21,7 +21,7 @@ const Badge = ({
         style={{ backgroundImage: `url(${badgeImage})` }}></span>
       <p className='description'>{description}</p>
 
-      {currentUser && currentUser.isAdmin && renderActions(id)}
+      {showActions && renderActions(id)}
     </div>
   );
 };

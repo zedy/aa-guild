@@ -124,7 +124,7 @@ const EventPlayerList = ({ event }) => {
   if (!usersList) return null;
 
   return (
-    <>
+    <div className='ui container content'>
       <h1 style={{ marginBottom: '2em' }}>
         List of players for {getDate(event.date.seconds)}
       </h1>
@@ -184,7 +184,7 @@ const EventPlayerList = ({ event }) => {
           Save
         </button>
       </form>
-    </>
+    </div>
   );
 };
 

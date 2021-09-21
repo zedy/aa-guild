@@ -1,10 +1,14 @@
+.container.content {
+  padding-top: 50px;
+}
+
 .masthead {
   display: flex;
   justify-content: center;
 }
 
-.profile-page,
-.sign-in-and-sign-up,
-.listing-page {
-  padding-top: 50px !important;
+.event-page,
+.news-page,
+.badge-page {
+  min-height: calc(100vh - 159px);
 }

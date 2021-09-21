@@ -63,7 +63,7 @@ const NewsForm = ({ newsArticle, history }) => {
   };
 
   return (
-    <>
+    <div className='ui container content'>
       <h1>{!newsArticle ? 'News create' : 'Edit news'}</h1>
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
@@ -118,7 +118,7 @@ const NewsForm = ({ newsArticle, history }) => {
           Cancel
         </Link>
       </form>
-    </>
+    </div>
   );
 };
 

@@ -13,7 +13,9 @@
 - napravi layout componente
 - router ln 39: refresh >> 403 (logged in)
 - forms => remove actions and <form> into Form component
-- !!! Add rules and Badge pages !!!
+- odvoji Masthead i druge HTML delove u sopstvene komponente
+- Inegrate FormLayout to other forms
+- !!! Add rules !!!
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!

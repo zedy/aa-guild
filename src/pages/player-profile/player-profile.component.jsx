@@ -36,11 +36,9 @@ const panes = [
 const PlayerProfile = () => {
   return (
     <div className='profile-page'>
-      <div className='ui container'>
-        <div className='ui content'>
-          <h1>Profiles page</h1>
-          <Tab panes={panes} />
-        </div>
+      <div className='ui container content'>
+        <h1>Profiles page</h1>
+        <Tab panes={panes} />
       </div>
     </div>
   );

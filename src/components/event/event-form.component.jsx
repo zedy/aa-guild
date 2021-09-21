@@ -86,7 +86,7 @@ const EventForm = ({ event, history }) => {
   };
 
   return (
-    <>
+    <div className='ui container content'>
       <h1>{!event ? 'Event create' : 'Edit event'}</h1>
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
@@ -147,7 +147,7 @@ const EventForm = ({ event, history }) => {
           Cancel
         </Link>
       </form>
-    </>
+    </div>
   );
 };
 

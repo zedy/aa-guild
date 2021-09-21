@@ -13,11 +13,11 @@ import BadgeForm from '../../components/badge/badge-form.component';
 // component
 const BadgesRoutePage = ({ match }) => {
   const badges = useSelector(getListByID);
-  console.log(badges);
+
   if (Object.keys(badges).length === 0) return <Loader />;
 
   const badge = badges[match.params.id];
-  console.log(badge);
+
   return (
     <div className='badge-page'>
       {/* <Route

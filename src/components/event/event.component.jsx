@@ -73,7 +73,7 @@ const Event = ({ event, currentUser }) => {
   };
 
   return (
-    <div>
+    <>
       <div
         className='ui inverted vertical masthead center aligned segment'
         style={{
@@ -143,7 +143,7 @@ const Event = ({ event, currentUser }) => {
           }}
         />
       </ModalDefault>
-    </div>
+    </>
   );
 };
 

@@ -18,7 +18,7 @@
     }
   }
 
-  & + .container { // changed from content
+  & + .container {
     & > .grid {
       margin-top: 0 !important;
     }
