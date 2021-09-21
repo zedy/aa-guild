@@ -15,7 +15,6 @@
 - forms => remove actions and <form> into Form component
 - odvoji Masthead i druge HTML delove u sopstvene komponente
 - Inegrate FormLayout to other forms
-- !!! Add rules !!!
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!

@@ -40,6 +40,9 @@ const Header = () => {
               <Link className='item' to='/players-list'>
                 Players
               </Link>
+              <Link className='item' to='/rules'>
+                Rules
+              </Link>
             </div>
             <div className='item'>
               <LanguageSwitcher />

@@ -105,6 +105,7 @@ export const Router = ({ match, currentUser }) => {
         user={currentUser}
         componentPath='signinout'
       />
+      <GuestRoute exact path={route.RULES} componentPath='rules' />
       <GuestRoute exact path={route.THROW_403} componentPath='fourohthree' />
     </Switch>
   );
