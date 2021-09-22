@@ -25,8 +25,8 @@ const CharacterProfile = () => {
   };
 
   return (
-    <div className='ui grid'>
-      <div className='four wide column'>
+    <div className='ui stackable two column grid'>
+      <div className='column'>
         <ImageUpload
           fileName={currentUser.id}
           path='character'
@@ -36,7 +36,7 @@ const CharacterProfile = () => {
           defaultImage={defaultAvatar}
         />
       </div>
-      <div className='twelve wide column'>
+      <div className='column'>
         <CharacterProfileForm user={currentUser} />
       </div>
     </div>

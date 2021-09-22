@@ -6,14 +6,14 @@ import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
 
 // components
-import InputField from '../form/form-element-wrapper.component';
-import { text, image, rte } from '../form/form-elements.component';
+import InputField from '../../form/form-element-wrapper.component';
+import { text, image, rte } from '../../form/form-elements.component';
 
 // redux
 import {
   addArticleToState,
   updateNewsArticleById
-} from '../../redux/news/news.actions';
+} from '../../../redux/news/news.actions';
 
 // utils
 import {
@@ -24,7 +24,7 @@ import {
 } from './news-form.utils';
 
 // firebase
-import { createNews, updateNews } from '../../firebase/firebase.utils';
+import { createNews, updateNews } from '../../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
 
 // component
@@ -64,12 +64,14 @@ const NewsForm = ({ newsArticle, history }) => {
 
   return (
     <div className='ui container content'>
-      <h1>{!newsArticle ? 'News create' : 'Edit news'}</h1>
+      <h1>
+        {!newsArticle ? 'News create' : `Edit news: ${newsArticle.headline}`}
+      </h1>
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
         onSubmit={formik.handleSubmit}>
-        <div className='ui grid'>
-          <div className='four wide column'>
+        <div className='ui stackable two column grid'>
+          <div className='column'>
             {FIELDS_MAP_LEFT.map(element => {
               return (
                 <InputField
@@ -93,7 +95,7 @@ const NewsForm = ({ newsArticle, history }) => {
               );
             })}
           </div>
-          <div className='twelve wide column'>
+          <div className='column'>
             {FIELDS_MAP_RIGHT.map(element => {
               return (
                 <InputField

@@ -6,7 +6,7 @@ import { toastr } from 'react-redux-toastr';
 // components
 import ImageUpload from '../image-upload/image-upload.component';
 import UserForm from '../user-form/user-form.component';
-import Loader from '../loader/loader.component';
+import { Loader } from '../static/static.component';
 
 // redux
 import { getCurrentUser } from '../../redux/user/user.selectors';
@@ -31,8 +31,8 @@ const UserProfile = () => {
   };
 
   return (
-    <div className='ui grid'>
-      <div className='four wide column'>
+    <div className='ui stackable two column grid'>
+      <div className='column'>
         <ImageUpload
           fileName={currentUser.id}
           path='profile'
@@ -42,7 +42,7 @@ const UserProfile = () => {
           defaultImage={defaultAvatar}
         />
       </div>
-      <div className='twelve wide column'>
+      <div className='column'>
         <UserForm user={currentUser} />
       </div>
     </div>

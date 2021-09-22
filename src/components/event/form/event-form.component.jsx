@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
 
 // components
-import InputField from '../form/form-element-wrapper.component';
+import InputField from '../../form/form-element-wrapper.component';
 import {
   text,
   image,
@@ -14,17 +14,17 @@ import {
   select,
   optionsItem,
   rte
-} from '../form/form-elements.component';
+} from '../../form/form-elements.component';
 
 // firebase
-import { createEvent, updateEvent } from '../../firebase/firebase.utils';
+import { createEvent, updateEvent } from '../../../firebase/firebase.utils';
 import { Link } from 'react-router-dom';
 
 // redux
 import {
   addEventToState,
   updateEventById
-} from '../../redux/events/events.actions';
+} from '../../../redux/events/events.actions';
 
 // utils
 import {
@@ -91,8 +91,8 @@ const EventForm = ({ event, history }) => {
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
         onSubmit={formik.handleSubmit}>
-        <div className='ui grid'>
-          <div className='four wide column'>
+        <div className='ui stackable two column grid'>
+          <div className='column'>
             {FIELD_MAP_LEFT.map(element => {
               return (
                 <InputField
@@ -116,7 +116,7 @@ const EventForm = ({ event, history }) => {
               );
             })}
           </div>
-          <div className='twelve wide column'>
+          <div className='column'>
             {FIELD_MAP_RIGHT.map(element => {
               return (
                 <InputField

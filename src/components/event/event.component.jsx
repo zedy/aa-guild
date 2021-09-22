@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { toastr } from 'react-redux-toastr';
 
 // components
+import Masthead from '../../layouts/masthead.component';
 import { GoogleMaps } from '../google/google.component';
 import { ModalDefault } from '../modal/modal.component';
 import {
@@ -13,7 +14,7 @@ import {
   EventRegisterButton,
   EventUnregisterButton,
   EventRedirectLink
-} from './event-buttons.component';
+} from '../buttons/buttons.component';
 
 // styles
 import './event.styles.scss';
@@ -21,18 +22,15 @@ import './event.styles.scss';
 // firebase
 import { eventRegister } from '../../firebase/firebase.utils';
 
+// utils
+import { convertDateToUTCString } from '../../utils';
+
 // helper functions
 const LocationMarker = () => (
   <div>
     <i style={{ fontSize: '40px' }} className='icon map marker alternate'></i>
   </div>
 );
-
-const getDate = eventDate => {
-  var theDate = new Date(eventDate * 1000);
-  const dateString = theDate.toUTCString();
-  return dateString;
-};
 //
 
 // component
@@ -40,17 +38,19 @@ const Event = ({ event, currentUser }) => {
   const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
   const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
 
-  // TODO refactor these two methods
   const eventRegistration = async () => {
-    const response = await eventRegister(event, currentUser.id);
-    toastr[response.status](response.message);
+    sendRequestToFirebase();
     setIsRegisterModalActive(false);
   };
 
   const eventUnRegistration = async () => {
-    const response = await eventRegister(event, currentUser.id, true);
-    toastr[response.status](response.message);
+    sendRequestToFirebase(true);
     setIsConfirmModalActive(false);
+  };
+
+  const sendRequestToFirebase = async (unregister = false) => {
+    const response = await eventRegister(event, currentUser.id, unregister);
+    toastr[response.status](response.message);
   };
   //
 
@@ -74,23 +74,10 @@ const Event = ({ event, currentUser }) => {
 
   return (
     <>
-      <div
-        className='ui inverted vertical masthead center aligned segment'
-        style={{
-          backgroundImage: `url("${event.heroImage}")`
-        }}>
-        <div className='ui grid middle aligned'>
-          <div className='row'>
-            <div className='column'>
-              <div className='ui text '>
-                <h1 className='ui inverted header'>{event.headline}</h1>
-                <h2>{getDate(event.date.seconds)}</h2>
-                {eventButtonRender()}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Masthead url={event.heroImage} headline={event.headline}>
+        <h2>{convertDateToUTCString(event.date.seconds)}</h2>
+        {eventButtonRender()}
+      </Masthead>
       <div className='ui container content'>
         <h3>Detalji o eventu</h3>
         <table className='ui table'>

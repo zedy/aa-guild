@@ -30,7 +30,7 @@ import {
   fetchAllEvents,
   fetchAllNews,
   fetchAboutUs
-} from '../../utils/firebaseFetch';
+} from '../../firebase/firebase-fetch';
 
 const App = () => {
   let unsubscribeFromAuth = null;

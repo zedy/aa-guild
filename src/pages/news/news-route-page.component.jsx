@@ -7,9 +7,9 @@ import { Route } from 'react-router-dom';
 import { getListByID } from '../../redux/news/news.selectors';
 
 // components
-import Loader from '../../components/loader/loader.component';
+import { Loader } from '../../components/static/static.component';
 import NewsArticle from '../../components/news/news.component';
-import NewsForm from '../../components/news/news-form.component';
+import NewsForm from '../../components/news/form/news-form.component';
 
 const NawsRoutePage = ({ match }) => {
   const news = useSelector(getListByID);

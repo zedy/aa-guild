@@ -8,10 +8,10 @@ import { getListByID } from '../../redux/events/events.selectors';
 import { getCurrentUser } from '../../redux/user/user.selectors';
 
 // components
-import Loader from '../../components/loader/loader.component';
+import { Loader } from '../../components/static/static.component';
 import Event from '../../components/event/event.component';
 import EventPlayerList from '../../components/event/event-player-list.component';
-import EventForm from '../../components/event/event-form.component';
+import EventForm from '../../components/event/form/event-form.component';
 
 const EventRoutePage = ({ match }) => {
   const events = useSelector(getListByID);

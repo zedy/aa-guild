@@ -85,7 +85,6 @@ export const Router = ({ match, currentUser }) => {
         path={route.PLAYER_LISTING}
         componentPath='playerlisting'
       />
-      <GuestRoute exact path={route.PLAYER_PAGE} componentPath='playerpage' />
       <AuthenticatedRoute
         exact
         user={currentUser}

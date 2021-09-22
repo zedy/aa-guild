@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import './badges.styles.scss';
 
 // firestore
-import { fetchAllBadges } from '../../utils/firebaseFetch';
+import { fetchAllBadges } from '../../firebase/firebase-fetch';
 
 // components
 import { Placeholder } from '../static/static.component';

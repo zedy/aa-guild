@@ -8,7 +8,6 @@ import { toastr } from 'react-redux-toastr';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 // components
-import Button from '../buttons/button.components';
 import InputField from '../form/form-element-wrapper.component';
 import { text } from '../form/form-elements.component';
 
@@ -18,7 +17,10 @@ import {
   FIELDS_MAP,
   INIT_VALUES
 } from './signin-form.utils';
+import { GoogleSignIn, SignIn } from '../buttons/buttons.component';
+//
 
+// component
 const SingIn = () => {
   const formik = useFormik({
     initialValues: INIT_VALUES,
@@ -35,7 +37,7 @@ const SingIn = () => {
   });
 
   return (
-    <div className='sign-up eight wide column'>
+    <div className='sign-up column'>
       <h2>Sign in</h2>
       <form className='ui form' onSubmit={formik.handleSubmit}>
         {FIELDS_MAP.map(element => {
@@ -49,16 +51,8 @@ const SingIn = () => {
             </InputField>
           );
         })}
-        <button className='ui button teal' type='submit'>
-          Sign in
-        </button>
-        <Button
-          className='ui button red'
-          type='button'
-          onClick={signInWithGoogle}>
-          <i className='google icon'></i>
-          Sign in with Google
-        </Button>
+        {SignIn()}
+        {GoogleSignIn(signInWithGoogle)}
       </form>
     </div>
   );

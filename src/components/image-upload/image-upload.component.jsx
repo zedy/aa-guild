@@ -54,14 +54,14 @@ const ImageUpload = ({
             {!imageList.length ? (
               <img
                 alt='alt tag'
-                className={`ui medium image ${isAvatar ? 'circular' : ''}`}
+                className={`ui image ${isAvatar ? 'circular' : ''}`}
                 src={presetImage ? presetImage : defaultImage}
               />
             ) : null}
             {imageList.map((image, index) => (
               <div key={index} className='image-item'>
                 <img
-                  className={`ui medium image ${isAvatar ? 'circular' : ''}`}
+                  className={`ui image ${isAvatar ? 'circular' : ''}`}
                   src={image['data_url']}
                   alt='upload-placeholder'
                   style={{ width: '100%' }}

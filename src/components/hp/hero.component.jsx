@@ -3,6 +3,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+// components
+import Masthead from '../../layouts/masthead.component';
+
 // assets
 import hero from '../../assets/hero_main.jpg';
 
@@ -26,23 +29,10 @@ const HpHero = () => {
 
   return (
     <div className='hero-banner'>
-      <div
-        className='ui inverted vertical masthead center aligned segment'
-        style={{
-          backgroundImage: 'url(' + hero + ')'
-        }}>
-        <div className='ui grid middle aligned'>
-          <div className='row'>
-            <div className='column'>
-              <div className='ui text '>
-                <h1 className='ui inverted header'>Asocijacija Avanturista</h1>
-                <h2>Udruzenje igraca i ljubitelja D&D-a.</h2>
-                {latestEvent && LinkElement()}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Masthead url={hero} headline='Asocijacija Avanturista'>
+        <h2>Udruzenje igraca i ljubitelja D&D-a.</h2>
+        {latestEvent && LinkElement()}
+      </Masthead>
     </div>
   );
 };

@@ -11,7 +11,7 @@ import './user-profile.styles.scss';
 import { auth } from '../../firebase/firebase.utils';
 
 // component
-import Button from '../buttons/button.components';
+import Button from '../buttons/buttons.component';
 
 const UserProfileDropdown = ({ user, history }) => {
   return (

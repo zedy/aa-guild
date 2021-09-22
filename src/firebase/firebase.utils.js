@@ -99,7 +99,7 @@ const firestoreApiSet = async (docType, id, payload, overwrite = false) => {
 export const updateAboutUs = async data => {
   if (!data) return new firebaseResponseError().response;
 
-  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+  data.createdAt = getTime();
 
   const response = await firestoreApiSet('misc', 'aboutus', data, true);
 
@@ -118,7 +118,7 @@ export const createBadge = async data => {
 export const updateBadges = async (docID, data) => {
   if (!data && !docID.length) return new firebaseResponseError().response;
 
-  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+  data.createdAt = getTime();
 
   const firestoreResponse = await firestoreApiUpdate('badges', docID, data);
 
@@ -130,7 +130,7 @@ export const updateBadges = async (docID, data) => {
 export const createNews = async data => {
   if (!data) return new firebaseResponseError().response;
 
-  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+  data.createdAt = getTime();
 
   const response = await firestoreApiCreate('news', data);
 
@@ -140,7 +140,7 @@ export const createNews = async data => {
 export const updateNews = async (newsId, data) => {
   if (!data && !newsId.length) return new firebaseResponseError().response;
 
-  data.createdAt = firebase.firestore.Timestamp.fromDate(new Date()).toDate();
+  data.createdAt = getTime();
 
   const firestoreResponse = await firestoreApiUpdate('news', newsId, data);
 
@@ -339,6 +339,9 @@ const sendFirebaseResponse = (message, firestoreResponse, payload) => {
 
   return firestoreResponse.response;
 };
+
+const getTime = () =>
+  firebase.firestore.Timestamp.fromDate(new Date()).toDate();
 //
 
 export const auth = firebase.auth();

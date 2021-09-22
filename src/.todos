@@ -15,6 +15,7 @@
 - forms => remove actions and <form> into Form component
 - odvoji Masthead i druge HTML delove u sopstvene komponente
 - Inegrate FormLayout to other forms
+- Badge assignment page
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!

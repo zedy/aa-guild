@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toastr } from 'react-redux-toastr';
-import { Link } from 'react-router-dom';
 
 // layouts
 import FormLayout from '../../layouts/form.component';
@@ -11,7 +10,7 @@ import FormLayout from '../../layouts/form.component';
 // components
 import InputField from '../form/form-element-wrapper.component';
 import { text, image } from '../form/form-elements.component';
-import { Placeholder } from '../static/static.component';
+import { BackToDash, Submit } from '../buttons/buttons.component';
 
 // utils
 import { VALIDATION_SCHEMA, FIELDS_MAP, initValues } from './badge-form.utils';
@@ -47,8 +46,6 @@ const BadgeForm = ({ badge, history }) => {
     setLoading(false);
   };
 
-  if (!badge) return <Placeholder placeholderClass='fluid' />;
-
   return (
     <>
       <FormLayout>
@@ -80,12 +77,8 @@ const BadgeForm = ({ badge, history }) => {
             );
           })}
           <div className='ui divider'></div>
-          <button type='submit' className='ui button teal'>
-            Submit
-          </button>
-          <Link to='/admin/dashboard' className='ui button orange'>
-            Cancel
-          </Link>
+          {Submit()}
+          {BackToDash()}
         </form>
       </FormLayout>
     </>

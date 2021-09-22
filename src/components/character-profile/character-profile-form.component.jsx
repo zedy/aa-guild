@@ -6,16 +6,17 @@ import { toastr } from 'react-redux-toastr';
 
 // components
 import InputField from '../form/form-element-wrapper.component';
-import Loader from '../loader/loader.component';
+import { Loader } from '../static/static.component';
 import {
   select,
   optionsItem,
   text,
   rte
 } from '../form/form-elements.component';
+import { Submit } from '../buttons/buttons.component';
 
 // utils
-import { fetchDndData } from '../../utils/firebaseFetch';
+import { fetchDndData } from '../../firebase/firebase-fetch';
 import {
   VALIDATION_SCHEMA,
   FIELDS_MAP,
@@ -87,7 +88,7 @@ const CharacterProfileForm = ({ user }) => {
   if (typeof dndData === 'undefined' || dndData.length === 0) return <Loader />;
 
   return (
-    <div className='sign-up eight wide column'>
+    <>
       <h2>Basic character details</h2>
       <form className='ui form' onSubmit={formik.handleSubmit}>
         {FIELDS_MAP.map(element => {
@@ -112,11 +113,9 @@ const CharacterProfileForm = ({ user }) => {
           );
         })}
         <div className='ui divider'></div>
-        <button type='submit' className='ui button teal'>
-          Submit
-        </button>
+        {Submit()}
       </form>
-    </div>
+    </>
   );
 };
 

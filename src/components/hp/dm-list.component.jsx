@@ -10,7 +10,7 @@ import { Placeholder } from '../../components/static/static.component';
 import { getDMList } from '../../redux/dm/dm.actions';
 
 // utils
-import { fetchDMList } from '../../utils/firebaseFetch';
+import { fetchDMList } from '../../firebase/firebase-fetch';
 
 // helper functions
 const renderPlaceholder = () => (

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+// components
+import { EditNews } from '../buttons/buttons.component';
+
 // redux
 import { getCurrentUser } from '../../redux/user/user.selectors';
 
 // helper functions
-const getDate = date => {
-  var theDate = new Date(date * 1000);
-  return theDate.toUTCString();
-};
+import { convertDateToUTCString } from '../../utils';
 
 // component
 const NewsListItem = ({ news, match }) => {
@@ -34,20 +34,15 @@ const NewsListItem = ({ news, match }) => {
           <span className='header'>{news.headline.toUpperCase()}</span>
           <div className='description'>
             <div className='info'>
-              Date: <strong>{getDate(news.createdAt.seconds)}</strong>
+              Date:{' '}
+              <strong>{convertDateToUTCString(news.createdAt.seconds)}</strong>
             </div>
             <div className='info'>
               Sezona: <strong>{`${news.article.substring(0, 100)} ...`}</strong>
             </div>
           </div>
         </div>
-        {isAdmin() ? (
-          <div className='actions'>
-            <Link className='ui orange button' to={`/news/${news.id}/edit`}>
-              <i className='edit icon'></i>Edit news article
-            </Link>
-          </div>
-        ) : null}
+        {isAdmin() ? <div className='actions'>{EditNews(news.id)}</div> : null}
       </Link>
     </>
   );

@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom';
 import { getListByID } from '../../redux/badges/badges.selectors';
 
 // components
-import Loader from '../../components/loader/loader.component';
+import { Loader } from '../../components/static/static.component';
 import BadgeForm from '../../components/badge/badge-form.component';
 
 // component

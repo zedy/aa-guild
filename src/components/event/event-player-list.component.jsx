@@ -3,117 +3,74 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { toastr } from 'react-redux-toastr';
 
+// utils
+import { convertDateToUTCString } from '../../utils';
+import { getInitialValues, prepValuesForFirestore } from './helpers';
+
 // firestore
-import { fetchUser } from '../../utils/firebaseFetch';
+import { fetchUser } from '../../firebase/firebase-fetch';
 import {
   updateAttendeesList,
   updateUserProfile
 } from '../../firebase/firebase.utils';
 
-const getDate = eventDate => {
-  var theDate = new Date(eventDate * 1000);
-  return theDate.toUTCString();
-};
-
-const getUsersFromFirestore = async userId => {
+// helper functions
+const getUserFromFirestore = async userId => {
   const response = await fetchUser(userId);
   return response;
+};
+
+const updateUsersGamesPlayedField = async (valuesToUpdate, usersList) => {
+  let userObjList = {};
+
+  usersList.map(user => (userObjList[user.id] = user));
+
+  valuesToUpdate.forEach(array => {
+    if (array.length) {
+      array.forEach(item => {
+        let user = userObjList[item.id];
+        let number =
+          item.direction === 'increase'
+            ? user.gamesPlayed + 1
+            : user.gamesPlayed - 1;
+        let data = { gamesPlayed: number };
+        (async () => {
+          await updateUserProfile(user, data);
+        })();
+      });
+    }
+  });
 };
 
 // component
 const EventPlayerList = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [usersList, setUsersList] = useState([]);
+  const initialValues = getInitialValues(event);
 
   useEffect(() => {
     getUsersList();
   }, []);
 
-  const initialValues = () => {
-    let init = {};
-
-    event.attendees.forEach(userId => {
-      init[userId] = event.confirmedAttendees.includes(userId);
-    });
-
-    return init;
-  };
-
   const getUsersList = () => {
     setUsersList([]);
     event.attendees.forEach(userId => {
       (async () => {
-        const user = await getUsersFromFirestore(userId);
+        const user = await getUserFromFirestore(userId);
         setUsersList(usersList => [...usersList, user]);
       })();
     });
   };
 
-  const getValuesForFirestore = values => {
-    const initValues = initialValues();
-    const inc = [];
-    const dec = [];
-    const sync = [];
-
-    Object.keys(values).filter((value, idx) => {
-      if (Object.values(values)[idx]) {
-        sync.push(value);
-      }
-
-      if (Object.values(values)[idx] !== Object.values(initValues)[idx]) {
-        let newObj = {};
-        newObj.id = value;
-
-        if (Object.values(values)[idx]) {
-          newObj.direction = 'increase';
-          inc.push(newObj);
-        } else if (!Object.values(values)[idx]) {
-          newObj.direction = 'decrease';
-          dec.push(newObj);
-        }
-      }
-    });
-
-    return {
-      playerList: sync,
-      gamesPlayedList: [inc, dec]
-    };
-  };
-
-  const updateUsersGamesPlayedField = async valuesToUpdate => {
-    let userObjList = {};
-
-    usersList.map(user => (userObjList[user.id] = user));
-
-    valuesToUpdate.forEach(array => {
-      if (array.length) {
-        array.forEach(item => {
-          let user = userObjList[item.id];
-          let number =
-            item.direction === 'increase'
-              ? user.gamesPlayed + 1
-              : user.gamesPlayed - 1;
-          let data = { gamesPlayed: number };
-          (async () => {
-            await updateUserProfile(user, data);
-          })();
-        });
-      }
-    });
-  };
-
   const formik = useFormik({
-    initialValues: initialValues(),
+    initialValues: initialValues,
     initialTouched: false,
     onSubmit: async values => {
       setLoading(true);
 
-      const playerValues = getValuesForFirestore(values);
-      await updateUsersGamesPlayedField(playerValues.gamesPlayedList);
-      const response = await updateAttendeesList(
-        event.id,
-        playerValues.playerList
-      );
+      const data = prepValuesForFirestore(values, initialValues);
+      await updateUsersGamesPlayedField(data.gamesPlayedList, usersList);
+      const response = await updateAttendeesList(event.id, data.playerList);
       toastr[response.status](response.message);
 
       getUsersList();
@@ -125,9 +82,7 @@ const EventPlayerList = ({ event }) => {
 
   return (
     <div className='ui container content'>
-      <h1 style={{ marginBottom: '2em' }}>
-        List of players for {getDate(event.date.seconds)}
-      </h1>
+      <h1>List of players for {convertDateToUTCString(event.date.seconds)}</h1>
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
         onSubmit={formik.handleSubmit}>

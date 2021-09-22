@@ -10,7 +10,7 @@ import PlayerItem from '../../components/player-item/player-item.component';
 import { Placeholder } from '../../components/static/static.component';
 
 // firestore
-import { fetchAllPlayersData } from '../../utils/firebaseFetch';
+import { fetchAllPlayersData } from '../../firebase/firebase-fetch';
 
 // helper functions
 const renderPlaceholder = () => <Placeholder placeholderClass='fluid' />;

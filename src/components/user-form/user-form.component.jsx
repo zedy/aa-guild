@@ -7,6 +7,7 @@ import { toastr } from 'react-redux-toastr';
 // components
 import InputField from '../form/form-element-wrapper.component';
 import { text, rte } from '../form/form-elements.component';
+import { Submit } from '../buttons/buttons.component';
 
 // firebase
 import { updateUserProfile } from '../../firebase/firebase.utils';
@@ -14,6 +15,7 @@ import { updateUserProfile } from '../../firebase/firebase.utils';
 // utils
 import { VALIDATION_SCHEMA, FIELDS_MAP, initValues } from './user-form.utils';
 
+// component
 const UserForm = ({ user }) => {
   const editorRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -43,7 +45,7 @@ const UserForm = ({ user }) => {
   };
 
   return (
-    <div>
+    <>
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
         onSubmit={formik.handleSubmit}>
@@ -61,11 +63,9 @@ const UserForm = ({ user }) => {
           );
         })}
         <div className='ui divider'></div>
-        <button type='submit' className='ui button teal'>
-          Submit
-        </button>
+        {Submit()}
       </form>
-    </div>
+    </>
   );
 };
 

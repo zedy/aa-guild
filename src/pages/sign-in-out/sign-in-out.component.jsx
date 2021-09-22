@@ -7,7 +7,7 @@ import SignUp from '../../components/signup/signup-form.component';
 
 const SingInOut = () => (
   <div className='ui container content'>
-    <div className='ui grid container sign-in-and-sign-up'>
+    <div className='sign-in-and-sign-up ui stackable two column grid'>
       <SignIn />
       <SignUp />
     </div>

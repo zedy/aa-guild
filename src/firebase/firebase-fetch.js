@@ -1,5 +1,5 @@
 // firebase
-import { firestore } from '../firebase/firebase.utils';
+import { firestore } from './firebase.utils';
 
 // TODO refactor these fetch methods into one dynamic one
 

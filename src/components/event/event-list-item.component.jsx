@@ -7,18 +7,16 @@ import { useSelector } from 'react-redux';
 // redux
 import { getCurrentUser } from '../../redux/user/user.selectors';
 
-// helper functions
-const getDate = eventDate => {
-  var theDate = new Date(eventDate * 1000);
-  return theDate.toUTCString();
-};
+// utils
+import { convertDateToUTCString } from '../../utils';
 
-const isPastEvent = event => {
-  const now = new Date().getTime();
+// buttons
+import { ManagePlayers, EditEvent } from '../buttons/buttons.component';
 
-  return event.date.seconds * 1000 < now;
-};
+// utils
+import { isPastEvent } from './helpers';
 
+// content
 const eventContent = (event, isAdmin) => (
   <>
     <img
@@ -31,7 +29,7 @@ const eventContent = (event, isAdmin) => (
       <span className='header'>{event.headline.toUpperCase()}</span>
       <div className='description'>
         <div className='info'>
-          Date: <strong>{getDate(event.date.seconds)}</strong>
+          Date: <strong>{convertDateToUTCString(event.date.seconds)}</strong>
         </div>
         <div className='info'>
           Sezona: <strong>{event.season}</strong>
@@ -43,12 +41,8 @@ const eventContent = (event, isAdmin) => (
     </div>
     {isAdmin() ? (
       <div className='actions'>
-        <Link className='ui orange button' to={`/event/${event.id}/edit`}>
-          <i className='edit icon'></i>Edit event
-        </Link>
-        <Link className='ui olive button' to={`/event/${event.id}/player-list`}>
-          <i className='users icon'></i>Manage players
-        </Link>
+        {EditEvent(event.id)}
+        {ManagePlayers(event.id)}
       </div>
     ) : null}
   </>
@@ -64,7 +58,7 @@ const EventListItem = ({ event, match }) => {
 
   return (
     <>
-      {isPastEvent(event) || isAdmin() ? (
+      {isPastEvent(event.date) || isAdmin() ? (
         <div className='item'>{eventContent(event, isAdmin)}</div>
       ) : (
         <Link to={`/event/${event.id}`} className='item'>

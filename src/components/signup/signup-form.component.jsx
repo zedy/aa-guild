@@ -10,6 +10,7 @@ import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 // components
 import InputField from '../form/form-element-wrapper.component';
 import { text } from '../form/form-elements.component';
+import { Submit } from '../buttons/buttons.component';
 
 // utils
 import {
@@ -18,6 +19,7 @@ import {
   FIELDS_MAP
 } from './signup-form.utils';
 
+// component
 const SingUp = () => {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
@@ -49,7 +51,7 @@ const SingUp = () => {
   });
 
   return (
-    <div className='sign-up eight wide column'>
+    <div className='sign-up column'>
       <h2>Sign up</h2>
       <form
         className={`ui form ${loading ? 'loading' : ''}`}
@@ -65,9 +67,7 @@ const SingUp = () => {
             </InputField>
           );
         })}
-        <button className='ui button teal' type='submit'>
-          Submit
-        </button>
+        {Submit()}
       </form>
     </div>
   );
