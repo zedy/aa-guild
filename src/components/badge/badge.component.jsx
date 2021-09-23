@@ -1,27 +1,27 @@
 // libs
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-// helper functions
-const renderActions = id => (
-  <Link className='edit-button' to={`/badge/${id}/edit`}>
-    <i className='ui edit icon'></i>
-  </Link>
-);
+// components
+import { EditBadge, RemoveBadgeFromPlayer } from '../buttons/buttons.component';
 
 // component
 const Badge = ({
   badge: { name, description, badgeImage, id },
-  showActions
+  showEdit,
+  removeBadge
 }) => {
   return (
     <div className='badge item'>
+      <strong className='name'>{name}</strong>
       <span
         className={`badge-image ${name}`}
         style={{ backgroundImage: `url(${badgeImage})` }}></span>
       <p className='description'>{description}</p>
 
-      {showActions && renderActions(id)}
+      {showEdit && EditBadge(id)}
+      {removeBadge !== null && typeof removeBadge !== 'undefined'
+        ? RemoveBadgeFromPlayer(removeBadge, id)
+        : null}
     </div>
   );
 };

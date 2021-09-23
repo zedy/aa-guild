@@ -80,11 +80,7 @@ export const Router = ({ match, currentUser }) => {
         componentPath='newscreate'
       />
       <GuestRoute path={route.NEWS_ROUTE_PAGE} componentPath='newsroutepage' />
-      <GuestRoute
-        exact
-        path={route.PLAYER_LISTING}
-        componentPath='playerlisting'
-      />
+      <GuestRoute exact path={route.PLAYERS_PAGE} componentPath='playerspage' />
       <AuthenticatedRoute
         exact
         user={currentUser}

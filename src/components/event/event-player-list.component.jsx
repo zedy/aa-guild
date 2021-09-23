@@ -91,7 +91,7 @@ const EventPlayerList = ({ event }) => {
             return (
               <div className='item' key={user.email}>
                 <div className='ui grid'>
-                  <div className='fourteen wide column'>
+                  <div className='thirteen wide column'>
                     <div className='ui list'>
                       <div className='item'>
                         <img
@@ -101,7 +101,7 @@ const EventPlayerList = ({ event }) => {
                         />
                         <div className='content'>
                           <span className='header'>
-                            {user.fullName.toUpperCase()} --- {user.id}
+                            {user.fullName.toUpperCase()}
                           </span>
                           <div className='description'>
                             Games attended: <strong>{user.gamesPlayed}</strong>
@@ -110,7 +110,7 @@ const EventPlayerList = ({ event }) => {
                       </div>
                     </div>
                   </div>
-                  <div className='two wide column field'>
+                  <div className='three wide column field'>
                     <div className='ui checkbox'>
                       <input
                         type='checkbox'
@@ -131,8 +131,8 @@ const EventPlayerList = ({ event }) => {
         </div>
         <div className='ui top attached label' style={{ top: '-20px' }}>
           <div className='ui grid'>
-            <div className='fourteen wide column'>Player name</div>
-            <div className='two wide column'>Attended</div>
+            <div className='thirteen wide column'>Player name</div>
+            <div className='three wide column'>Attended</div>
           </div>
         </div>
         <button className='ui teal button' type='submit'>

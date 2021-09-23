@@ -61,6 +61,9 @@
     display: flex;
     flex-direction: column;
   }
+  .bottom_panel {
+    position: relative;
+  }
   .middle_panel {
     .image {
       background-position: center center;

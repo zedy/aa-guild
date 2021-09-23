@@ -77,4 +77,22 @@ export const BackToDash = () => (
   </Link>
 );
 
+export const AddBadgeToPlayer = callback => (
+  <Button onClick={e => callback(e)} classList='teal'>
+    Add badge <i className='ui plus icon'></i>
+  </Button>
+);
+
+export const EditBadge = id => (
+  <Link className='edit-button' to={`/badge/${id}/edit`}>
+    <i className='ui edit icon'></i>
+  </Link>
+);
+
+export const RemoveBadgeFromPlayer = (callback, id) => (
+  <Button onClick={e => callback(e, id)} classList='mini red remove-button'>
+    <i className='ui minus icon'></i>
+  </Button>
+);
+
 export default Button;

@@ -11,6 +11,7 @@ import AboutUsForm from '../../components/about-us/about-us-form.component';
 import BadgeList from '../../components/badge/badge-list.component';
 import EventList from '../../components/event/event-list.component';
 import NewsList from '../../components/news/news-list.components';
+import PlayerList from '../../components/player/player-list.component';
 
 // helper functions
 const renderAboutUs = () => (
@@ -27,7 +28,7 @@ const renderBadges = () => (
       </Link>
       <h2>All badges</h2>
     </div>
-    <BadgeList showActions='true' />
+    <BadgeList renderEdit='true' />
   </Tab.Pane>
 );
 
@@ -55,7 +56,17 @@ const renderNews = () => (
   </Tab.Pane>
 );
 
-// TODO add Loading to class
+const renderPlayers = () => (
+  <Tab.Pane>
+    <div className='ui headline'>
+      <h2>Player mods</h2>
+    </div>
+    <div className='ui middle aligned divided list'>
+      <PlayerList />
+    </div>
+  </Tab.Pane>
+);
+
 const panes = [
   {
     menuItem: 'About us',
@@ -72,6 +83,10 @@ const panes = [
   {
     menuItem: 'News',
     render: renderNews
+  },
+  {
+    menuItem: 'Players',
+    render: renderPlayers
   }
 ];
 

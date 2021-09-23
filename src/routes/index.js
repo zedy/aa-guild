@@ -10,7 +10,7 @@ import NewsArticle from '../components/news/news.component';
 import NewsForm from '../components/news/form/news-form.component';
 import NewsListingPage from '../pages/news/news-listing-page.component';
 import NawsRoutePage from '../pages/news/news-route-page.component';
-import PlayersListPage from '../pages/players-list/players-list.component';
+import PlayersPage from '../pages/players/players-page.component';
 import PlayerProfile from '../pages/player-profile/player-profile.component';
 import Rules from '../pages/rules/rules.component';
 import SignInOut from '../pages/sign-in-out/sign-in-out.component';
@@ -27,7 +27,7 @@ export const HOME_PAGE = '/';
 export const NEWS_LISTING = '/news';
 export const NEWS_ROUTE_PAGE = '/news/:id';
 export const NEWS_CREATE = '/news/create';
-export const PLAYER_LISTING = '/players-list';
+export const PLAYERS_PAGE = '/players-list';
 export const PLAYER_PROFILE = '/player/:id/profile';
 export const SIGN_IN_OUT = '/signin';
 export const RULES = '/rules';
@@ -47,7 +47,7 @@ export const componentPaths = {
   newscreate: NewsForm,
   newslisting: NewsListingPage,
   newsroutepage: NawsRoutePage,
-  playerlisting: PlayersListPage,
+  playerspage: PlayersPage,
   playerprofile: PlayerProfile,
   rules: Rules,
   signinout: SignInOut

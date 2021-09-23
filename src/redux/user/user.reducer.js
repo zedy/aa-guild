@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-  currentUser: null
+  currentUser: null,
+  list: null
 };
 
 // ubaci immer.js
@@ -10,6 +11,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload
+      };
+    case 'SET_USER_LIST':
+      return {
+        ...state,
+        list: action.payload
       };
     default:
       return state;
