@@ -10,6 +10,7 @@ import dndReducer from './dnd/dnd.reducer';
 import newsReducer from './news/news.reducer';
 import miscReducer from './misc/misc.reducer';
 import badgeReducer from './badges/badges.reducer';
+import modalReducer from './modal/modal.reducer';
 
 // TODO => redux-persist
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   toastr: toastrReducer,
   news: newsReducer,
   misc: miscReducer,
-  badges: badgeReducer
+  badges: badgeReducer,
+  modal: modalReducer
 });
 
 export default rootReducer;

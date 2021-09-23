@@ -1,6 +1,6 @@
 // libs
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // firebase
 import {
@@ -18,12 +18,14 @@ import Header from '../header/header.component';
 import Footer from '../footer/footer.component';
 import { ModalHero } from '../modal/modal.component';
 import { ModalContentNewUser } from '../modal/content/modal-content.component';
+import Modal from '../modal/modal2.component';
 
 // redux
 import { setCurrentUser } from '../../redux/user/user.actions';
 import { setEventsList } from '../../redux/events/events.actions';
 import { setNewsList } from '../../redux/news/news.actions';
 import { setAboutUs } from '../../redux/misc/misc.actions';
+import { showModal } from '../../redux/modal/modal.actions';
 
 // utils
 import {
@@ -35,9 +37,9 @@ import {
 const App = () => {
   let unsubscribeFromAuth = null;
 
+  const modal = useSelector(state => state.modal);
   const dispatch = useDispatch();
   const [authUser, setAuthUser] = useState(null);
-  const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -65,7 +67,7 @@ const App = () => {
           dispatch(setCurrentUser(authObject));
           setAuthUser(authObject);
 
-          if (data && data.newUser) setIsModalActive(true);
+          if (data && data.newUser) dispatch(showModal('test'));
         });
       }
       // console.log(userAuthObj);
@@ -78,19 +80,21 @@ const App = () => {
     };
   }, [unsubscribeFromAuth]);
 
-  const hideModal = async () => {
-    await updateNewUserFlag(authUser);
-    setIsModalActive(false);
-  };
+  // const hideModal = async () => {
+  //   await updateNewUserFlag(authUser);
+  //   setIsModalActive(false);
+  // };
 
   return (
     <div className='app'>
       <Header />
       <Router currentUser={authUser} />
       <Footer />
-      <ModalHero isActive={isModalActive}>
+      {/* <ModalHero isActive={isModalActive}>
         <ModalContentNewUser handleClick={hideModal} />
-      </ModalHero>
+      </ModalHero> */}
+      {console.log(modal)}
+      <Modal modalInfo={modal} />
     </div>
   );
 };

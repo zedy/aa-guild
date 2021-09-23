@@ -1,5 +1,6 @@
 // libs
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import {
   AccordionItem,
   AccordionItemHeading,
@@ -7,26 +8,31 @@ import {
   AccordionItemPanel
 } from 'react-accessible-accordion';
 
+// redux
+import { showModal } from '../../redux/modal/modal.actions';
+
 // components
 import Badge from '../badge/badge.component';
 import { AddBadgeToPlayer } from '../buttons/buttons.component';
 
 // helper functions
-const renderBadges = ({ badges }) => {
+const renderBadges = (handleClick, badges) => {
   if (!badges) return null;
-
   return badges.map(badge => {
     return <Badge key={badge.id} badge={badge} removeBadge={handleClick} />;
   });
 };
 
-const handleClick = (e, id) => {
-  e.preventDefault();
-  console.log(id);
-};
-
 // component
 const PlayerItemAdmin = ({ data }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = (e, id) => {
+    e.preventDefault();
+    console.log(id);
+    dispatch(showModal('tits'));
+  };
+
   return (
     <AccordionItem>
       <AccordionItemHeading>
@@ -50,7 +56,9 @@ const PlayerItemAdmin = ({ data }) => {
           <div className='badges'>
             <strong>Badges: </strong>
             <div className='actions'>{AddBadgeToPlayer(handleClick)}</div>
-            <div className='badge-list'>{renderBadges(data.pc)}</div>
+            <div className='badge-list'>
+              {renderBadges(handleClick, data.pc.badges)}
+            </div>
           </div>
         </div>
       </AccordionItemPanel>
