@@ -3,6 +3,6 @@ export const showModal = data => ({
   payload: data
 });
 
-export const hideMOdal = () => ({
+export const hideModal = () => ({
   type: 'HIDE_MODAL'
 });

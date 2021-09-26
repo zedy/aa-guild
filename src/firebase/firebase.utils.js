@@ -229,14 +229,14 @@ export const updateNewUserFlag = async user => {
   await firestoreApiUpdate('users', user.id, payload);
 };
 
-export const updatePlayerCharacterProfile = async (user, data) => {
-  if (!user && !data) return new firebaseResponseError().response;
+export const updatePlayerCharacterProfile = async (userId, data) => {
+  if (!userId && !data) return new firebaseResponseError().response;
 
   const payload = {
     pc: data
   };
 
-  const firestoreResponse = await firestoreApiUpdate('users', user.id, payload);
+  const firestoreResponse = await firestoreApiUpdate('users', userId, payload);
 
   return sendFirebaseResponse('updatedCharacter', firestoreResponse);
 };
@@ -265,7 +265,6 @@ export const createUserProfileDocument = async (userAuth, otherData) => {
     createdAt: new Date(),
     characterPic: '',
     profilePic: '',
-    badges: [],
     pc: [],
     ...otherData
   };

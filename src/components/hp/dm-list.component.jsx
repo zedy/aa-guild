@@ -37,7 +37,7 @@ const DMList = () => {
       setDmList(data);
       dispatch(getDMList(data));
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <section className='dm-list'>

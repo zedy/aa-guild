@@ -40,7 +40,7 @@ const BadgeList = ({ showActions }) => {
       dispatch(setBadges(badgesData));
       setBadgesList(badgesData);
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className='badge-list'>

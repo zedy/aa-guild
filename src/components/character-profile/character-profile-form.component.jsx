@@ -47,7 +47,7 @@ const CharacterProfileForm = ({ user }) => {
     onSubmit: async values => {
       const newValues = Object.assign({}, values);
       newValues.bio = editorRef.current.getContent();
-      const response = await updatePlayerCharacterProfile(user, newValues);
+      const response = await updatePlayerCharacterProfile(user.id, newValues);
       toastr[response.status](response.message);
     }
   });

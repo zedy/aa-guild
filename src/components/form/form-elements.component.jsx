@@ -37,16 +37,14 @@ export const image = (
   );
 };
 
-export const textarea = (element, formik) => {
-  return (
-    <textarea
-      type={element.type}
-      id={element.id}
-      placeholder={element.label}
-      {...formik.getFieldProps(element.id)}
-    />
-  );
-};
+export const textarea = (element, formik) => (
+  <textarea
+    type={element.type}
+    id={element.id}
+    placeholder={element.label}
+    {...formik.getFieldProps(element.id)}
+  />
+);
 
 export const select = (element, formik, options) => (
   <select id={element.id} {...formik.getFieldProps(element.id)}>
@@ -63,40 +61,50 @@ export const optionsItem = value => (
   </option>
 );
 
-export const text = (element, formik) => {
-  return (
-    <input
-      type={element.type}
-      id={element.id}
-      placeholder={element.label}
-      {...formik.getFieldProps(element.id)}
-      //autoComplete='off'
-    />
-  );
-};
+export const text = (element, formik) => (
+  <input
+    type={element.type}
+    id={element.id}
+    placeholder={element.label}
+    {...formik.getFieldProps(element.id)}
+  />
+);
 
-export const datePicker = (startDate, callback, id, formik) => {
-  return (
-    <>
-      <input
-        type='hidden'
-        id={id}
-        //{...formik.getFieldProps('date')}
-      />
-      <DatePicker
-        id='dateFake'
-        name='dateFake'
-        selected={startDate}
-        showTimeSelect
-        dateFormat='MMMM d, yyyy h:mm aa'
-        onChange={date => {
-          formik.setFieldValue('date', date);
-          callback(date);
-        }}
-      />
-    </>
-  );
-};
+export const checkbox = (id, formik) => (
+  <div className='ui checkbox'>
+    <input
+      type='checkbox'
+      name={id}
+      onChange={e => {
+        const value = e.target.checked ? true : false;
+        formik.setFieldValue(id, value);
+      }}
+      checked={formik.values[id] === true}
+    />
+    <label>&nbsp;</label>
+  </div>
+);
+
+export const datePicker = (startDate, callback, id, formik) => (
+  <>
+    <input
+      type='hidden'
+      id={id}
+      //{...formik.getFieldProps('date')}
+    />
+    <DatePicker
+      id='dateFake'
+      name='dateFake'
+      selected={startDate}
+      showTimeSelect
+      dateFormat='MMMM d, yyyy h:mm aa'
+      onChange={date => {
+        formik.setFieldValue('date', date);
+        callback(date);
+      }}
+    />
+  </>
+);
 
 export const rte = (value, editorRef) => {
   return (

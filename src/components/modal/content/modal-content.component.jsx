@@ -1,46 +1,53 @@
 // libs
 import React from 'react';
 
-import hero from '../../../assets/hero.jpg';
+// components
+import AddBadgeForm from '../../badge/form/badge-add-form.component';
 
-export const ModalContentNewUser = ({ handleClick }) => (
-  <div
-    className='ui segment'
-    style={{
-      height: '550px',
-      width: '800px',
-      backgroundImage: 'url(' + hero + ')'
-    }}>
-    <div
-      className='ui centered middle aligned two column grid'
-      style={{ height: '100%' }}>
-      <div className='row'>
-        <div className='column'>
-          <p style={{ color: 'white' }}>
-            Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam
-            alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret
-            referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque
-            electram, eos choro alterum definiebas in. Vim dolorum definiebas
-            an. Mei ex natum rebum iisque.
-          </p>
-          <div className='actions ui centered two column grid'>
-            <button
-              onClick={() => {
-                handleClick();
-              }}
-              className='ui button blue'>
-              Got it!
-            </button>
-          </div>
-        </div>
+// badge
+export const addBadgeModalContent = props => (
+  <>
+    <div className='header'>Add badge</div>
+    <div className='image content'>
+      <AddBadgeForm data={props} />
+    </div>
+    <div className='actions'>
+      <div className='ui button' onClick={() => props.closeModal()}>
+        Close
       </div>
     </div>
-  </div>
+  </>
 );
 
-export const ModalContentEventRegister = ({ handleConfirm, handleDeny }) => (
+export const deleteBadgeModalContent = ({
+  badgeId,
+  removeBadge,
+  closeModal
+}) => {
+  return (
+    <>
+      <div className='header'>Remove badge</div>
+      <div className='image content'>
+        Are you sure you want to remove this badge from the players list?
+      </div>
+      <div className='actions'>
+        <div className='ui red button' onClick={() => removeBadge(badgeId)}>
+          Yes
+        </div>
+        <div className='ui button' onClick={() => closeModal()}>
+          No
+        </div>
+      </div>
+    </>
+  );
+};
+//
+
+// event
+export const eventRegisterModalContent = ({ handleConfirm, closeModal }) => (
   <>
-    <div className='ui centered middle aligned two column grid'>
+    <div className='header'>Prijava za event</div>
+    <div className='content'>
       <p>
         Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia
         facete scriptorem, est autem aliquip detraxit at. Usu ocurreret
@@ -48,55 +55,52 @@ export const ModalContentEventRegister = ({ handleConfirm, handleDeny }) => (
         electram, eos choro alterum definiebas in. Vim dolorum definiebas an.
         Mei ex natum rebum iisque.
       </p>
-
-      <div className='row'>
-        <div className='column'>
-          <div className='actions ui centered two column grid'>
-            <button
-              onClick={() => {
-                handleConfirm();
-              }}
-              className='ui button blue'>
-              Potvrdjujem svoj dolazak
-            </button>
-            <button
-              onClick={() => {
-                handleDeny();
-              }}
-              className='ui red deny button'>
-              Zatvori prozor
-            </button>
-          </div>
-        </div>
+    </div>
+    <div className='actions'>
+      <div className='ui button' onClick={() => handleConfirm()}>
+        Potvrdjujem dolazak
+      </div>
+      <div className='ui button' onClick={() => closeModal()}>
+        Close
       </div>
     </div>
   </>
 );
 
-export const ModalContentEventUnRegister = ({ handleConfirm, handleDeny }) => (
+export const eventUnregisterModalContent = ({ handleConfirm, closeModal }) => (
   <>
-    <div className='ui centered middle aligned two column grid'>
+    <div className='header'>Odjava sa event-a</div>
+    <div className='content'>
       <p>Da li ste sigurni da zelite da se odjavite?</p>
+    </div>
+    <div className='actions'>
+      <div className='ui button' onClick={() => handleConfirm()}>
+        Da
+      </div>
+      <div className='ui button' onClick={() => closeModal()}>
+        Ne
+      </div>
+    </div>
+  </>
+);
+//
 
-      <div className='row'>
-        <div className='column'>
-          <div className='actions ui centered two column grid'>
-            <button
-              onClick={() => {
-                handleConfirm();
-              }}
-              className='ui button blue'>
-              Da
-            </button>
-            <button
-              onClick={() => {
-                handleDeny();
-              }}
-              className='ui red deny button'>
-              Zatvori prozor
-            </button>
-          </div>
-        </div>
+// new user
+export const newUserModalContent = ({ handleConfirm }) => (
+  <>
+    <div className='header'>Dobro dosli na sajt AA</div>
+    <div className='content'>
+    <p>
+        Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia
+        facete scriptorem, est autem aliquip detraxit at. Usu ocurreret
+        referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque
+        electram, eos choro alterum definiebas in. Vim dolorum definiebas an.
+        Mei ex natum rebum iisque.
+      </p>
+    </div>
+    <div className='actions'>
+      <div className='ui button' onClick={() => handleConfirm()}>
+        Razumem
       </div>
     </div>
   </>

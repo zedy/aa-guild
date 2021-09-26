@@ -45,7 +45,7 @@ const PlayerList = ({ match }) => {
         dispatch(setUsersList(data));
       }
     })();
-  }, []);
+  }, [dispatch]);
 
   const isAdmin = () => {
     return match.url === '/admin/dashboard';

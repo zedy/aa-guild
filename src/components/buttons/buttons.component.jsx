@@ -27,22 +27,14 @@ export const GoogleSignIn = callback => (
   </Button>
 );
 
-export const EventUnregisterButton = ({ onClick }) => (
-  <Button
-    onClick={() => {
-      onClick(true);
-    }}
-    classList='huge red'>
+export const EventUnregisterButton = ({ callback }) => (
+  <Button onClick={e => callback(e)} classList='huge red'>
     Odjavi se sa event-a <i className='calendar minus icon'></i>
   </Button>
 );
 
-export const EventRegisterButton = ({ onClick }) => (
-  <Button
-    onClick={() => {
-      onClick(true);
-    }}
-    classList='huge primary'>
+export const EventRegisterButton = ({ callback }) => (
+  <Button onClick={e => callback(e)} classList='huge primary'>
     Prijavite se na event <i className='calendar plus icon'></i>
   </Button>
 );
@@ -89,8 +81,10 @@ export const EditBadge = id => (
   </Link>
 );
 
-export const RemoveBadgeFromPlayer = (callback, id) => (
-  <Button onClick={e => callback(e, id)} classList='mini red remove-button'>
+export const RemoveBadgeFromPlayer = (callback, badgeId) => (
+  <Button
+    onClick={e => callback(e, badgeId)}
+    classList='mini red remove-button'>
     <i className='ui minus icon'></i>
   </Button>
 );

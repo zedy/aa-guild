@@ -16,16 +16,14 @@ import './app.styles.scss';
 import Router from '../router/router.component';
 import Header from '../header/header.component';
 import Footer from '../footer/footer.component';
-import { ModalHero } from '../modal/modal.component';
-import { ModalContentNewUser } from '../modal/content/modal-content.component';
-import Modal from '../modal/modal2.component';
+import Modal from '../modal/modal.component';
 
 // redux
 import { setCurrentUser } from '../../redux/user/user.actions';
 import { setEventsList } from '../../redux/events/events.actions';
 import { setNewsList } from '../../redux/news/news.actions';
 import { setAboutUs } from '../../redux/misc/misc.actions';
-import { showModal } from '../../redux/modal/modal.actions';
+import { hideModal, showModal } from '../../redux/modal/modal.actions';
 
 // utils
 import {
@@ -67,7 +65,15 @@ const App = () => {
           dispatch(setCurrentUser(authObject));
           setAuthUser(authObject);
 
-          if (data && data.newUser) dispatch(showModal('test'));
+          if (data && data.newUser)
+            dispatch(
+              showModal({
+                modalType: 'NEW_USER',
+                modalProps: {
+                  handleConfirm: handleConfirm
+                }
+              })
+            );
         });
       }
       // console.log(userAuthObj);
@@ -80,20 +86,20 @@ const App = () => {
     };
   }, [unsubscribeFromAuth]);
 
-  // const hideModal = async () => {
-  //   await updateNewUserFlag(authUser);
-  //   setIsModalActive(false);
-  // };
+  const handleConfirm = async () => {
+    await updateNewUserFlag(authUser);
+    closeModal();
+  };
+
+  const closeModal = () => {
+    dispatch(hideModal());
+  };
 
   return (
     <div className='app'>
       <Header />
       <Router currentUser={authUser} />
       <Footer />
-      {/* <ModalHero isActive={isModalActive}>
-        <ModalContentNewUser handleClick={hideModal} />
-      </ModalHero> */}
-      {console.log(modal)}
       <Modal modalInfo={modal} />
     </div>
   );

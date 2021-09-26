@@ -1,15 +1,11 @@
 // libs
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
 
 // components
 import Masthead from '../../layouts/masthead.component';
 import { GoogleMaps } from '../google/google.component';
-import { ModalDefault } from '../modal/modal.component';
-import {
-  ModalContentEventRegister,
-  ModalContentEventUnRegister
-} from '../modal/content/modal-content.component';
 import {
   EventRegisterButton,
   EventUnregisterButton,
@@ -21,6 +17,9 @@ import './event.styles.scss';
 
 // firebase
 import { eventRegister } from '../../firebase/firebase.utils';
+
+// redux
+import { hideModal, showModal } from '../../redux/modal/modal.actions';
 
 // utils
 import { convertDateToUTCString } from '../../utils';
@@ -35,22 +34,50 @@ const LocationMarker = () => (
 
 // component
 const Event = ({ event, currentUser }) => {
-  const [isRegisterModalActive, setIsRegisterModalActive] = useState(false);
-  const [isConfirmModalActive, setIsConfirmModalActive] = useState(false);
+  const dispatch = useDispatch();
+
+  const openEventRegistrationModal = e => {
+    e.preventDefault();
+    dispatch(
+      showModal({
+        modalType: 'EVENT_REGISTER',
+        modalProps: {
+          handleConfirm: eventRegistration,
+          closeModal: closeModal
+        }
+      })
+    );
+  };
+
+  const openEventUnregistrationModal = e => {
+    e.preventDefault();
+    dispatch(
+      showModal({
+        modalType: 'EVENT_UNREGISTER',
+        modalProps: {
+          handleConfirm: eventUnregistration,
+          closeModal: closeModal
+        }
+      })
+    );
+  };
+
+  const closeModal = () => {
+    dispatch(hideModal());
+  };
 
   const eventRegistration = async () => {
     sendRequestToFirebase();
-    setIsRegisterModalActive(false);
   };
 
-  const eventUnRegistration = async () => {
+  const eventUnregistration = async () => {
     sendRequestToFirebase(true);
-    setIsConfirmModalActive(false);
   };
 
   const sendRequestToFirebase = async (unregister = false) => {
     const response = await eventRegister(event, currentUser.id, unregister);
     toastr[response.status](response.message);
+    closeModal();
   };
   //
 
@@ -64,9 +91,9 @@ const Event = ({ event, currentUser }) => {
     return (
       <>
         {isGoing ? (
-          <EventUnregisterButton onClick={setIsConfirmModalActive} />
+          <EventUnregisterButton callback={openEventUnregistrationModal} />
         ) : (
-          <EventRegisterButton onClick={setIsRegisterModalActive} />
+          <EventRegisterButton callback={openEventRegistrationModal} />
         )}
       </>
     );
@@ -114,22 +141,6 @@ const Event = ({ event, currentUser }) => {
           </GoogleMaps>
         </div>
       </div>
-      <ModalDefault isActive={isRegisterModalActive}>
-        <ModalContentEventRegister
-          handleConfirm={eventRegistration}
-          handleDeny={() => {
-            setIsRegisterModalActive(false);
-          }}
-        />
-      </ModalDefault>
-      <ModalDefault isActive={isConfirmModalActive}>
-        <ModalContentEventUnRegister
-          handleConfirm={eventUnRegistration}
-          handleDeny={() => {
-            setIsConfirmModalActive(false);
-          }}
-        />
-      </ModalDefault>
     </>
   );
 };

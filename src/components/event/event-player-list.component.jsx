@@ -5,7 +5,10 @@ import { toastr } from 'react-redux-toastr';
 
 // utils
 import { convertDateToUTCString } from '../../utils';
-import { getInitialValues, prepValuesForFirestore } from './helpers';
+import { prepValuesForFirestore, getInitialValues } from './helpers';
+
+// components
+import { Submit } from '../buttons/buttons.component';
 
 // firestore
 import { fetchUser } from '../../firebase/firebase-fetch';
@@ -135,9 +138,7 @@ const EventPlayerList = ({ event }) => {
             <div className='three wide column'>Attended</div>
           </div>
         </div>
-        <button className='ui teal button' type='submit'>
-          Save
-        </button>
+        {Submit()}
       </form>
     </div>
   );

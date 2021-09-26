@@ -22,7 +22,8 @@ const Rules = () => (
       accumsan nec in elit. Donec a fringilla neque. Integer libero augue,
       iaculis non nisl ac, mattis egestas est. Integer sem sem, interdum at
       tincidunt et, pretium in mauris.
-      <br /><br /> Morbi vestibulum, nisl nec iaculis cursus, odio neque interdum
+      <br />
+      <br /> Morbi vestibulum, nisl nec iaculis cursus, odio neque interdum
       nulla, nec lobortis lorem elit eget libero. Cras egestas, ante nec maximus
       consequat, libero lorem vulputate lacus, sed tempor quam neque in arcu.
       Fusce sodales elit ex, ut ornare justo ultrices a. Maecenas id leo
