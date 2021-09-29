@@ -21,7 +21,7 @@ export const Submit = () => (
 );
 
 export const GoogleSignIn = callback => (
-  <Button classList='red' onClick={callback}>
+  <Button type='button' classList='red' onClick={callback}>
     <i className='google icon'></i>
     Sign in with Google
   </Button>

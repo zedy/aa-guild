@@ -1,13 +1,9 @@
 // libs
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // firebase
-import {
-  updateNewUserFlag,
-  auth,
-  createUserProfileDocument
-} from '../../firebase/firebase.utils';
+import { updateNewUserFlag } from '../../firebase/firebase.utils';
 
 // styles
 import './app.styles.scss';
@@ -19,11 +15,11 @@ import Footer from '../footer/footer.component';
 import Modal from '../modal/modal.component';
 
 // redux
-import { setCurrentUser } from '../../redux/user/user.actions';
 import { setEventsList } from '../../redux/events/events.actions';
 import { setNewsList } from '../../redux/news/news.actions';
 import { setAboutUs } from '../../redux/misc/misc.actions';
 import { hideModal, showModal } from '../../redux/modal/modal.actions';
+import { getCurrentUser } from '../../redux/user/user.selectors';
 
 // utils
 import {
@@ -33,11 +29,9 @@ import {
 } from '../../firebase/firebase-fetch';
 
 const App = () => {
-  let unsubscribeFromAuth = null;
-
   const modal = useSelector(state => state.modal);
   const dispatch = useDispatch();
-  const [authUser, setAuthUser] = useState(null);
+  const authUser = useSelector(getCurrentUser);
 
   useEffect(() => {
     (async () => {
@@ -49,42 +43,16 @@ const App = () => {
       dispatch(setEventsList(events));
     })();
 
-    // TODO create service for this
-    unsubscribeFromAuth = auth.onAuthStateChanged(async userAuthObj => {
-      if (userAuthObj) {
-        const firebaseResponse = await createUserProfileDocument(userAuthObj);
-        const { collectionRef } = firebaseResponse.payload;
-
-        collectionRef.onSnapshot(response => {
-          const data = response.data();
-          const authObject = {
-            id: response.id,
-            ...data
-          };
-
-          dispatch(setCurrentUser(authObject));
-          setAuthUser(authObject);
-
-          if (data && data.newUser)
-            dispatch(
-              showModal({
-                modalType: 'NEW_USER',
-                modalProps: {
-                  handleConfirm: handleConfirm
-                }
-              })
-            );
-        });
-      }
-      // console.log(userAuthObj);
-      //       dispatch(setCurrentUser(userAuthObj));
-      //       setAuthUser(userAuthObj);
-    });
-
-    return () => {
-      if (unsubscribeFromAuth !== null) unsubscribeFromAuth();
-    };
-  }, [unsubscribeFromAuth]);
+    if (authUser && authUser.newUser)
+      dispatch(
+        showModal({
+          modalType: 'NEW_USER',
+          modalProps: {
+            handleConfirm: handleConfirm
+          }
+        })
+      );
+  }, []);
 
   const handleConfirm = async () => {
     await updateNewUserFlag(authUser);

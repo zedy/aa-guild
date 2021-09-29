@@ -1,11 +1,14 @@
 // libs
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { toastr } from 'react-redux-toastr';
 
 // auth
-import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
+import {
+  googleSignInStart,
+  emailSignInStart
+} from '../../redux/user/user.actions';
 
 // components
 import InputField from '../form/form-element-wrapper.component';
@@ -22,19 +25,20 @@ import { GoogleSignIn, SignIn } from '../buttons/buttons.component';
 
 // component
 const SingIn = () => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: INIT_VALUES,
     validationSchema: Yup.object(VALIDATION_SCHEMA),
     onSubmit: async values => {
-      const { signupEmail, signupPassword } = values;
-
-      try {
-        await auth.signInWithEmailAndPassword(signupEmail, signupPassword);
-      } catch (err) {
-        toastr.error(err.message);
-      }
+      const { signinEmail, signinPassword } = values;
+      dispatch(emailSignInStart({ signinEmail, signinPassword }));
     }
   });
+
+  const googleLogIn = () => {
+    dispatch(googleSignInStart());
+  };
 
   return (
     <div className='sign-up column'>
@@ -52,7 +56,7 @@ const SingIn = () => {
           );
         })}
         {SignIn()}
-        {GoogleSignIn(signInWithGoogle)}
+        {GoogleSignIn(googleLogIn)}
       </form>
     </div>
   );

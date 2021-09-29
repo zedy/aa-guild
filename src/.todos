@@ -1,19 +1,14 @@
 -Standardise component loading => Placeholder or Loader per component.
--Auth check on Event registration
 -use memos
 - refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
-- Move modal to Store
 - image editing library for ImageUpload component
-- crawl through all the helper functions and methods and create a new service called "general" or idk
 - REfactor imageupload elemnt defaultPlaceholder to accept object with size props and placeholder
 - add icons for dnd classes and sheet upload
 - refaktorisi DMList + koju god komponentu da prikaje Placeholder umesto return null;
 - responsive (mobile)
 - napravi About us > slider
 - napravi layout componente
-- router ln 39: refresh >> 403 (logged in)
 - forms => remove actions and <form> into Form component
-- odvoji Masthead i druge HTML delove u sopstvene komponente
 - Inegrate FormLayout to other forms
 
 BUGS:

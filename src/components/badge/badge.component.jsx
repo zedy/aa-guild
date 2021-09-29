@@ -8,10 +8,12 @@ import { EditBadge } from '../buttons/buttons.component';
 const Badge = ({ badge: { name, description, badgeImage, id }, showEdit }) => {
   return (
     <div className='badge item'>
-      <strong className='name'>{name}</strong>
-      <span
-        className={`badge-image ${name}`}
-        style={{ backgroundImage: `url(${badgeImage})` }}></span>
+      <div>
+        <strong className='name'>{name}</strong>
+        <span
+          className={`badge-image ${name}`}
+          style={{ backgroundImage: `url(${badgeImage})` }}></span>
+      </div>
       <p className='description'>{description}</p>
 
       {showEdit && EditBadge(id)}

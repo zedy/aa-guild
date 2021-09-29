@@ -1,8 +1,12 @@
 // libs
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+
+// redux
+import { userSignOut } from '../../redux/user/user.actions';
 
 // styles
 import './user-profile.styles.scss';
@@ -14,6 +18,8 @@ import { auth } from '../../firebase/firebase.utils';
 import Button from '../buttons/buttons.component';
 
 const UserProfileDropdown = ({ user, history }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className='item user-profile-dropdown'>
       <Dropdown floating icon='user outline'>
@@ -42,6 +48,7 @@ const UserProfileDropdown = ({ user, history }) => {
               style={{ color: '#000' }}
               onClick={() => {
                 auth.signOut();
+                dispatch(userSignOut());
                 history.push('/signin');
               }}
               className='ui button item'>

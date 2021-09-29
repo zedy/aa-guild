@@ -18,7 +18,8 @@ const TOASTR_MESSAGES = {
   emptyFields: 'At least one paragraph and one image is required',
   removedElement: 'Removed element from about us form',
   badgeCreate: 'Created a new badge',
-  updatedBadge: 'Successfully update badge'
+  updatedBadge: 'Successfully update badge',
+  signinFail: 'Signin failed, please contact support'
 };
 
 export default TOASTR_MESSAGES;
