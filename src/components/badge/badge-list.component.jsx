@@ -1,6 +1,6 @@
 // libs
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // styles
 import './badges.styles.scss';
@@ -14,6 +14,7 @@ import Badge from './badge.component';
 
 // redux
 import { setBadges } from '../../redux/badges/badges.actions';
+import { getBadges } from '../../redux/badges/badges.selectors';
 
 // helper functions
 const renderPlaceholder = () => (
@@ -32,13 +33,14 @@ const renderData = (badges, showActions) => {
 // component
 const BadgeList = ({ showActions }) => {
   const dispatch = useDispatch();
-  const [badgesList, setBadgesList] = useState(null);
+  const badgesList = useSelector(getBadges);
 
   useEffect(() => {
     (async () => {
-      const badgesData = await fetchAllBadges();
-      dispatch(setBadges(badgesData));
-      setBadgesList(badgesData);
+      if (!badgesList) {
+        const badgesData = await fetchAllBadges();
+        dispatch(setBadges(badgesData));
+      }
     })();
   }, [dispatch]);
 

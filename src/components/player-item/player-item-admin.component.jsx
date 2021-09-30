@@ -117,6 +117,9 @@ const PlayerItemAdmin = ({ data }) => {
               Players character: <strong>{data.pc.name}</strong>
             </div>
           </div>
+          <div className='pointers'>
+            <i className='ui chevron down icon'></i>
+          </div>
         </AccordionItemButton>
       </AccordionItemHeading>
       <AccordionItemPanel>

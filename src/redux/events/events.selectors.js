@@ -2,6 +2,11 @@ import { createSelector } from 'reselect';
 
 const selectEvents = state => state.events;
 
+export const getEventsList = createSelector(
+  [selectEvents],
+  events => events.list
+);
+
 export const getSplitEventList = createSelector([selectEvents], events =>
   splitEventsBasedOnDate(events.list)
 );

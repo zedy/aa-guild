@@ -3,7 +3,6 @@
 - refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
 - image editing library for ImageUpload component
 - REfactor imageupload elemnt defaultPlaceholder to accept object with size props and placeholder
-- add icons for dnd classes and sheet upload
 - refaktorisi DMList + koju god komponentu da prikaje Placeholder umesto return null;
 - responsive (mobile)
 - napravi About us > slider

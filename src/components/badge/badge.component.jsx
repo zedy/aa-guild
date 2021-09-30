@@ -5,7 +5,10 @@ import React from 'react';
 import { EditBadge } from '../buttons/buttons.component';
 
 // component
-const Badge = ({ badge: { name, description, badgeImage, id }, showEdit }) => {
+const Badge = ({
+  badge: { name, description, badgeImage, id },
+  showActions
+}) => {
   return (
     <div className='badge item'>
       <div>
@@ -16,7 +19,7 @@ const Badge = ({ badge: { name, description, badgeImage, id }, showEdit }) => {
       </div>
       <p className='description'>{description}</p>
 
-      {showEdit && EditBadge(id)}
+      {showActions && EditBadge(id)}
     </div>
   );
 };

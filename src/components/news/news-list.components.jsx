@@ -7,7 +7,7 @@ import NewsListItem from '../news/news-list-item.component';
 
 // redux
 import { getAllNewsArticles } from '../../redux/news/news.selectors';
-import { Placeholder } from 'semantic-ui-react';
+import { Placeholder } from '../../components/static/static.component';
 
 const NewsList = () => {
   const newsList = useSelector(getAllNewsArticles);
@@ -20,7 +20,11 @@ const NewsList = () => {
             return <NewsListItem key={news.id} news={news} />;
           })
         ) : (
-          <Placeholder />
+          <>
+            <Placeholder placeholderClass='fluid' />
+            <Placeholder placeholderClass='fluid' />
+            <Placeholder placeholderClass='fluid' />
+          </>
         )}
       </div>
     </div>

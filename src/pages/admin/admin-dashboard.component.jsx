@@ -28,7 +28,7 @@ const renderBadges = () => (
       </Link>
       <h2>All badges</h2>
     </div>
-    <BadgeList renderEdit='true' />
+    <BadgeList showActions='true' />
   </Tab.Pane>
 );
 

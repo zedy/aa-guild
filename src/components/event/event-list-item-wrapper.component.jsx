@@ -13,7 +13,10 @@ const EventListItemWrapper = ({ events }) => {
           return <EventListItem key={event.id} event={event} />;
         })
       ) : (
-        <Placeholder />
+        <>
+          <Placeholder placeholderClass='fluid' />
+          <Placeholder placeholderClass='fluid' />
+        </>
       )}
     </div>
   );
