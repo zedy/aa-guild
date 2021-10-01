@@ -90,7 +90,7 @@ export const newUserModalContent = ({ handleConfirm }) => (
   <>
     <div className='header'>Dobro dosli na sajt AA</div>
     <div className='content'>
-    <p>
+      <p>
         Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia
         facete scriptorem, est autem aliquip detraxit at. Usu ocurreret
         referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque

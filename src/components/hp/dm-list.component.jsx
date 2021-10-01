@@ -1,13 +1,14 @@
 // libs
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
 import DMItem from './dm-item.component';
 import { Placeholder } from '../../components/static/static.component';
 
 // redux
-import { getDMList } from '../../redux/dm/dm.actions';
+import { setDMList } from '../../redux/dm/dm.actions';
+import { getDMs } from '../../redux/dm/dm.selectors';
 
 // utils
 import { fetchDMList } from '../../firebase/firebase-fetch';
@@ -29,13 +30,14 @@ const renderData = dmList => {
 // component
 const DMList = () => {
   const dispatch = useDispatch();
-  const [dmList, setDmList] = useState(null);
+  const dmList = useSelector(getDMs);
 
   useEffect(() => {
     (async () => {
-      const data = await fetchDMList();
-      setDmList(data);
-      dispatch(getDMList(data));
+      if (!dmList.length) {
+        const data = await fetchDMList();
+        dispatch(setDMList(data));
+      }
     })();
   }, [dispatch]);
 

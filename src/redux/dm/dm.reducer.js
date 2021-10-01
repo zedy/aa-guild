@@ -4,7 +4,7 @@ const INITIAL_STATE = {
 
 const dmReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'GET_DM_LIST':
+    case 'SET_DM_LIST':
       return {
         ...state,
         list: action.payload

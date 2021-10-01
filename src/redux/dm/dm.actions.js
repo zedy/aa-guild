@@ -1,4 +1,4 @@
-export const getDMList = list => ({
-  type: 'GET_DM_LIST',
+export const setDMList = list => ({
+  type: 'SET_DM_LIST',
   payload: list
 });

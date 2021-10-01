@@ -1,14 +1,12 @@
--Standardise component loading => Placeholder or Loader per component.
 -use memos
 - refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
 - image editing library for ImageUpload component
 - REfactor imageupload elemnt defaultPlaceholder to accept object with size props and placeholder
-- refaktorisi DMList + koju god komponentu da prikaje Placeholder umesto return null;
 - responsive (mobile)
-- napravi About us > slider
 - napravi layout componente
 - forms => remove actions and <form> into Form component
 - Inegrate FormLayout to other forms
+- Finish integrating/converting the other Reducers into Sagas
 
 BUGS:
 - !! TEST the app in both auth and anon modes !!

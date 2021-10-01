@@ -1,6 +1,8 @@
 // libs
 import React from 'react';
 import { useSelector } from 'react-redux';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
 
 // components
 import { Placeholder } from '../static/static.component';
@@ -24,11 +26,48 @@ const parapraph = (p, key) => (
 );
 
 const renderData = data => {
-  return data.keyOrder.map(key => {
-    return key.includes('rte')
-      ? parapraph(data[key], key)
-      : image(data[key], key);
+  let carousel = [];
+  const carouselIndex = carouselCalculator(data.keyOrder);
+
+  return data.keyOrder.map((key, index) => {
+    if (key.includes('rte')) {
+      return parapraph(data[key], key);
+    }
+
+    if (key.includes('image')) {
+      if (index >= carouselIndex[0] && index <= carouselIndex[1]) {
+        carousel.push(image(data[key], key));
+      } else {
+        console.log('sss');
+        return image(data[key], key);
+      }
+      if (index === carouselIndex[1]) {
+        return (
+          <Carousel showThumbs={false} dynamicHeight infiniteLoop>
+            {carousel}
+          </Carousel>
+        );
+      }
+    }
+
+    return null; // just to satisfy eslint
   });
+};
+
+const carouselCalculator = keys => {
+  let imageCounter = [];
+  let prevKey = null;
+
+  keys.forEach((key, index) => {
+    if (key.includes('image') && prevKey === 'image' && !imageCounter.length) {
+      imageCounter.push(index - 1);
+    } else if (key.includes('rte') && prevKey === 'image') {
+      imageCounter.push(index - 1);
+    }
+    prevKey = key.slice(0, -2);
+  });
+
+  return imageCounter;
 };
 
 const renderPlaceholder = () => <Placeholder placeholderClass='fluid' />;
