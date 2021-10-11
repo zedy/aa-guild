@@ -2,6 +2,26 @@
   & > div {
     padding: 0 !important;
   }
+  .pushable {
+    transform: unset !important;    
+  }
+  .dimmer {
+    background-color: rgba(0,0,0,0.3) !important;
+    position: absolute;
+    height: 0;
+    visibility: hidden;
+    width: 100%;
+  }  
+  .sidebar {
+    padding: 30px 50px;    
+
+    &.visible {
+      & + .dimmer {
+        height: 100vh;
+        visibility: visible;
+      }
+    }
+  }
   .ui.menu {
     .signin-link {
       color: white;
@@ -23,5 +43,23 @@
       margin-top: 0 !important;
     }
     min-height: calc(100vh - 159px);
+  }
+  .close-button {
+    background-color: transparent !important;
+    color: #fff !important;
+    right: 0;
+    position: absolute;
+    top: 5px;
+
+    i {
+      transform: rotate(0deg);
+      transition: all 0.2s !important;
+    }
+
+    &:hover {
+      i {
+        transform: rotate(90deg);
+      }
+    }
   }
 }

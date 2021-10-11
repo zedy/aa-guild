@@ -38,7 +38,6 @@ const renderData = data => {
       if (index >= carouselIndex[0] && index <= carouselIndex[1]) {
         carousel.push(image(data[key], key));
       } else {
-        console.log('sss');
         return image(data[key], key);
       }
       if (index === carouselIndex[1]) {
@@ -50,7 +49,7 @@ const renderData = data => {
       }
     }
 
-    return null; // just to satisfy eslint
+    return null; // to satisfy eslint
   });
 };
 

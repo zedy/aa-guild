@@ -1,7 +1,6 @@
 -use memos
 - refactor googlemaps components to be a generic Maps componenet, used library as a dependacy
 - image editing library for ImageUpload component
-- REfactor imageupload elemnt defaultPlaceholder to accept object with size props and placeholder
 - responsive (mobile)
 - napravi layout componente
 - forms => remove actions and <form> into Form component

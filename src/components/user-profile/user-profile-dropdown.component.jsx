@@ -1,9 +1,8 @@
 // libs
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
 
 // redux
 import { userSignOut } from '../../redux/user/user.actions';

@@ -89,4 +89,10 @@ export const RemoveBadgeFromPlayer = (callback, badgeId) => (
   </Button>
 );
 
+export const CloseSidebar = callback => (
+  <Button onClick={() => callback()} classList='white close-button'>
+    <i className='ui close icon'></i>
+  </Button>
+);
+
 export default Button;

@@ -76,12 +76,14 @@ const App = () => {
   };
 
   return (
-    <div className='app'>
-      <Header />
-      <Router currentUser={authUser} />
-      <Footer />
-      <Modal modalInfo={modal} />
-    </div>
+    <>
+      <div className='app'>
+        <Header />
+        <Router currentUser={authUser} />
+        <Footer />
+        <Modal modalInfo={modal} />
+      </div>
+    </>
   );
 };
 
