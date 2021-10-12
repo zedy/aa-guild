@@ -3,7 +3,12 @@
     padding: 0 !important;
   }
   .pushable {
-    transform: unset !important;    
+    overflow: visible !important;
+    transform: unset !important;
+
+    & > .pusher {
+      overflow: visible !important;
+    }
   }
   .dimmer {
     background-color: rgba(0,0,0,0.3) !important;
@@ -11,6 +16,7 @@
     height: 0;
     visibility: hidden;
     width: 100%;
+    z-index: 1;
   }  
   .sidebar {
     padding: 30px 50px;    
@@ -59,6 +65,13 @@
     &:hover {
       i {
         transform: rotate(90deg);
+      }
+    }
+  }
+  @media all and (max-width: 768px) {
+    .main-menu {
+      & > .item:not(.home) {
+        display: none;
       }
     }
   }

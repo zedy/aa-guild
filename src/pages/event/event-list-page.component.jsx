@@ -4,6 +4,9 @@ import React from 'react';
 // components
 import EventList from '../../components/event/event-list.component';
 
+// styles
+import '../listing-pages/listing-page.styles.scss';
+
 // components
 const EventListPage = () => {
   return (

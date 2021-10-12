@@ -23,12 +23,9 @@ const NewsListItem = ({ news, match }) => {
   return (
     <>
       <Link to={`/news/${news.id}`} className='item'>
-        <img
-          style={{ width: '100px', height: '100px' }}
-          className='ui avatar image'
-          src={`${news.heroImage}`}
-          alt='test'
-        />
+        <div
+          style={{ backgroundImage: `url(${news.heroImage})` }}
+          className='box-image'></div>
         <div className='content'>
           <span className='header'>{news.headline.toUpperCase()}</span>
           <div className='description'>

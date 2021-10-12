@@ -72,7 +72,7 @@ const HeaderSidebar = ({ path, children, visible, callback }) => {
         {CloseSidebar(callback)}
         {renderMenu(path, callback)}
       </Sidebar>
-      <div className='dimmer'></div>
+      <div onClick={() => callback()} className='dimmer'></div>
       <Sidebar.Pusher>{children}</Sidebar.Pusher>
     </Sidebar.Pushable>
   );
@@ -81,9 +81,9 @@ const HeaderSidebar = ({ path, children, visible, callback }) => {
 const HeaderMenu = ({ path, user, callback }) => (
   <div className='ui vertical inverted segment'>
     <Container>
-      <Menu inverted>
-        <Menu.Item as={Link} to='/'>
-          <Icon className='home' name='home' />
+      <Menu className='main-menu' inverted>
+        <Menu.Item className='home' as={Link} to='/'>
+          <Icon name='home' />
         </Menu.Item>
 
         {renderMenu(path)}
@@ -102,7 +102,7 @@ const HeaderMenu = ({ path, user, callback }) => (
               </Link>
             </div>
           )}
-          <Menu.Item as='a' onClick={() => callback()}>
+          <Menu.Item className='menu-trigger' as='a' onClick={() => callback()}>
             <Icon className='bars' name='bars' />
           </Menu.Item>
         </Menu.Menu>

@@ -19,12 +19,9 @@ import { isPastEvent } from './helpers';
 // content
 const eventContent = (event, isAdmin) => (
   <>
-    <img
-      style={{ width: '100px', height: '100px' }}
-      className='ui avatar image'
-      src={`${event.heroImage}`}
-      alt='test'
-    />
+    <div
+      className='box-image'
+      style={{ backgroundImage: `url(${event.heroImage})` }}></div>
     <div className='content'>
       <span className='header'>{event.headline.toUpperCase()}</span>
       <div className='description'>
