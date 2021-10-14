@@ -9,19 +9,17 @@ import './badges.styles.scss';
 import { fetchAllBadges } from '../../firebase/firebase-fetch';
 
 // components
-import { Placeholder } from '../static/static.component';
 import Badge from './badge.component';
 
 // redux
 import { setBadges } from '../../redux/badges/badges.actions';
 import { getBadges } from '../../redux/badges/badges.selectors';
 
-// helper functions
-const renderPlaceholder = () => (
-  <div className='twelve wide column'>
-    <Placeholder placeholderClass='fluid' />
-  </div>
-);
+// utils
+import { renderPlaceholders } from '../../utils';
+
+// constants
+const PLACEHOLDER_NUMBER = 8;
 
 const renderData = (badges, showActions) => {
   return badges.map(badge => {
@@ -46,7 +44,9 @@ const BadgeList = ({ showActions }) => {
 
   return (
     <div className='badge-list'>
-      {!badgesList ? renderPlaceholder() : renderData(badgesList, showActions)}
+      {!badgesList
+        ? renderPlaceholders(PLACEHOLDER_NUMBER)
+        : renderData(badgesList, showActions)}
     </div>
   );
 };

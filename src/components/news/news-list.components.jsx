@@ -7,8 +7,14 @@ import NewsListItem from '../news/news-list-item.component';
 
 // redux
 import { getAllNewsArticles } from '../../redux/news/news.selectors';
-import { Placeholder } from '../../components/static/static.component';
 
+// utils
+import { renderPlaceholders } from '../../utils';
+
+// constants
+const PLACEHOLDER_NUMBER = 4;
+
+// component
 const NewsList = () => {
   const newsList = useSelector(getAllNewsArticles);
 
@@ -20,11 +26,7 @@ const NewsList = () => {
             return <NewsListItem key={news.id} news={news} />;
           })
         ) : (
-          <>
-            <Placeholder placeholderClass='fluid' />
-            <Placeholder placeholderClass='fluid' />
-            <Placeholder placeholderClass='fluid' />
-          </>
+          <>{renderPlaceholders(PLACEHOLDER_NUMBER)}</>
         )}
       </div>
     </div>

@@ -72,4 +72,13 @@
       }
     }    
   }
+  .placeholder {
+    margin: 10px !important;
+    width: 47%;
+
+    @media  screen and (max-width: 991px) {
+      margin: 0;
+      width: 100%;
+    }
+  }
 }

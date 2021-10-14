@@ -4,11 +4,14 @@ import { useSelector } from 'react-redux';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 
-// components
-import { Placeholder } from '../static/static.component';
-
 // redux
 import { getAboutUs } from '../../redux/misc/misc.selectors';
+
+// utils
+import { renderPlaceholders } from '../../utils';
+
+// constants
+const PLACEHOLDER_NUMBER = 2;
 
 // consts & helpers
 const image = (src, key) => (
@@ -69,9 +72,6 @@ const carouselCalculator = keys => {
   return imageCounter;
 };
 
-const renderPlaceholder = () => <Placeholder placeholderClass='fluid' />;
-//
-
 // component
 const AboutUs = () => {
   const data = useSelector(getAboutUs);
@@ -81,7 +81,7 @@ const AboutUs = () => {
       <div className='ui container content'>
         <h1>About us</h1>
         {!data || Object.keys(data).length === 0
-          ? renderPlaceholder()
+          ? renderPlaceholders(PLACEHOLDER_NUMBER)
           : renderData(data)}
       </div>
     </section>

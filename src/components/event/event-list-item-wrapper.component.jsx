@@ -3,8 +3,14 @@ import React from 'react';
 
 // components
 import EventListItem from '../../components/event/event-list-item.component';
-import { Placeholder } from '../../components/static/static.component';
 
+// utils
+import { renderPlaceholders } from '../../utils';
+
+// constants
+const PLACEHOLDER_NUMBER = 4;
+
+// component
 const EventListItemWrapper = ({ events }) => {
   return (
     <div className='ui middle aligned divided list'>
@@ -13,10 +19,7 @@ const EventListItemWrapper = ({ events }) => {
           return <EventListItem key={event.id} event={event} />;
         })
       ) : (
-        <>
-          <Placeholder placeholderClass='fluid' />
-          <Placeholder placeholderClass='fluid' />
-        </>
+        <>{renderPlaceholders(PLACEHOLDER_NUMBER)}</>
       )}
     </div>
   );

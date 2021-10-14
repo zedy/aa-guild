@@ -57,11 +57,11 @@ export const eventRegisterModalContent = ({ handleConfirm, closeModal }) => (
       </p>
     </div>
     <div className='actions'>
-      <div className='ui button' onClick={() => handleConfirm()}>
+      <div className='ui button teal' onClick={() => handleConfirm()}>
         Potvrdjujem dolazak
       </div>
       <div className='ui button' onClick={() => closeModal()}>
-        Close
+        Zatvori
       </div>
     </div>
   </>
@@ -74,7 +74,7 @@ export const eventUnregisterModalContent = ({ handleConfirm, closeModal }) => (
       <p>Da li ste sigurni da zelite da se odjavite?</p>
     </div>
     <div className='actions'>
-      <div className='ui button' onClick={() => handleConfirm()}>
+      <div className='ui button red' onClick={() => handleConfirm()}>
         Da
       </div>
       <div className='ui button' onClick={() => closeModal()}>
@@ -99,7 +99,7 @@ export const newUserModalContent = ({ handleConfirm }) => (
       </p>
     </div>
     <div className='actions'>
-      <div className='ui button' onClick={() => handleConfirm()}>
+      <div className='ui button teal' onClick={() => handleConfirm()}>
         Razumem
       </div>
     </div>
