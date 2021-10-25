@@ -7,7 +7,6 @@ import HomePage from '../../pages/homepage/homepage.component';
 import NewsListingPage from '../../pages/news/news-listing-page.component';
 import Throw403 from '../../pages/403/throw403.component';
 
-// Ukoliko obican user ode na /badges dobije kitu. Lupio sam badges samo radi testiranja funkcionalnosti
 const AdminRoute = props => {
   const { user } = useAuth();
   if (!user.isAdmin) return <Redirect to={route.THROW_403} />;
@@ -15,6 +14,7 @@ const AdminRoute = props => {
   return <Route {...props} />;
 };
 
+// /badges ruta odabrana samo radi demonstracije admin rute
 export const UserRouter = () => {
   return (
     <Switch>
