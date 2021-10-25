@@ -11,9 +11,8 @@ const HomePage = () => {
   const { user, logout } = useAuth();
 
   // otvori modal za novog korisnika ukoliko je novi korisnik i nije do sad zatvorio new-user modal
-  const { isOpen: isModalOpen, onClose: onCloseModal } = useDisclosure(
-    user.newUser && !user.closedNewUserModal
-  );
+  const { isOpen: isNewUserModalOpen, onClose: onCloseNewUserModal } =
+    useDisclosure(user.newUser && !user.closedNewUserModal);
   // inspiracija za useDisclosure hook od https://chakra-ui.com/docs/hooks/use-disclosure :)
 
   return (
@@ -23,7 +22,7 @@ const HomePage = () => {
       </Button>
       <HpHero />
       <DMList />
-      <NewUserModal isOpen={isModalOpen} onClose={onCloseModal} />
+      <NewUserModal isOpen={isNewUserModalOpen} onClose={onCloseNewUserModal} />
     </div>
   );
 };
