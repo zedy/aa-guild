@@ -1,3 +1,4 @@
+.throw404,
 .throw403 {
   &.content {
     align-items: center;
@@ -9,7 +10,8 @@
     font-size: 200px;
     text-align: center;
   }
-  p {
+  p {  
     font-size: 19px;
+    text-align: center;
   }
 }

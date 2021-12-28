@@ -79,7 +79,7 @@ const App = () => {
     <>
       <div className='app'>
         <Header />
-        <Router currentUser={authUser} />
+        <Router />
         <Footer />
         <Modal modalInfo={modal} />
       </div>

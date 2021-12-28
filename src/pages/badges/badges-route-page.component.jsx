@@ -10,7 +10,7 @@ import { getListByID } from '../../redux/badges/badges.selectors';
 import { Loader } from '../../components/static/static.component';
 import BadgeForm from '../../components/badge/badge-form.component';
 
-// component
+// componentNewUserModal
 const BadgesRoutePage = ({ match }) => {
   const badges = useSelector(getListByID);
 
