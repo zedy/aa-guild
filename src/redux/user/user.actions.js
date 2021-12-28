@@ -40,3 +40,7 @@ export const emailSignInFailure = message => ({
   type: 'EMAIL_SIGN_IN_FAILURE',
   payload: message
 });
+
+export const closedNewUserModal = () => ({
+  type: 'CLOSED_NEW_USER_MODAL'
+});

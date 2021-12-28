@@ -1,103 +1,15 @@
-// libs
 import React from 'react';
 import { withRouter } from 'react-router';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { useAuth } from '../../redux/user/useAuth';
+import { UnauthedRouter } from './unauthed-router';
+import { UserRouter } from './user-router';
 
-// routes
-import * as route from '../../routes';
+export const Router = () => {
+  const { user } = useAuth();
 
-// helper functions
-const AsyncRoute = ({ componentPath, ...props }) => {
-  return <Route {...props} component={route.componentPaths[componentPath]} />;
+  if (!user) return <UnauthedRouter />;
+
+  return <UserRouter />;
 };
 
-const AdminRoute = props => {
-  if (!props.user) {
-    return null;
-  }
-
-  if (!props.user.isAdmin) return <Redirect to={route.THROW_403} />;
-
-  return <AsyncRoute {...props} />;
-};
-
-const AuthenticatedRoute = props => {
-  if (!props.user) {
-    return null;
-  }
-
-  if (!props.user || props.user.id !== props.computedMatch.params.id)
-    return <Redirect to={route.THROW_403} />;
-
-  return <AsyncRoute {...props} />;
-};
-
-const GuestRoute = props => {
-  if (props.componentPath === 'signinout' && props.user) {
-    return <Redirect to={route.HOME_PAGE} />;
-  }
-
-  return <AsyncRoute {...props} />;
-};
-
-// component
-export const Router = ({ match, currentUser }) => (
-  <Switch>
-    <GuestRoute exact path={route.HOME_PAGE} componentPath='homepage' />
-    <AdminRoute
-      exact
-      path={route.EVENT_CREATE}
-      user={currentUser}
-      componentPath='eventcreate'
-    />
-    <GuestRoute path={route.EVENT_ROUTE_PAGE} componentPath='eventroutepage' />
-    <GuestRoute exact path={route.EVENT_LISTING} componentPath='eventlisting' />
-    <AdminRoute
-      exact
-      path={route.BADGE_CREATE}
-      user={currentUser}
-      componentPath='badgecreate'
-    />
-    <AdminRoute
-      path={route.BADGE_ROUTE_PAGE}
-      user={currentUser}
-      componentPath='badgeroutepage'
-    />
-    <GuestRoute
-      exact
-      path={route.BADGES_LISTING}
-      componentPath='badgeslisting'
-    />
-    <GuestRoute exact path={route.NEWS_LISTING} componentPath='newslisting' />
-    <AdminRoute
-      exact
-      path={route.NEWS_CREATE}
-      user={currentUser}
-      componentPath='newscreate'
-    />
-    <GuestRoute path={route.NEWS_ROUTE_PAGE} componentPath='newsroutepage' />
-    <GuestRoute exact path={route.PLAYERS_PAGE} componentPath='playerspage' />
-    <AuthenticatedRoute
-      exact
-      user={currentUser}
-      match={match}
-      path={route.PLAYER_PROFILE}
-      componentPath='playerprofile'
-    />
-    <AdminRoute
-      exact
-      user={currentUser}
-      path={route.DASHBOARD}
-      componentPath='dashboard'
-    />
-    <GuestRoute
-      exact
-      path={route.SIGN_IN_OUT}
-      user={currentUser}
-      componentPath='signinout'
-    />
-    <GuestRoute exact path={route.RULES} componentPath='rules' />
-    <GuestRoute exact path={route.THROW_403} componentPath='fourohthree' />
-  </Switch>
-);
 export default withRouter(Router);

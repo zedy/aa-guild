@@ -15,11 +15,12 @@ import { CloseSidebar } from '../buttons/buttons.component';
 
 // redux
 import { getCurrentUser } from '../../redux/user/user.selectors';
+import { BADGES_LISTING } from '../../routes';
 
 const HeaderMenuItems = [
   {
     text: 'Badges',
-    path: '/badges',
+    path: BADGES_LISTING,
     icon: 'trophy'
   },
   {

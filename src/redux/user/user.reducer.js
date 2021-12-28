@@ -32,6 +32,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         currentUser: null,
         signInError: null
       };
+    case 'CLOSED_NEW_USER_MODAL':
+      return {
+        ...state,
+        currentUser: { ...state.currentUser, closedNewUserModal: true }
+      };
     default:
       return state;
   }
