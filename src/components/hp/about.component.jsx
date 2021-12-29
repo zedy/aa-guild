@@ -1,14 +1,18 @@
 // libs
-import React from 'react';
-import { useSelector } from 'react-redux';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
+
+// styles
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 // redux
 import { getAboutUs } from '../../redux/misc/misc.selectors';
+import { setAboutUs } from '../../redux/misc/misc.actions';
 
 // utils
 import { renderPlaceholders } from '../../utils';
+import { fetchAboutUs } from '../../firebase/firebase-fetch';
 
 // constants
 const PLACEHOLDER_NUMBER = 2;
@@ -74,7 +78,17 @@ const carouselCalculator = keys => {
 
 // component
 const AboutUs = () => {
+  const dispatch = useDispatch();
   const data = useSelector(getAboutUs);
+
+  useEffect(() => {
+    (async () => {
+      if (!data) {
+        const aboutusData = await fetchAboutUs();
+        dispatch(setAboutUs(aboutusData));
+      }
+    })();
+  }, []);
 
   return (
     <section className='about-us'>

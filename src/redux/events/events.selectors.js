@@ -24,6 +24,8 @@ export const getListByID = createSelector([selectEvents], events =>
 );
 
 const splitEventsBasedOnDate = (events, key = null) => {
+  if (!events || !events.length) return null;
+
   let data = {
     future: [],
     past: []

@@ -1,12 +1,15 @@
 // libs
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 
 // routes
 import * as route from '../../routes';
 
 // auth
 import { UserAuth } from '../../redux/user/user.auth';
+
+// pages
+import Throw404 from '../../pages/404/throw404.component';
 
 // helper functions
 const GuestRoute = props => {
@@ -22,6 +25,7 @@ const GuestRoute = props => {
 // component
 export const GuestRouter = () => {
   const { currentUser } = UserAuth();
+  let location = useLocation();
 
   return (
     <Switch>
@@ -51,6 +55,9 @@ export const GuestRouter = () => {
       />
       <GuestRoute exact path={route.RULES} componentPath='rules' />
       <GuestRoute exact path={route.THROW_403} componentPath='fourohthree' />
+      <Route path='*'>
+        <Throw404 location={location} />
+      </Route>
     </Switch>
   );
 };
